@@ -21,7 +21,26 @@ public class Hero
    
     public void updateStats(Equipment equipment, boolean equip)
     {
-        // STUB
+        //equip case
+        if(equip)
+        {
+            setStrength(getStrength() + equipment.getStrengthMod());
+            setDexterity(getDexterity() + equipment.getDexterityMod());
+            setToughness(getToughness() + equipment.getToughnessMod());
+            setIntelligence(getIntelligence() + equipment.getIntelligenceMod());
+            setWisdom(getWisdom() + equipment.getWisdomMod());
+            setDefense(getDefense() + equipment.getDefenseMod());
+        }
+        //unquip case
+        else
+        {
+            setStrength(getStrength() - equipment.getStrengthMod());
+            setDexterity(getDexterity() - equipment.getDexterityMod());
+            setToughness(getToughness() - equipment.getToughnessMod());
+            setIntelligence(getIntelligence() - equipment.getIntelligenceMod());
+            setWisdom(getWisdom() - equipment.getWisdomMod());
+            setDefense(getDefense() - equipment.getDefenseMod()); 
+        }
     }
     public void unequip(int index)
     {

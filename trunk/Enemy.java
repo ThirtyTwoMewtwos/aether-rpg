@@ -57,13 +57,15 @@ public class Enemy
     public void Death()
     {
         timer = new Timer();
-        timer.schedule(new Respawn(), RESPAWN_TIMER);
-        
-        
+        timer.schedule(new Respawn(this), RESPAWN_TIMER);    
     }
     class Respawn extends TimerTask  
     {
         Enemy enemy;
+        public Respawn(Enemy en)
+        {
+            run(en);
+        }
         public void run(Enemy en)
         {
             enemy = en;

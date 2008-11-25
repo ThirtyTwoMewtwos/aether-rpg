@@ -36,24 +36,28 @@ public class Hero
     private final double EXPIERENCE_MODIFER = 0.05;
     private final double ATTACK_MODIFER = 0.01;
     private final double CHANCE_MODIFER = 0.01;
+    private final int MALE = 0;
+    private final int FEMALE = 1;
+    private final String[] SEXS = { "Male", "Female" };
+    
     private int hp, mp, maxHP, maxMP;
     private int strength, dexterity, toughness, intelligence, wisdom, defense;
     private int gold, silver, copper;
     private int level, xp, xpToLevel;
     private double meleeAttack, rangedAttack, magicIntuative, blockChance, dispelChance;
     private double critChance, dodgeChance;
-    private String name, bio;
+    private String name, bio, sex;
     private Point location;
     private Vector<Item> inventory;
     private Vector<Quest> questLog;
     private Equipment[] equiped;
     
-    public Hero(String hName,String hBio)
+    public Hero(String hName,String hBio, String sex)
     {
         level = 1;
         setName(hName);
         setBio(hBio);
-        
+        setSex(sex);
     }
     public void updateStats(Equipment equipment, boolean equip)
     {
@@ -174,6 +178,17 @@ public class Hero
     public void setBio(String heroBio)
     {
         bio = heroBio;
+    }
+    public String getSex()
+    {
+        return sex;
+    }
+    public void setSex(String s)
+    {
+        if(s.toLowerCase().equals("male"))
+           sex = SEXS[MALE];
+        else
+           sex = SEXS[FEMALE];
     }
     public int getDefense()
     {

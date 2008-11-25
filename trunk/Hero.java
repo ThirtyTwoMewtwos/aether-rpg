@@ -47,7 +47,14 @@ public class Hero
     private Vector<Item> inventory;
     private Vector<Quest> questLog;
     private Equipment[] equiped;
-   
+    
+    public Hero(String hName,String hBio)
+    {
+        level = 1;
+        setName(hName);
+        setBio(hBio);
+        
+    }
     public void updateStats(Equipment equipment, boolean equip)
     {
         //equip case

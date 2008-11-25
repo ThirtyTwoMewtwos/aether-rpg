@@ -38,9 +38,12 @@ public class UI extends JFrame implements ActionListener, KeyListener
     private JPanel controlsWindow = new JPanel();
     
     private JTextArea output = new JTextArea(5,25);
+    private Hero hero;
     
-    public UI()
+    public UI(Hero hero)
     {
+        this.hero = hero;
+        
         windowPane.setLayout(new BorderLayout());
         
         output.setEnabled(false);

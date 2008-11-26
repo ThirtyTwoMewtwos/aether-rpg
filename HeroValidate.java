@@ -1,5 +1,5 @@
 /*
- * AetherTest.java
+ * HeroValidate.java
  * 
  * Copyright (c) 2008, Tyler Hoersch
  * All rights reserved.
@@ -28,16 +28,23 @@
  * 
  */
 
-public class AetherTest 
+public class HeroValidate 
 {
-    public static void main(String args[])
+    private final int NAME_MIN = 2;
+    private final int NAME_MAX = 12;
+    private String name;
+    
+    public HeroValidate(String enteredName)
     {
+        name = enteredName;
+    }
+    public boolean validateName()
+    {
+        //check DB for duplicate
         
-        HeroCreationUI hc = new HeroCreationUI();
-        Hero hero = hc.getCreatedHero();
-        if(hc.heroCreated())
-        {
-            new UI(hero);
-        }
+        if(name.length() < NAME_MIN || name.length() > NAME_MAX)
+            return false;
+        
+        return name.matches( "([a-zA-Z]+|[a-zA-Z]+\\s[a-zA-Z]+)" );
     }
 }

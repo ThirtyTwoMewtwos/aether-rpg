@@ -36,29 +36,87 @@ public class Hero
     private final double EXPIERENCE_MODIFER = 0.05;
     private final double ATTACK_MODIFER = 0.01;
     private final double CHANCE_MODIFER = 0.01;
-    private final int MALE = 0;
-    private final int FEMALE = 1;
-    private final String[] SEXS = { "Male", "Female" };
+    private final static int MALE = 0;
+    private final static int FEMALE = 1;
+    private final static int REVENANT = 0;
+    private final static int HUMAN = 1;
+    private final static String[] SEXS = { "Male", "Female" };
+    private final static String[] RACES = { "Revenant", "Human" };
     
-    private int hp, mp, maxHP, maxMP;
-    private int strength, dexterity, toughness, intelligence, wisdom, defense;
-    private int gold, silver, copper;
-    private int level, xp, xpToLevel;
-    private double meleeAttack, rangedAttack, magicIntuative, blockChance, dispelChance;
-    private double critChance, dodgeChance;
-    private String name, bio, sex;
+    private int hp;
+    private int mp;
+    private int maxHP;
+    private int maxMP;
+    private int strength;
+    private int dexterity;
+    private int toughness;
+    private int intelligence;
+    private int wisdom;
+    private int defense;
+    private int gold;
+    private int silver;
+    private int copper;
+    private int level;
+    private int xp;
+    private int xpToLevel;
+    private double meleeAttack;
+    private double rangedAttack;
+    private double magicIntuative;
+    private double blockChance;
+    private double dispelChance;
+    private double critChance;
+    private double dodgeChance;
+    private String name;
+    private String bio;
+    private String sex;
     private Point location;
     private Vector<Item> inventory;
     private Vector<Quest> questLog;
     private Equipment[] equiped;
+    private Class role;
     
-    public Hero(String hName,String hBio, String sex)
+    public enum Class
+    {
+        HERETIC("Heretic", "Healer", RACES[REVENANT]),
+        DARKGUARD("Dark Guard", "Tank", RACES[REVENANT]),
+        NECROMANCER("Necromancer","Magic DPS", RACES[REVENANT]),
+        BERSERKER("Berserker","Melee DPS", RACES[REVENANT]),
+        SAGE("Sage","Healer", RACES[HUMAN]),
+        HOLYKNIGHT("Holy Knight","Tank", RACES[HUMAN]),
+        ACOLYTE("Acolyte","Magic DPS", RACES[HUMAN]),
+        CRUSADER("Crusader","Melee DPS", RACES[HUMAN]);
+        
+        private String className;
+        private String role;
+        private String race;
+        
+        private Class(String strClass, String strRole, String strRace)
+        {
+            className = strClass;
+            role = strRole;
+            race = strRace;
+        }
+        public String getName()
+        {
+            return className;
+        }
+        public String getRole()
+        {
+            return role;
+        }
+        public String getRace()
+        {
+            return race;
+        }
+    }
+    public Hero(String hName,String hBio, String sex,Class hClass)
     {
         level = 1;
         setName(hName);
         setBio(hBio);
         setSex(sex);
-    }
+        setHeroClass(hClass);
+    }   
     public void updateStats(Equipment equipment, boolean equip)
     {
         //equip case
@@ -189,6 +247,14 @@ public class Hero
            sex = SEXS[MALE];
         else
            sex = SEXS[FEMALE];
+    }
+    public void setHeroClass(Hero.Class hClass)
+    {
+        role = hClass;
+    }
+    public Hero.Class getHeroClass()
+    {
+        return role;
     }
     public int getDefense()
     {

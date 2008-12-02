@@ -43,7 +43,12 @@ public abstract class Equipment extends Item
     public final static int OFFHAND = 11;
     public final static int TOME = 12;
     
-    private int strength, dexterity, toughness, intelligence, wisdom, defense;
+    private int strength;
+    private int dexterity;
+    private int  toughness;
+    private int intelligence;
+    private int wisdom;
+    private int defense;
     private int levelRequirement;
     
     public int getStrengthMod()

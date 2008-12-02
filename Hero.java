@@ -36,6 +36,8 @@ public class Hero
     private final double EXPIERENCE_MODIFER = 0.05;
     private final double ATTACK_MODIFER = 0.01;
     private final double CHANCE_MODIFER = 0.01;
+    private final double LARGE_STAT_MODIFIER = 0.05;
+    private final double SMALL_STAT_MODIFIER = 0.02;
     private final static int MALE = 0;
     private final static int FEMALE = 1;
     private final static int REVENANT = 0;
@@ -112,12 +114,22 @@ public class Hero
     public Hero(String hName,String hBio, String sex,Class hClass)
     {
         level = 1;
+        
+        setStrength(10);
+        setDexterity(10);
+        setToughness(10);
+        setIntelligence(10);
+        setWisdom(10);
+        setDefense(100);
+        
+        setCombatValues();
+        
         setName(hName);
         setBio(hBio);
         setSex(sex);
         setHeroClass(hClass);
     }   
-    public void updateStats(Equipment equipment, boolean equip)
+    private void updateStats(Equipment equipment, boolean equip)
     {
         //equip case
         if(equip)
@@ -139,6 +151,25 @@ public class Hero
             setWisdom(getWisdom() - equipment.getWisdomMod());
             setDefense(getDefense() - equipment.getDefenseMod()); 
         }
+        
+        setCombatValues(); 
+    }
+    private void setCombatValues()
+    {
+        double melee = (getStrength() * (getStrength() * LARGE_STAT_MODIFIER)) + (getDexterity() * (getDexterity() * SMALL_STAT_MODIFIER));
+        double magic = (getIntelligence() * (getIntelligence() * LARGE_STAT_MODIFIER)) + (getWisdom() * (getWisdom() * SMALL_STAT_MODIFIER));
+        double ranged = (getDexterity() * (getDexterity() * LARGE_STAT_MODIFIER)) + (getStrength() * (getStrength() * SMALL_STAT_MODIFIER));
+        double crit = (getDexterity() * (getDexterity() * LARGE_STAT_MODIFIER)) + (getStrength() * SMALL_STAT_MODIFIER);
+        double dodge = (getToughness() * (getToughness() * LARGE_STAT_MODIFIER)) - (getDexterity()* (getDexterity() * SMALL_STAT_MODIFIER)) + (getStrength() * (getStrength() * SMALL_STAT_MODIFIER));
+        double block = (getDexterity() * (getDexterity() * LARGE_STAT_MODIFIER)) - (getToughness()* (getToughness() * SMALL_STAT_MODIFIER)) + (getStrength() * (getStrength() * SMALL_STAT_MODIFIER));
+        double dispel = (((getWisdom() + getIntelligence()) * LARGE_STAT_MODIFIER) * getWisdom()) - (getDexterity() * SMALL_STAT_MODIFIER) - (getStrength() * SMALL_STAT_MODIFIER);
+        setMeleeAttack(melee);
+        setMagicIntuative(magic);
+        setRangedAttack(ranged);
+        setCritChance(crit);
+        setDodgeChance(dodge);
+        setBlockChance(block);
+        setDispelChance(dispel);
     }
     public void unequip(int index)
     {
@@ -463,6 +494,8 @@ public class Hero
         
         setXPToLevel((int)(getXPToLevel() + EXPIERENCE_MODIFER));
         setXP(0);
+        
+        setCombatValues();
     }
     public int getXPToLevel()
     {

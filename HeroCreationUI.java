@@ -48,43 +48,51 @@ public class HeroCreationUI extends JDialog implements ActionListener, ItemListe
     private JPanel windowPane;
     private JPanel imagePane;
     private JPanel inputPane;
-    private JPanel buttonsPane;
+    private JPanel bottomPane;
+
     private ImageIcon icon;
+
     private JButton create;
-    private JButton cancel;
+
     private JLabel nameLabel;
     private JLabel bioLabel;
     private JLabel sexLabel;
     private JLabel raceLabel;
     private JLabel classLabel;
+
     private JTextField nameField;
+
     private JComboBox sexDropDown;
     private JComboBox raceDropDown;
     private JComboBox classDropDown;
+
     private JTextArea bioField;
+
     private JScrollPane scrollPane;
      
     private Hero hero;
+    
     private boolean created;
     
     public HeroCreationUI()
     {
         created = false;
         
-        windowPane = new JPanel(new BorderLayout());
+        windowPane = new JPanel(new GridLayout(3,1));
         imagePane = new JPanel();
         inputPane = new JPanel(new GridLayout(5,2));
-        buttonsPane = new JPanel();
+        bottomPane = new JPanel(new BorderLayout());
         
         icon = new ImageIcon("logo.jpg");
         create = new JButton("Create");
-        cancel = new JButton("Cancel");
         nameLabel = new JLabel("Hero Name:");
         sexLabel = new JLabel("Sex:");
         raceLabel = new JLabel("Race:");
         classLabel = new JLabel("Class:");
         bioLabel = new JLabel("Biography:");
+
         nameField = new JTextField(20);
+
         sexDropDown = new JComboBox(SEX_CHOICES);
         raceDropDown = new JComboBox(RACE_CHOICES);
         classDropDown = new JComboBox(EVIL_CLASS_CHOICES);
@@ -105,18 +113,16 @@ public class HeroCreationUI extends JDialog implements ActionListener, ItemListe
         inputPane.add(raceDropDown);
         inputPane.add(classLabel);
         inputPane.add(classDropDown);
-        inputPane.add(bioLabel);
-        inputPane.add(scrollPane);
+
+        bottomPane.add(bioLabel, BorderLayout.WEST);
+        bottomPane.add(scrollPane, BorderLayout.EAST);
+        bottomPane.add(create, BorderLayout.SOUTH);
         
-        buttonsPane.add(create);
-        buttonsPane.add(cancel);
-        
-        windowPane.add(imagePane,BorderLayout.NORTH);
-        windowPane.add(inputPane,BorderLayout.CENTER);
-        windowPane.add(buttonsPane,BorderLayout.SOUTH);
+        windowPane.add(imagePane);
+        windowPane.add(inputPane);
+        windowPane.add(bottomPane);
         
         create.addActionListener(this);
-        cancel.addActionListener(this);
         
         raceDropDown.addItemListener(this);
         

@@ -37,7 +37,7 @@ public class AetherTest
         Hero hero = hc.getCreatedHero();
         if(hc.heroCreated())
         {
-            new UI(hero);
+            UI.createAndShowGUI();
         }
     }
 }

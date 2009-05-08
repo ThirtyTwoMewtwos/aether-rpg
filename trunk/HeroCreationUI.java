@@ -127,7 +127,9 @@ public class HeroCreationUI extends JDialog implements ActionListener, ItemListe
         setLocation(100,100);
         setMinimumSize(new Dimension(375,375));
         setMaximumSize(new Dimension(375,375));
-        setResizable(false);
+        setPreferredSize(getMinimumSize());
+        setResizable(true);
+        pack();
         setVisible(true);
     }
     public void itemStateChanged(ItemEvent e)

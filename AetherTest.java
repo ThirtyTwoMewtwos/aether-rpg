@@ -29,6 +29,7 @@
  */
 
 import java.io.*;
+import javax.swing.*;
 
 public class AetherTest implements ViewEventListener
 {
@@ -92,11 +93,27 @@ public class AetherTest implements ViewEventListener
         }
         else if(event.toString().equals("btn_save_exit"))
         {
-
+            saveAndExit();
         }
         else if(event.toString().equals("export_char_pdf"))
         {
             exportHeroToPDF();
+        }
+    }
+
+    private void saveAndExit()
+    {
+        if(saveHero())
+        {
+            System.exit(0);
+        }
+        else
+        {
+            String[] options = {"Exit Without Saving","Cancel Exit"};
+            int option = JOptionPane.showOptionDialog(null, "ERROR!", "Unable to save character!",JOptionPane.YES_NO_OPTION , JOptionPane.ERROR_MESSAGE, null, options, options[1]);
+
+            if(option == 0)
+                System.exit(1);
         }
     }
 

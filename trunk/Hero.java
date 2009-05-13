@@ -28,9 +28,13 @@
  * 
  */
 import java.awt.Point;
+import java.awt.Color;
 import java.util.Vector;
+import java.io.*;
+import com.lowagie.text.*;
+import com.lowagie.text.pdf.PdfWriter;
 
-public class Hero 
+public class Hero implements Serializable
 {
     private final int ATTRIBUTE_MODIFER = 2;
     private final double EXPIERENCE_MODIFER = 0.05;
@@ -44,7 +48,7 @@ public class Hero
     private final static int HUMAN = 1;
     private final static String[] SEXS = { "Male", "Female" };
     private final static String[] RACES = { "Revenant", "Human" };
-    
+
     private int hp;
     private int mp;
     private int maxHP;
@@ -61,6 +65,7 @@ public class Hero
     private int level;
     private int xp;
     private int xpToLevel;
+
     private double meleeAttack;
     private double rangedAttack;
     private double magicIntuative;
@@ -68,9 +73,11 @@ public class Hero
     private double dispelChance;
     private double critChance;
     private double dodgeChance;
+
     private String name;
     private String bio;
     private String sex;
+
     private Point location;
     private Vector<Item> inventory;
     private Vector<Quest> questLog;
@@ -114,7 +121,9 @@ public class Hero
     public Hero(String hName,String hBio, String sex,Class hClass)
     {
         level = 1;
-        
+        setXPToLevel(100);
+
+
         setStrength(10);
         setDexterity(10);
         setToughness(10);
@@ -163,6 +172,7 @@ public class Hero
         double dodge = (getToughness() * (getToughness() * LARGE_STAT_MODIFIER)) - (getDexterity()* (getDexterity() * SMALL_STAT_MODIFIER)) + (getStrength() * (getStrength() * SMALL_STAT_MODIFIER));
         double block = (getDexterity() * (getDexterity() * LARGE_STAT_MODIFIER)) - (getToughness()* (getToughness() * SMALL_STAT_MODIFIER)) + (getStrength() * (getStrength() * SMALL_STAT_MODIFIER));
         double dispel = (((getWisdom() + getIntelligence()) * LARGE_STAT_MODIFIER) * getWisdom()) - (getDexterity() * SMALL_STAT_MODIFIER) - (getStrength() * SMALL_STAT_MODIFIER);
+
         setMeleeAttack(melee);
         setMagicIntuative(magic);
         setRangedAttack(ranged);
@@ -512,5 +522,88 @@ public class Hero
     public void setXP(int exp)
     {
         xp = exp;
+    }
+
+    @Override
+    public String toString()
+    {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(this.getName() + "\n");
+        buffer.append(this.getLevel() + "\n");
+        buffer.append(this.getSex() + "\n");
+        buffer.append(this.getHeroClass() + "\n");
+        buffer.append(this.getBio() + "\n");
+        buffer.append(this.getHP() + "\n");
+        buffer.append(this.getMaxHP() + "\n");
+        buffer.append(this.getMP() + "\n");
+        buffer.append(this.getMaxMP() + "\n");
+        buffer.append(this.getStrength() + "\n");
+        buffer.append(this.getDexterity() + "\n");
+        buffer.append(this.getIntelligence() + "\n");
+        buffer.append(this.getToughness() + "\n");
+        buffer.append(this.getWisdom() + "\n");
+        buffer.append(this.getDefense() + "\n");
+        buffer.append(this.getBlockChance() + "\n");
+        buffer.append(this.getCritChance() + "\n");
+        buffer.append(this.getDispelChance() + "\n");
+        buffer.append(this.getDodgeChance() + "\n");
+        buffer.append(this.getMagicIntuative() + "\n");
+        buffer.append(this.getMeleeAttack() + "\n");
+        buffer.append(this.getRangedAttack() + "\n");
+        buffer.append(this.getXP() + "\n");
+        buffer.append(this.getXPToLevel() + "\n");
+        buffer.append(this.getLocation() + "\n");
+        buffer.append(this.getCopper() + "\n");
+        buffer.append(this.getSilver() + "\n");
+        buffer.append(this.getGold() + "\n");
+
+        return buffer.toString();
+    }
+
+    public void exportCharToPDF()
+    {
+        try{
+            Document document = new Document(PageSize.A4, 50, 50, 50, 50);
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("heroes/"+ getName() +".pdf"));
+
+            document.open();
+
+            Paragraph title = new Paragraph(this.getName(), FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC, new Color(0, 0, 255)));
+
+            Chapter chapter = new Chapter(title, 1);
+            chapter.setNumberDepth(0);
+
+            Paragraph subTitle = new Paragraph("Level " + this.getLevel() + " " + this.getSex() + " " + this.getHeroClass(), FontFactory.getFont(FontFactory.HELVETICA, 16, Font.BOLD, new Color(255, 0, 0)));
+            Section section = chapter.addSection(subTitle);
+
+            Paragraph content = new Paragraph("Biography: " + this.getBio() + "\n"
+                                                + "HP: " + this.getHP() + "/" + this.getMaxHP() + "\n"
+                                                + "MP: " + this.getMP() + "/" + this.getMaxMP() + "\n"
+                                                + "Strength: " + this.getStrength() + "\n"
+                                                + "Dexterity: " + this.getDexterity() + "\n"
+                                                + "Intelligence: " + this.getIntelligence() + "\n"
+                                                + "Toughness: " + this.getToughness() + "\n"
+                                                + "Wisdom: " + this.getWisdom() + "\n"
+                                                + "Strength: " + this.getStrength() + "\n"
+                                                + "Defense: " + this.getDefense() + "\n"
+                                                + "Melee Attack: " + this.getMeleeAttack() + "\n"
+                                                + "Ranged Attck: " + this.getRangedAttack() + "\n"
+                                                + "Block Chance: " + this.getBlockChance() + "\n"
+                                                + "Critical Hit Chance: " + this.getCritChance() + "\n"
+                                                + "Dispell Magic Chance: " + this.getDispelChance() + "\n"
+                                                + "Dodge Chance: " + this.getDodgeChance() + "\n"
+                                                + "Magic Intuativeness: " + this.getMagicIntuative() + "\n"
+                                                + "Experience: " + this.getXP() + "/" + this.getXPToLevel() + "\n"
+                                                + "Finances: " + "Gold: " +this.getGold() + "Silver: " + this.getSilver() + "Copper: " + this.getCopper() + "\n");
+
+
+            section.add(content);
+
+            document.add(chapter);
+            document.close();
+        }catch(Exception e)
+        {
+            System.err.println(e.getMessage());
+        }
     }
 }

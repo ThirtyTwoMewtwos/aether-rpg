@@ -32,6 +32,7 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 
+
 public class HeroCreationUI extends JDialog implements ActionListener, ItemListener
 {
     private final static String[] SEX_CHOICES = { "Male","Female" };
@@ -44,7 +45,7 @@ public class HeroCreationUI extends JDialog implements ActionListener, ItemListe
                                                          "Holy Knight (tank)",
                                                          "Acolyte (magic dps)",
                                                          "Crusader (melee dps)" };
-    
+
     private JPanel windowPane;
     private JPanel imagePane;
     private JPanel inputPane;
@@ -71,6 +72,8 @@ public class HeroCreationUI extends JDialog implements ActionListener, ItemListe
     private JScrollPane scrollPane;
      
     private Hero hero;
+
+
     
     private boolean created;
     
@@ -167,7 +170,7 @@ public class HeroCreationUI extends JDialog implements ActionListener, ItemListe
                 formattedName = formattedName.toLowerCase();
                 formattedName = formattedName.substring(0, 1).toUpperCase() + formattedName.substring(1,formattedName.length());
                 nameField.setText(formattedName);
-                
+
                 String formattedClass = classDropDown.getSelectedItem() + "";
                 formattedClass = formattedClass.substring(0, formattedClass.indexOf(" ("));
                 if(formattedClass.indexOf(" ") != -1)
@@ -190,4 +193,5 @@ public class HeroCreationUI extends JDialog implements ActionListener, ItemListe
     {
         return hero;
     }
+
 }

@@ -28,16 +28,108 @@
  * 
  */
 
-public class AetherTest 
+import java.io.*;
+
+public class AetherTest implements ViewEventListener
 {
-    public static void main(String args[])
+    
+    private FileOutputStream file;
+    private ObjectOutputStream output;
+    
+    private HeroCreationUI hc;
+    private Hero hero;
+    
+    public AetherTest()
     {
-        
-        HeroCreationUI hc = new HeroCreationUI();
-        Hero hero = hc.getCreatedHero();
+        hc = new HeroCreationUI();
+        hero = hc.getCreatedHero();
         if(hc.heroCreated())
         {
-            UI.createAndShowGUI();
+            setupOutputTools();
+            saveHero();
+
+            UI ui = new UI();
+            ui.addViewEventListener(this);
         }
+    }
+    
+    public static void main(String args[])
+    {
+        new AetherTest();
+
+    }
+
+    public void viewEventOccurred(ViewEvent event)
+    {
+        if(event.toString().equals("btn_camp"))
+        {
+
+        }
+        else if(event.toString().equals("btn_options"))
+        {
+            AetherOptionsPane aop = new AetherOptionsPane();
+            aop.addViewEventListener(this);
+        }
+        else if(event.toString().equals("btn_slaves"))
+        {
+
+        }
+        else if(event.toString().equals("btn_persona"))
+        {
+
+        }
+        else if(event.toString().equals("btn_abilities"))
+        {
+
+        }
+        else if(event.toString().equals("btn_inventory"))
+        {
+
+        }
+        else if(event.toString().equals("btn_map"))
+        {
+
+        }
+        else if(event.toString().equals("btn_save_exit"))
+        {
+
+        }
+        else if(event.toString().equals("export_char_pdf"))
+        {
+            exportHeroToPDF();
+        }
+    }
+
+    private void exportHeroToPDF()
+    {
+        hero.exportCharToPDF();
+    }
+
+    private void setupOutputTools()
+    {
+        try{
+            file = new FileOutputStream( hero.getName() + ".ser" );
+            output = new ObjectOutputStream( file );
+
+        }catch(IOException ioe)
+        {
+            System.err.println(ioe.getMessage() + " in setup.");
+        }
+      
+    }
+    
+    public boolean saveHero()
+    {
+        boolean success = false;
+
+        try{
+            output.writeObject(hero);
+            success = true;
+        }catch(Exception e)
+        {
+            System.err.println(e.getMessage() + " in save.");
+        }
+        
+        return success;
     }
 }

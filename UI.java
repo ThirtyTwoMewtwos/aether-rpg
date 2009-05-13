@@ -32,9 +32,13 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.event.*;
 import java.awt.*;
+import javax.swing.event.*;
 
-public class UI extends JPanel implements ActionListener, KeyListener
+
+public class UI extends JFrame implements ActionListener, KeyListener
 {
+    private EventListenerList listenerList;
+
     private JPanel control_panel;
     private JPanel view_panel;
     private JPanel general_text_panel;
@@ -63,11 +67,17 @@ public class UI extends JPanel implements ActionListener, KeyListener
 
     public UI()
     {
+        super("CODE NAME: SAPHIRE");
+
+        
         initGUIComponents();
+        createAndShowGUI();
     }
 
     private void initGUIComponents()
     {
+        listenerList = new EventListenerList();
+
         control_panel = new JPanel(new GridLayout(4,2));
         general_text_panel = new JPanel(new FlowLayout());
         private_text_panel = new JPanel(new FlowLayout());
@@ -169,8 +179,48 @@ public class UI extends JPanel implements ActionListener, KeyListener
         debug_chat_box.append(msg + "\n");
     }
 
+    public void addViewEventListener(ViewEventListener listener)
+    {
+        listenerList.add(ViewEventListener.class, listener);
+    }
+
+    private void fireViewEvent(Object source, String name)
+    {
+        ViewEvent event = new ViewEvent(source, name);
+
+        ViewEventListener[] listeners = listenerList.getListeners(ViewEventListener.class);
+
+        for (int i = 0; i < listeners.length; i++)
+        {
+            listeners[i].viewEventOccurred(event);
+        }
+    }
+
     public void actionPerformed(ActionEvent e)
     {
+        if(e.getSource() == btn_save_exit)
+            fireViewEvent(btn_save_exit,"btn_save_exit");
+        
+        else if(e.getSource() == btn_options)
+            fireViewEvent(btn_options,"btn_options");
+
+        else if(e.getSource() == btn_slaves)
+            fireViewEvent(btn_slaves,"btn_slaves");
+
+        else if(e.getSource() == btn_abilities)
+            fireViewEvent(btn_abilities,"btn_abilities");
+
+        else if(e.getSource() == btn_persona)
+            fireViewEvent(btn_persona,"btn_persona");
+
+        else if(e.getSource() == btn_inventory)
+            fireViewEvent(btn_inventory,"btn_inventory");
+
+        else if(e.getSource() == btn_map)
+            fireViewEvent(btn_map,"btn_map");
+
+        else if(e.getSource() == btn_camp)
+            fireViewEvent(btn_camp,"btn_camp");
 
     }
 
@@ -187,14 +237,12 @@ public class UI extends JPanel implements ActionListener, KeyListener
 
     }
 
-    public static void createAndShowGUI()
+    public void createAndShowGUI()
     {
-        JFrame f = new JFrame("CODE NAME: SAPHIRE");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.add(new UI());
-        f.setPreferredSize(new Dimension(800,650));
-        f.setLocation(new Point(150,50));
-        f.pack();
-        f.setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setPreferredSize(new Dimension(800,650));
+        setLocation(new Point(150,50));
+        pack();
+        setVisible(true);
     }
 }

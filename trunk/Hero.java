@@ -29,7 +29,7 @@
  */
 import java.awt.Point;
 import java.awt.Color;
-import java.util.Vector;
+import java.util.*;
 import java.io.*;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
@@ -77,6 +77,7 @@ public class Hero implements Serializable
     private String name;
     private String bio;
     private String sex;
+    private String race;
 
     private Point location;
     private Vector<Item> inventory;
@@ -289,9 +290,18 @@ public class Hero implements Serializable
         else
            sex = SEXS[FEMALE];
     }
+    public void setRace(String hRace)
+    {
+        race = hRace;
+    }
+    public String getRace()
+    {
+        return race;
+    }
     public void setHeroClass(Hero.Class hClass)
     {
         role = hClass;
+        setRace(hClass.getRace());
     }
     public Hero.Class getHeroClass()
     {
@@ -524,38 +534,71 @@ public class Hero implements Serializable
         xp = exp;
     }
 
+    public double format(Double attribute)
+    {
+        int decimal_place = 2;
+        java.math.BigDecimal bd = new java.math.BigDecimal(attribute);
+        bd = bd.setScale(decimal_place,java.math.BigDecimal.ROUND_UP);
+        return bd.doubleValue();
+    }
+    public String format(String incString)
+    {
+        String formated = "";
+        String bytes = "";
+        int count = 0;
+        StringTokenizer st = new StringTokenizer(incString);
+
+        while(st.hasMoreTokens())
+        {
+            if(count < 32)
+            {
+                bytes = st.nextToken();
+                count += bytes.length();
+                formated += bytes + " ";
+            }
+            else
+            {
+                count = 0;
+                bytes = st.nextToken();
+                count += bytes.length();
+                formated += "\n" + bytes + " ";
+            }
+        }
+
+
+        return formated;
+    }
     @Override
     public String toString()
     {
         StringBuffer buffer = new StringBuffer();
-        buffer.append(this.getName() + "\n");
-        buffer.append(this.getLevel() + "\n");
-        buffer.append(this.getSex() + "\n");
-        buffer.append(this.getHeroClass() + "\n");
-        buffer.append(this.getBio() + "\n");
-        buffer.append(this.getHP() + "\n");
-        buffer.append(this.getMaxHP() + "\n");
-        buffer.append(this.getMP() + "\n");
-        buffer.append(this.getMaxMP() + "\n");
-        buffer.append(this.getStrength() + "\n");
-        buffer.append(this.getDexterity() + "\n");
-        buffer.append(this.getIntelligence() + "\n");
-        buffer.append(this.getToughness() + "\n");
-        buffer.append(this.getWisdom() + "\n");
-        buffer.append(this.getDefense() + "\n");
-        buffer.append(this.getBlockChance() + "\n");
-        buffer.append(this.getCritChance() + "\n");
-        buffer.append(this.getDispelChance() + "\n");
-        buffer.append(this.getDodgeChance() + "\n");
-        buffer.append(this.getMagicIntuative() + "\n");
-        buffer.append(this.getMeleeAttack() + "\n");
-        buffer.append(this.getRangedAttack() + "\n");
-        buffer.append(this.getXP() + "\n");
-        buffer.append(this.getXPToLevel() + "\n");
-        buffer.append(this.getLocation() + "\n");
-        buffer.append(this.getCopper() + "\n");
-        buffer.append(this.getSilver() + "\n");
-        buffer.append(this.getGold() + "\n");
+        buffer.append(getName() + "\n");
+        buffer.append("                " + "\n");
+        buffer.append("Level: " + getLevel() + "\n");
+        buffer.append(getRace() + "\n");
+        buffer.append(getSex() + "\n");
+        buffer.append( getHeroClass() + "\n");
+        buffer.append("Bio: " + format(getBio()) + "\n\n");
+        buffer.append("HP: " + getHP() + "/" + getMaxHP() +"\n");
+        buffer.append("MP: " + getMP() + "/" + getMaxMP() +"\n\n");
+        buffer.append("Strength: " + getStrength() + "\n");
+        buffer.append("Dexterity: " + getDexterity() + "\n");
+        buffer.append("Intelligence: " + getIntelligence() + "\n");
+        buffer.append("Toughness" + getToughness() + "\n");
+        buffer.append("Wisdom: " + getWisdom() + "\n");
+        buffer.append("Defense: " + getDefense() + "\n");
+        buffer.append("Block: " + format(getBlockChance()) + "%\n");
+        buffer.append("Critical: " + format(getCritChance()) + "%\n");
+        buffer.append("Dispell: " + format(getDispelChance()) + "%\n");
+        buffer.append("Dodge: " + format(getDodgeChance()) + "%\n\n");
+        buffer.append("Magic Intuative: " + getMagicIntuative() + "\n");
+        buffer.append("Melee Attack: " + getMeleeAttack() + "\n");
+        buffer.append("Ranged Attack: " + getRangedAttack() + "\n\n");
+        buffer.append("Experience: " + getXP() + "/" + getXPToLevel() + "\n");
+        buffer.append("Located: " + getLocation() + "\n");
+        buffer.append("Gold: " + getGold() + "\n");
+        buffer.append("Silver: " + getSilver() + "\n");
+        buffer.append("Copper: " + getCopper() + "\n");
 
         return buffer.toString();
     }
@@ -568,33 +611,33 @@ public class Hero implements Serializable
 
             document.open();
 
-            Paragraph title = new Paragraph(this.getName(), FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC, new Color(0, 0, 255)));
+            Paragraph title = new Paragraph(getName(), FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC, new Color(0, 0, 255)));
 
             Chapter chapter = new Chapter(title, 1);
             chapter.setNumberDepth(0);
 
-            Paragraph subTitle = new Paragraph("Level " + this.getLevel() + " " + this.getSex() + " " + this.getHeroClass(), FontFactory.getFont(FontFactory.HELVETICA, 16, Font.BOLD, new Color(255, 0, 0)));
+            Paragraph subTitle = new Paragraph("Level " + getLevel() + " " + getRace() + " " + getSex() + " " + getHeroClass(), FontFactory.getFont(FontFactory.HELVETICA, 16, Font.BOLD, new Color(255, 0, 0)));
             Section section = chapter.addSection(subTitle);
 
-            Paragraph content = new Paragraph("Biography: " + this.getBio() + "\n"
-                                                + "HP: " + this.getHP() + "/" + this.getMaxHP() + "\n"
-                                                + "MP: " + this.getMP() + "/" + this.getMaxMP() + "\n"
-                                                + "Strength: " + this.getStrength() + "\n"
-                                                + "Dexterity: " + this.getDexterity() + "\n"
-                                                + "Intelligence: " + this.getIntelligence() + "\n"
-                                                + "Toughness: " + this.getToughness() + "\n"
-                                                + "Wisdom: " + this.getWisdom() + "\n"
-                                                + "Strength: " + this.getStrength() + "\n"
-                                                + "Defense: " + this.getDefense() + "\n"
-                                                + "Melee Attack: " + this.getMeleeAttack() + "\n"
-                                                + "Ranged Attck: " + this.getRangedAttack() + "\n"
-                                                + "Block Chance: " + this.getBlockChance() + "\n"
-                                                + "Critical Hit Chance: " + this.getCritChance() + "\n"
-                                                + "Dispell Magic Chance: " + this.getDispelChance() + "\n"
-                                                + "Dodge Chance: " + this.getDodgeChance() + "\n"
-                                                + "Magic Intuativeness: " + this.getMagicIntuative() + "\n"
-                                                + "Experience: " + this.getXP() + "/" + this.getXPToLevel() + "\n"
-                                                + "Finances: " + "Gold: " +this.getGold() + "Silver: " + this.getSilver() + "Copper: " + this.getCopper() + "\n");
+            Paragraph content = new Paragraph("Biography: " + getBio() + "\n"
+                                                + "HP: " + getHP() + "/" + getMaxHP() + "\n"
+                                                + "MP: " + getMP() + "/" + getMaxMP() + "\n"
+                                                + "Strength: " + getStrength() + "\n"
+                                                + "Dexterity: " + getDexterity() + "\n"
+                                                + "Intelligence: " + getIntelligence() + "\n"
+                                                + "Toughness: " + getToughness() + "\n"
+                                                + "Wisdom: " + getWisdom() + "\n"
+                                                + "Strength: " + getStrength() + "\n"
+                                                + "Defense: " + getDefense() + "\n"
+                                                + "Melee Attack: " + getMeleeAttack() + "\n"
+                                                + "Ranged Attck: " + getRangedAttack() + "\n"
+                                                + "Block Chance: " + getBlockChance() + "\n"
+                                                + "Critical Hit Chance: " + getCritChance() + "\n"
+                                                + "Dispell Magic Chance: " + getDispelChance() + "\n"
+                                                + "Dodge Chance: " + getDodgeChance() + "\n"
+                                                + "Magic Intuativeness: " + getMagicIntuative() + "\n"
+                                                + "Experience: " + getXP() + "/" + getXPToLevel() + "\n"
+                                                + "Finances: " + "Gold: " +getGold() + "Silver: " + getSilver() + "Copper: " + getCopper() + "\n");
 
 
             section.add(content);

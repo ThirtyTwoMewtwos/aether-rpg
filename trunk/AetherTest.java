@@ -77,7 +77,7 @@ public class AetherTest implements ViewEventListener
         }
         else if(event.toString().equals("btn_persona"))
         {
-
+            JOptionPane.showMessageDialog(null, hero.toString(), "Persona", JOptionPane.PLAIN_MESSAGE);
         }
         else if(event.toString().equals("btn_abilities"))
         {

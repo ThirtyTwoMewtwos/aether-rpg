@@ -35,10 +35,45 @@ import java.awt.*;
 public class AetherPersonaPane extends JFrame implements ActionListener
 {
     private EventListenerList listenerList;
+    
+    private JPanel bio_controls;
 
-    public AetherPersonaPane()
+    private JButton btn_cancel;
+    private JButton btn_save_bio;
+
+    private JTextArea txt_persona;
+    private JTextArea txt_edit_bio;
+
+    private JScrollPane bio_scroll_pane;
+
+
+    public AetherPersonaPane(String persona)
     {
         listenerList = new EventListenerList();
+
+        bio_controls = new JPanel(new FlowLayout());
+
+        btn_cancel = new JButton("Cancel");
+        btn_save_bio = new JButton("Save Changes");
+
+        txt_persona = new JTextArea(persona);
+        txt_edit_bio = new JTextArea(5,20);
+
+        txt_edit_bio.setWrapStyleWord(true);
+        txt_edit_bio.setLineWrap(true);
+
+        bio_scroll_pane = new JScrollPane(txt_edit_bio);
+        bio_scroll_pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        txt_persona.setEditable(false);
+        txt_persona.setEnabled(false);
+
+        bio_controls.add(txt_edit_bio);
+        bio_controls.add(btn_save_bio);
+        bio_controls.add(btn_cancel);
+
+        add(txt_persona,BorderLayout.CENTER);
+        add(bio_controls, BorderLayout.SOUTH);
 
         createAndShowGUI();
     }
@@ -46,9 +81,9 @@ public class AetherPersonaPane extends JFrame implements ActionListener
     public void createAndShowGUI()
     {
         this.setTitle("Persona");
-        this.setLayout(new FlowLayout());
+        this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(HIDE_ON_CLOSE);
-        this.setMinimumSize(new Dimension(350, 450));
+        this.setMinimumSize(new Dimension(250, 600));
         this.setLocation(new Point(200,80));
         this.pack();
         this.setVisible(true);

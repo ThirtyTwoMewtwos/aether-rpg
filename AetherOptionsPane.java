@@ -47,10 +47,7 @@ public class AetherOptionsPane extends JDialog implements ActionListener
 
         export_char_pdf.addActionListener(this);
 
-        add(export_char_pdf);
-
-        
-        createAndShowGUI();
+        add(export_char_pdf);  
     }
 
     public void createAndShowGUI()

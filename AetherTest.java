@@ -40,6 +40,9 @@ public class AetherTest implements ViewEventListener
     private HeroCreationUI hc;
     private Hero hero;
     
+    private AetherPersonaPane app;
+    private AetherOptionsPane aop;
+    
     public AetherTest()
     {
         hc = new HeroCreationUI();
@@ -51,6 +54,12 @@ public class AetherTest implements ViewEventListener
 
             UI ui = new UI();
             ui.addViewEventListener(this);
+            
+            aop = new AetherOptionsPane();
+            app = new AetherPersonaPane(hero.toString());
+            
+            aop.addViewEventListener(this);
+            app.addViewEventListener(this);
         }
     }
     
@@ -68,8 +77,7 @@ public class AetherTest implements ViewEventListener
         }
         else if(event.toString().equals("btn_options"))
         {
-            AetherOptionsPane aop = new AetherOptionsPane();
-            aop.addViewEventListener(this);
+            aop.createAndShowGUI();
         }
         else if(event.toString().equals("btn_slaves"))
         {
@@ -77,7 +85,8 @@ public class AetherTest implements ViewEventListener
         }
         else if(event.toString().equals("btn_persona"))
         {
-            JOptionPane.showMessageDialog(null, hero.toString(), "Persona", JOptionPane.PLAIN_MESSAGE);
+            //JOptionPane.showMessageDialog(null, hero.toString(), "Persona", JOptionPane.PLAIN_MESSAGE);
+            app.createAndShowGUI();
         }
         else if(event.toString().equals("btn_abilities"))
         {
@@ -99,6 +108,19 @@ public class AetherTest implements ViewEventListener
         {
             exportHeroToPDF();
         }
+        else if(event.toString().equals("btn_save_bio"))
+        {
+            updateBio();
+        }
+
+    }
+    
+    private void updateBio()
+    {
+        hero.setBio(app.getUpdatedBio());
+        app.killWindow();
+        app = new AetherPersonaPane(hero.toString());
+        app.createAndShowGUI();
     }
 
     private void saveAndExit()

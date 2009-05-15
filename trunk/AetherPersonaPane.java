@@ -32,13 +32,14 @@ import javax.swing.event.*;
 import java.awt.event.*;
 import java.awt.*;
 
-public class AetherPersonaPane extends JFrame implements ActionListener
+public class AetherPersonaPane extends JDialog implements ActionListener
 {
     private EventListenerList listenerList;
     
     private JPanel bio_controls;
+    private JPanel btn_controls;
 
-    private JButton btn_cancel;
+    private JButton btn_cancel_bio;
     private JButton btn_save_bio;
 
     private JTextArea txt_persona;
@@ -51,9 +52,10 @@ public class AetherPersonaPane extends JFrame implements ActionListener
     {
         listenerList = new EventListenerList();
 
-        bio_controls = new JPanel(new FlowLayout());
+        bio_controls = new JPanel(new BorderLayout());
+        btn_controls = new JPanel(new FlowLayout());
 
-        btn_cancel = new JButton("Cancel");
+        btn_cancel_bio = new JButton("Cancel");
         btn_save_bio = new JButton("Save Changes");
 
         txt_persona = new JTextArea(persona);
@@ -68,23 +70,37 @@ public class AetherPersonaPane extends JFrame implements ActionListener
         txt_persona.setEditable(false);
         txt_persona.setEnabled(false);
 
-        bio_controls.add(txt_edit_bio);
-        bio_controls.add(btn_save_bio);
-        bio_controls.add(btn_cancel);
+        btn_controls.add(btn_save_bio);
+        btn_controls.add(btn_cancel_bio);
 
-        add(txt_persona,BorderLayout.CENTER);
-        add(bio_controls, BorderLayout.SOUTH);
+        bio_controls.add(bio_scroll_pane,BorderLayout.CENTER);
+        bio_controls.add(btn_controls,BorderLayout.SOUTH);
 
-        createAndShowGUI();
+        btn_save_bio.addActionListener(this);
+        btn_cancel_bio.addActionListener(this);
+
+        add(txt_persona);//,BorderLayout.CENTER
+        add(bio_controls);//, BorderLayout.SOUTH
+    }
+
+    public String getUpdatedBio()
+    {
+        return txt_edit_bio.getText();
+    }
+
+    public void killWindow()
+    {
+        this.dispose();
     }
 
     public void createAndShowGUI()
     {
         this.setTitle("Persona");
-        this.setLayout(new BorderLayout());
+        this.setLayout(new FlowLayout());
         this.setDefaultCloseOperation(HIDE_ON_CLOSE);
-        this.setMinimumSize(new Dimension(250, 600));
-        this.setLocation(new Point(200,80));
+        this.setMinimumSize(new Dimension(150, 750));
+        this.setMaximumSize(new Dimension(150, 750));
+        this.setLocation(new Point(200,0));
         this.pack();
         this.setVisible(true);
     }
@@ -96,7 +112,6 @@ public class AetherPersonaPane extends JFrame implements ActionListener
 
     private void fireViewEvent(Object source, String name)
     {
-
         ViewEvent event = new ViewEvent(source, name);
 
         ViewEventListener[] listeners = listenerList.getListeners(ViewEventListener.class);
@@ -109,6 +124,13 @@ public class AetherPersonaPane extends JFrame implements ActionListener
 
     public void actionPerformed(ActionEvent e)
     {
-
+        if(e.getSource() == btn_save_bio)
+        {
+            fireViewEvent(btn_save_bio,"btn_save_bio");
+        }
+        else if(e.getSource() == btn_cancel_bio)
+        {
+            killWindow();
+        }
     }
 }

@@ -31,7 +31,7 @@
 import java.io.*;
 import javax.swing.*;
 
-public class AetherTest implements ViewEventListener
+public class AetherTest implements ViewEventListener,MoveEventListener
 {
     
     private FileOutputStream file;
@@ -69,6 +69,25 @@ public class AetherTest implements ViewEventListener
 
     }
 
+    public void moveEventOccurred(MoveEvent event)
+    {
+        if(event.toString().equals("North"))
+        {
+
+        }
+        else if(event.toString().equals("South"))
+        {
+
+        }
+        else if(event.toString().equals("East"))
+        {
+
+        }
+        else if(event.toString().equals("West"))
+        {
+            
+        }
+    }
     public void viewEventOccurred(ViewEvent event)
     {
         if(event.toString().equals("btn_camp"))

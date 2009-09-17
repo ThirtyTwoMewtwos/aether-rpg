@@ -37,7 +37,8 @@ import javax.swing.event.*;
 
 public class UI extends JFrame implements ActionListener, KeyListener
 {
-    private EventListenerList listenerList;
+    private EventListenerList viewListenerList;
+    private EventListenerList moveListenerList;
 
     private JPanel control_panel;
     private JPanel view_panel;
@@ -68,15 +69,15 @@ public class UI extends JFrame implements ActionListener, KeyListener
     public UI()
     {
         super("CODE NAME: SAPHIRE");
-
-        
+       
         initGUIComponents();
         createAndShowGUI();
     }
 
     private void initGUIComponents()
     {
-        listenerList = new EventListenerList();
+        viewListenerList = new EventListenerList();
+        moveListenerList = new EventListenerList();
 
         control_panel = new JPanel(new GridLayout(4,2));
         general_text_panel = new JPanel(new FlowLayout());
@@ -84,6 +85,8 @@ public class UI extends JFrame implements ActionListener, KeyListener
         debug_text_panel = new JPanel(new FlowLayout());
         view_panel = new JPanel(new FlowLayout());
         bottom_panel = new JPanel(new FlowLayout());
+
+        view_panel.setBorder(BorderFactory.createRaisedBevelBorder());
 
         general_chat_box = new JTextArea(5,25);
         general_chat_box.setOpaque(false);
@@ -155,12 +158,19 @@ public class UI extends JFrame implements ActionListener, KeyListener
         tabbed_pane.addTab("Tells", null, private_text_panel, "Private Tells");
         tabbed_pane.addTab("Debug", null, debug_text_panel, "Debug Messages");
 
+        view_panel.add(new VirtualWorld_2d(new Point(20,20)));
+
+
         bottom_panel.add(control_panel);
         bottom_panel.add(tabbed_pane);
 
         setLayout(new BorderLayout());
         add(view_panel,BorderLayout.CENTER);
         add(bottom_panel,BorderLayout.SOUTH);
+
+        view_panel.addKeyListener(this);
+        view_panel.setFocusable(true);
+        view_panel.requestFocus();
 
     }
 
@@ -179,16 +189,33 @@ public class UI extends JFrame implements ActionListener, KeyListener
         debug_chat_box.append(msg + "\n");
     }
 
+    public void addMoveEventListener(MoveEventListener listener)
+    {
+        moveListenerList.add(MoveEventListener.class, listener);
+    }
+
+    private void fireMoveEvent(Object source, String name)
+    {
+        MoveEvent event = new MoveEvent(source, name);
+
+        MoveEventListener[] listeners = moveListenerList.getListeners(MoveEventListener.class);
+
+        for (int i = 0; i < listeners.length; i++)
+        {
+            listeners[i].moveEventOccurred(event);
+        }
+    }
+
     public void addViewEventListener(ViewEventListener listener)
     {
-        listenerList.add(ViewEventListener.class, listener);
+        viewListenerList.add(ViewEventListener.class, listener);
     }
 
     private void fireViewEvent(Object source, String name)
     {
         ViewEvent event = new ViewEvent(source, name);
 
-        ViewEventListener[] listeners = listenerList.getListeners(ViewEventListener.class);
+        ViewEventListener[] listeners = viewListenerList.getListeners(ViewEventListener.class);
 
         for (int i = 0; i < listeners.length; i++)
         {
@@ -222,6 +249,8 @@ public class UI extends JFrame implements ActionListener, KeyListener
         else if(e.getSource() == btn_camp)
             fireViewEvent(btn_camp,"btn_camp");
 
+        view_panel.requestFocus();
+
     }
 
     public void keyReleased(KeyEvent e)
@@ -234,7 +263,22 @@ public class UI extends JFrame implements ActionListener, KeyListener
     }
     public void keyTyped(KeyEvent e)
     {
-
+        if(e.getKeyChar() == 'w'|| e.getKeyChar() == 'W')
+        {
+            System.out.println("Testing W key");
+        }
+        else if(e.getKeyChar() == 'a'|| e.getKeyChar() == 'A')
+        {
+            System.out.println("Testing A key");
+        }
+        else if(e.getKeyChar() == 's'|| e.getKeyChar() == 'S')
+        {
+            System.out.println("Testing S key");
+        }
+        else if(e.getKeyChar() == 'd'|| e.getKeyChar() == 'D')
+        {
+            System.out.println("Testing D key");
+        }
     }
 
     public void createAndShowGUI()

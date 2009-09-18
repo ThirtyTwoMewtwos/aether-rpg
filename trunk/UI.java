@@ -64,14 +64,16 @@ public class UI extends JFrame implements ActionListener, KeyListener
     private JButton btn_camp;
     private JButton btn_options;
     private JButton btn_save_exit;
-    
 
-    public UI()
+    private Virtual_World virtualWorld;
+
+    public UI(Virtual_World vw)
     {
         super("CODE NAME: SAPHIRE");
-       
+        setVirtualWorld(vw);
         initGUIComponents();
         createAndShowGUI();
+        
     }
 
     private void initGUIComponents()
@@ -158,8 +160,7 @@ public class UI extends JFrame implements ActionListener, KeyListener
         tabbed_pane.addTab("Tells", null, private_text_panel, "Private Tells");
         tabbed_pane.addTab("Debug", null, debug_text_panel, "Debug Messages");
 
-        view_panel.add(new VirtualWorld_2d(new Point(20,20)));
-
+        view_panel.add(getVirtualWorld());
 
         bottom_panel.add(control_panel);
         bottom_panel.add(tabbed_pane);
@@ -221,6 +222,15 @@ public class UI extends JFrame implements ActionListener, KeyListener
         {
             listeners[i].viewEventOccurred(event);
         }
+    }
+
+    public void setVirtualWorld(Virtual_World vw)
+    {
+        virtualWorld = vw;
+    }
+    public Virtual_World getVirtualWorld()
+    {
+        return virtualWorld;
     }
 
     public void actionPerformed(ActionEvent e)

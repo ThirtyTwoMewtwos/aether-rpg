@@ -28,40 +28,78 @@
  *
  */
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.event.*;
 
-public class VirtualWorld_2d extends JPanel
+public class VirtualWorld_2d extends Virtual_World
 {
-    private final Color AGRO_ENEMY_COLOR = Color.red;
-    private final Color NON_AGRO_ENEMY_COLOR = Color.yellow;
-    private final Color PLAYER_COLOR = Color.blue;
-    private final Color NPC_COLOR = Color.white;
-    private final Color GUILD_COLOR = Color.green;
-    private final Color GROUP_COLOR = Color.cyan;
-    private final Color OBJECT_COLOR = Color.lightGray;
+    private final int pHEIGHT = 10;
+    private final int pWIDTH = 20;
+    private final int textHoverHeight = 4;
 
     private Point heroLocation;
+    private EventListenerList requestListenerList;
+    private String heroName;
 
     @Override
     public void paint(Graphics g)
     {
         super.paint(g);
-        g.setColor(Color.black);
-        g.draw3DRect(heroLocation.x, heroLocation.y, 20, 35,true);
+
+        /*
+         *  Draw player
+         */
+        g.setColor(PLAYER_COLOR);
+        g.drawString(getHeroName(), getHeroLocation().x - (pWIDTH / 2), getHeroLocation().y - textHoverHeight);
+        g.draw3DRect(getHeroLocation().x, getHeroLocation().y, pHEIGHT, pWIDTH, true);
+
     }
 
-    public VirtualWorld_2d(Point heroLoc)
+    public VirtualWorld_2d(Point heroLoc, String hName)
     {
+        requestListenerList = new EventListenerList();
+        setHeroName(hName);
+        setHeroLocation(heroLoc);
+        
+        
         this.setLayout(new FlowLayout());
         this.setPreferredSize(new Dimension(780,465));
         this.setSize(this.getPreferredSize());
         this.setVisible(true);
-        setHeroLocation(heroLoc);
+        
         repaint();
+    }
+    public void setHeroName(String hName)
+    {
+        heroName = hName;
+    }
+    public String getHeroName()
+    {
+        return heroName;
     }
     public void setHeroLocation(Point heroLoc)
     {
         heroLocation = heroLoc;
+    }
+    public Point getHeroLocation()
+    {
+        return heroLocation;
+    }
+
+    public void addRequestEventListener(RequestEventListener listener)
+    {
+        requestListenerList.add(RequestEventListener.class, listener);
+    }
+
+    private void fireRequestEvent(Object source, String name)
+    {
+        RequestEvent event = new RequestEvent(source, name);
+
+        RequestEventListener[] listeners = requestListenerList.getListeners(RequestEventListener.class);
+
+        for (int i = 0; i < listeners.length; i++)
+        {
+            listeners[i].requestEventOccurred(event);
+        }
     }
 }

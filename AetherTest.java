@@ -40,19 +40,26 @@ public class AetherTest implements ViewEventListener,MoveEventListener
     private HeroCreationUI hc;
     private Hero hero;
     
+    private UI ui;
+    
     private AetherPersonaPane app;
     private AetherOptionsPane aop;
     
+    private VirtualWorld_2d virtualWorld;
+    
     public AetherTest()
     {
+        
         hc = new HeroCreationUI();
         hero = hc.getCreatedHero();
         if(hc.heroCreated())
         {
             setupOutputTools();
             saveHero();
+            
+            virtualWorld = new VirtualWorld_2d(hero.getLocation(),hero.getName());
 
-            UI ui = new UI();
+            ui = new UI(virtualWorld);
             ui.addViewEventListener(this);
             
             aop = new AetherOptionsPane();
@@ -68,7 +75,10 @@ public class AetherTest implements ViewEventListener,MoveEventListener
         new AetherTest();
 
     }
+    public void requestEventOccurred(RequestEvent event)
+    {
 
+    }
     public void moveEventOccurred(MoveEvent event)
     {
         if(event.toString().equals("North"))
@@ -90,6 +100,10 @@ public class AetherTest implements ViewEventListener,MoveEventListener
     }
     public void viewEventOccurred(ViewEvent event)
     {
+        if(event.toString().equals("view_panel"))
+        {
+            
+        }
         if(event.toString().equals("btn_camp"))
         {
 

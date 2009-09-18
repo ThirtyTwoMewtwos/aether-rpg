@@ -123,6 +123,7 @@ public class Hero implements Serializable
     {
         level = 1;
         setXPToLevel(100);
+        setLocation(new Point(20,20));
 
 
         setStrength(10);

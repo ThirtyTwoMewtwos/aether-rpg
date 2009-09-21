@@ -7,9 +7,8 @@ Here is a listing of items to complete in a prioritized listing.  Thus, stories 
 
 This process can change as time goes on.
 
-= Backlog =
+== Backlog ==
 
-* Paint world map
-* Paint character (PC)
-* Keys can be used to navigate the character
-
+  * Paint world map
+  * Paint character (PC)
+  * Keys can be used to navigate the character

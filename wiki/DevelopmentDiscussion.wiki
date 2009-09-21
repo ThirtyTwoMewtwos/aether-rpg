@@ -1,0 +1,8 @@
+#summary Used to maintain an ongoing and open dialog for development
+
+== What is this for? ==
+
+Here we can keep an ongoing dialog for development, back stories, and planning.
+
+
+== Stories ==

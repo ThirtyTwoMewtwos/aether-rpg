@@ -1,0 +1,16 @@
+#summary Using Netbeans, and getting started with development (or viewing the source)
+#labels Code,Checkout,Started
+
+= Code Checkout =
+
+Perform a checkout of the code into a folder named of your choice.  Open up netbeans and perform an Open Project (Ctrl-Shift-O).  Navigate to the directory which you've checked the code out to, and you should now be able to work from there.
+
+  # Checkout the code
+  # Start up NetBeans
+  # Navigate to _Open Project_ in the _File_ menu or perform *Ctrl-Shift O*
+  # From the *Open Project* dialog locate the directory which you checked-out the code
+  # Press the _Open Project_ button
+
+Done!
+
+

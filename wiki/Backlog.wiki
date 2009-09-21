@@ -1,5 +1,5 @@
 #labels backlog,stories,features
-# Story backlog - Listing of items to complete
+#Summary Ongoing listing of stories to complete
 
 = Introduction =
 

@@ -35,7 +35,6 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 
-
 public class HeroCreationUI extends JDialog implements ActionListener, ItemListener
 {
     private final static String[] SEX_CHOICES = { "Male","Female" };
@@ -44,17 +43,11 @@ public class HeroCreationUI extends JDialog implements ActionListener, ItemListe
                                              "Dark Guard (tank)",
                                              "Necromancer (magic dps)",
                                              "Berserker (melee dps)" };
+    
     private final static String[] GOOD_CLASS_CHOICES = { "Sage (healer)",
                                                          "Holy Knight (tank)",
                                                          "Acolyte (magic dps)",
                                                          "Crusader (melee dps)" };
-
-    private JPanel windowPane;
-    private JPanel imagePane;
-    private JPanel inputPane;
-    private JPanel bottomPane;
-
-    private ImageIcon icon;
 
     private JButton create;
 
@@ -75,64 +68,22 @@ public class HeroCreationUI extends JDialog implements ActionListener, ItemListe
     private JScrollPane scrollPane;
      
     private Hero hero;
-
-
     
     private boolean created;
     
     public HeroCreationUI()
     {
-        created = false;
-        
-        windowPane = new JPanel(new GridLayout(3,1));
-        imagePane = new JPanel();
-        inputPane = new JPanel(new GridLayout(5,2));
-        bottomPane = new JPanel(new BorderLayout());
-        
-        icon = new ImageIcon("images/logo.jpg");
-        create = new JButton("Create");
-        nameLabel = new JLabel("Hero Name:");
-        sexLabel = new JLabel("Sex:");
-        raceLabel = new JLabel("Race:");
-        classLabel = new JLabel("Class:");
-        bioLabel = new JLabel("Biography:");
+        JPanel imagePane = createImagePanel();
+        JPanel inputPane = createInputPanel();
+        JPanel bottomPane = createBottomPanel();
 
-        nameField = new JTextField(20);
-
-        sexDropDown = new JComboBox(SEX_CHOICES);
-        raceDropDown = new JComboBox(RACE_CHOICES);
-        classDropDown = new JComboBox(EVIL_CLASS_CHOICES);
-        bioField = new JTextArea(5,20);
-        scrollPane = new JScrollPane(bioField);
-        
-        bioField.setWrapStyleWord(true);
-        bioField.setLineWrap(true);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        
-        imagePane.add(new JLabel(icon));
-        
-        inputPane.add(nameLabel);
-        inputPane.add(nameField);
-        inputPane.add(sexLabel);
-        inputPane.add(sexDropDown);
-        inputPane.add(raceLabel);
-        inputPane.add(raceDropDown);
-        inputPane.add(classLabel);
-        inputPane.add(classDropDown);
-
-        bottomPane.add(bioLabel, BorderLayout.WEST);
-        bottomPane.add(scrollPane, BorderLayout.EAST);
-        bottomPane.add(create, BorderLayout.SOUTH);
-        
-        windowPane.add(imagePane);
-        windowPane.add(inputPane);
-        windowPane.add(bottomPane);
+        this.setLayout(new GridLayout(3, 1));
+        this.add(imagePane);
+        this.add(inputPane);
+        this.add(bottomPane);
         
         create.addActionListener(this);
-        
         raceDropDown.addItemListener(this);
-        
-        add(windowPane);
         
         setTitle("Hero Creation");
         setModal(true);
@@ -144,6 +95,7 @@ public class HeroCreationUI extends JDialog implements ActionListener, ItemListe
         pack();
         setVisible(true);
     }
+
     public void itemStateChanged(ItemEvent e)
     {
         String race = "" + raceDropDown.getSelectedItem();
@@ -160,6 +112,7 @@ public class HeroCreationUI extends JDialog implements ActionListener, ItemListe
                 classDropDown.addItem(GOOD_CLASS_CHOICES[i]);
         }
     }
+
     public void actionPerformed(ActionEvent e)
     {
         if(e.getSource() == create)
@@ -186,8 +139,8 @@ public class HeroCreationUI extends JDialog implements ActionListener, ItemListe
                 JOptionPane.showMessageDialog(null,"Name can not contain spaces or characters outside of A-Z. Name must be at least 3 characters long and less than 12","Invalid Name",JOptionPane.ERROR_MESSAGE);
         }
             setVisible(false);
-        
     }
+    
     public boolean heroCreated()
     {
         return created;
@@ -197,4 +150,54 @@ public class HeroCreationUI extends JDialog implements ActionListener, ItemListe
         return hero;
     }
 
+    private JPanel createBottomPanel() {
+        JPanel bottomPane = new JPanel(new BorderLayout());
+        bottomPane.add(bioLabel, BorderLayout.WEST);
+        bottomPane.add(scrollPane, BorderLayout.EAST);
+        bottomPane.add(create, BorderLayout.SOUTH);
+        return bottomPane;
+    }
+
+    private JPanel createImagePanel() {
+        JPanel imagePane = new JPanel();
+        ImageIcon icon = new ImageIcon("images/logo.jpg");
+        imagePane.add(new JLabel(icon));
+        return imagePane;
+    }
+
+    private JPanel createInputPanel() {
+        JPanel inputPane = new JPanel(new GridLayout(5, 2));
+        nameLabel = new JLabel("Hero Name:");
+        sexLabel = new JLabel("Sex:");
+        raceLabel = new JLabel("Race:");
+        classLabel = new JLabel("Class:");
+        bioLabel = new JLabel("Biography:");
+        create = new JButton("Create");
+        nameField = new JTextField(20);
+        sexDropDown = new JComboBox(SEX_CHOICES);
+        raceDropDown = new JComboBox(RACE_CHOICES);
+        classDropDown = new JComboBox(EVIL_CLASS_CHOICES);
+        bioField = new JTextArea(5, 20);
+        scrollPane = new JScrollPane(bioField);
+        bioField.setWrapStyleWord(true);
+        bioField.setLineWrap(true);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        inputPane.add(nameLabel);
+        inputPane.add(nameField);
+        inputPane.add(sexLabel);
+        inputPane.add(sexDropDown);
+        inputPane.add(raceLabel);
+        inputPane.add(raceDropDown);
+        inputPane.add(classLabel);
+        inputPane.add(classDropDown);
+        return inputPane;
+    }
+
+    private JPanel createWindowPanel(JPanel imagePane, JPanel inputPane, JPanel bottomPane) {
+        JPanel windowPane = new JPanel(new GridLayout(3, 1));
+        windowPane.add(imagePane);
+        windowPane.add(inputPane);
+        windowPane.add(bottomPane);
+        return windowPane;
+    }
 }

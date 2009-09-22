@@ -38,6 +38,8 @@ import com.lowagie.text.pdf.PdfWriter;
 
 public class Hero implements Serializable
 {
+    public final static int MOVE_MODIFIER = 2;
+
     private final int ATTRIBUTE_MODIFER = 2;
     private final double EXPIERENCE_MODIFER = 0.05;
     private final double ATTACK_MODIFER = 0.01;

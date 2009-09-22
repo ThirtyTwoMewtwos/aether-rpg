@@ -53,7 +53,6 @@ public class Start implements ViewEventListener,MoveEventListener
     
     public Start()
     {
-        
         hc = new HeroCreationUI();
         hero = hc.getCreatedHero();
         if(hc.heroCreated())
@@ -150,7 +149,6 @@ public class Start implements ViewEventListener,MoveEventListener
         {
             updateBio();
         }
-
     }
     
     private void updateBio()

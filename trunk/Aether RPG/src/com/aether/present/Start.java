@@ -33,6 +33,7 @@ package com.aether.present;
 import com.aether.model.Hero;
 import java.io.*;
 import javax.swing.*;
+import java.awt.Point;
 
 public class Start implements ViewEventListener,MoveEventListener
 {
@@ -45,8 +46,8 @@ public class Start implements ViewEventListener,MoveEventListener
     
     private UI ui;
     
-    private PersonaPane app;
-    private OptionsPane aop;
+    private PersonaPane persona_pane;
+    private OptionsPane options_pane;
     
     private VirtualWorld virtualWorld;
     
@@ -65,11 +66,11 @@ public class Start implements ViewEventListener,MoveEventListener
             ui = new UI(virtualWorld);
             ui.addViewEventListener(this);
             
-            aop = new OptionsPane();
-            app = new PersonaPane(hero.toString());
+            options_pane = new OptionsPane();
+            persona_pane = new PersonaPane(hero.toString());
             
-            aop.addViewEventListener(this);
-            app.addViewEventListener(this);
+            options_pane.addViewEventListener(this);
+            persona_pane.addViewEventListener(this);
         }
     }
     
@@ -86,20 +87,22 @@ public class Start implements ViewEventListener,MoveEventListener
     {
         if(event.toString().equals("North"))
         {
-
+            hero.setLocation(new Point(hero.getLocation().x,hero.getLocation().y - Hero.MOVE_MODIFIER));
         }
         else if(event.toString().equals("South"))
         {
-
+            hero.setLocation(new Point(hero.getLocation().x,hero.getLocation().y + Hero.MOVE_MODIFIER));
         }
         else if(event.toString().equals("East"))
         {
-
+            hero.setLocation(new Point(hero.getLocation().x + Hero.MOVE_MODIFIER,hero.getLocation().y));
         }
         else if(event.toString().equals("West"))
         {
-            
+            hero.setLocation(new Point(hero.getLocation().x - Hero.MOVE_MODIFIER,hero.getLocation().y));
         }
+
+        ui.repaintVirtualWorld(hero.getLocation());
     }
     public void viewEventOccurred(ViewEvent event)
     {
@@ -113,7 +116,7 @@ public class Start implements ViewEventListener,MoveEventListener
         }
         else if(event.toString().equals("btn_options"))
         {
-            aop.createAndShowGUI();
+            options_pane.createAndShowGUI();
         }
         else if(event.toString().equals("btn_slaves"))
         {
@@ -121,8 +124,7 @@ public class Start implements ViewEventListener,MoveEventListener
         }
         else if(event.toString().equals("btn_persona"))
         {
-            //JOptionPane.showMessageDialog(null, hero.toString(), "Persona", JOptionPane.PLAIN_MESSAGE);
-            app.createAndShowGUI();
+            persona_pane.createAndShowGUI();
         }
         else if(event.toString().equals("btn_abilities"))
         {
@@ -153,10 +155,10 @@ public class Start implements ViewEventListener,MoveEventListener
     
     private void updateBio()
     {
-        hero.setBio(app.getUpdatedBio());
-        app.killWindow();
-        app = new PersonaPane(hero.toString());
-        app.createAndShowGUI();
+        hero.setBio(persona_pane.getUpdatedBio());
+        persona_pane.killWindow();
+        persona_pane = new PersonaPane(hero.toString());
+        persona_pane.createAndShowGUI();
     }
 
     private void saveAndExit()

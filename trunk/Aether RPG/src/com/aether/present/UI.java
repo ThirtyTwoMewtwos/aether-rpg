@@ -226,6 +226,11 @@ public class UI extends JFrame implements ActionListener, KeyListener
         }
     }
 
+    public void repaintVirtualWorld(Point location)
+    {
+        virtualWorld.setHeroLocation(location);
+        virtualWorld.repaint();
+    }
     public void setVirtualWorld(VirtualWorld vw)
     {
         virtualWorld = vw;
@@ -277,19 +282,19 @@ public class UI extends JFrame implements ActionListener, KeyListener
     {
         if(e.getKeyChar() == 'w'|| e.getKeyChar() == 'W')
         {
-            System.out.println("Testing W key");
+            fireMoveEvent("w","North");
         }
         else if(e.getKeyChar() == 'a'|| e.getKeyChar() == 'A')
         {
-            System.out.println("Testing A key");
+            fireMoveEvent("a", "West");
         }
         else if(e.getKeyChar() == 's'|| e.getKeyChar() == 'S')
         {
-            System.out.println("Testing S key");
+            fireMoveEvent("s", "South");
         }
         else if(e.getKeyChar() == 'd'|| e.getKeyChar() == 'D')
         {
-            System.out.println("Testing D key");
+            fireMoveEvent("d","East");
         }
     }
 

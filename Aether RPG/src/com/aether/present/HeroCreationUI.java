@@ -89,7 +89,7 @@ public class HeroCreationUI extends JDialog implements ActionListener, ItemListe
         inputPane = new JPanel(new GridLayout(5,2));
         bottomPane = new JPanel(new BorderLayout());
         
-        icon = new ImageIcon("logo.jpg");
+        icon = new ImageIcon("images/logo.jpg");
         create = new JButton("Create");
         nameLabel = new JLabel("Hero Name:");
         sexLabel = new JLabel("Sex:");

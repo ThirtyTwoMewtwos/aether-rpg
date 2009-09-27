@@ -1,5 +1,5 @@
 #summary Our IDE of preference for the moment.
-#labels IDE,Eclipse
+#labels IDE,Eclipse,NetBeans
 
 = Introduction =
 

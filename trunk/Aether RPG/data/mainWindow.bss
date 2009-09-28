@@ -1,0 +1,34 @@
+//this is the new stylesheet we're going to use
+// it starts and ends here
+
+button:hover {
+  text-effect: glow;
+}
+
+button {
+  background: solid #FF0000;
+  padding: 3 5;
+  font: "Dialog" bold 24;
+  color: #FFFF00;
+  text-align: center;
+}
+
+button:down {
+  color: #0000FF;
+  background: solid #FF1111;
+  padding: 4 6 2 4;
+}
+
+button:selected {
+  padding: 4 6 2 4;
+}
+
+label {
+ 	font: "Dialog" italic 30;
+	color: #FF00FF;
+	text-align: center;
+}
+
+labeltext {
+    padding: 5 5;
+}

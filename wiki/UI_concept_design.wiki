@@ -7,7 +7,7 @@
 
  * Player skill bar(s).  This is a bar containing slots to assign skills/abilities to a location in the bar.  This bar will contain 12 slots per bar.  Each bar will be given a keyboard shortcut {1,2,3,4,5,6,7,8,9,0,-,=} for the default bar and then shift + the shortcut set, lastly followed by crtl + the shortcut set. Any additional bars will have no keyboard shortcuts.  Alternatively, you can mouse click a skill in a bar to activate that skill (if the skill is applicable to be used). The mouse click is the only way to activate skills on bars more than 3 (the ones with no shortcuts).
 
- * Window Buttons.  These are clickable buttons that produce various windows to aid users.  The available buttons (explaned in the windows section in more detail) will be:  Options, Persona, Skills/Abilities, Inventory, Slaves, Map, Guild, Social, Quests.  These buttons will be toggle buttons and textured with only an icon.  These windows might have successor windows.  Each of the 9 parent windows will have a keyboard shortcut { options = esc; persona = p; skills = k; inventory = i; slaves = l (L); map = m; guild = g; social = o; quests = j;}
+ * Window Buttons.  These are clickable buttons that produce various windows to aid users.  The available buttons (explaned in the windows section in more detail) will be:  Options, Persona, Skills/Abilities, Inventory, Equipment, Map, Guild, Social, Quests.  These buttons will be toggle buttons and textured with only an icon.  These windows might have successor windows.  Each of the 9 parent windows will have a keyboard shortcut { options = esc; persona = p; skills = k; inventory = i; Equipment = c; map = m; guild = g; social = o; quests = j;}
 
  * Mini-map.  Spherical radius of player using standard colored dots to represent a top-down view of immediate surroundings.
 
@@ -24,7 +24,7 @@
 
  * Inventory: The inventory window will consist of up to multiple windows.  Each window is a graphical representation of the players bags/packs/etc.  If the player has 2 bags of items, clicking the inventory button (or shortcut) would bring up 2 windows consisting of slot-like spots depending on the number of slots the players bags have.  Each item, which is represented by an icon and tooltip for detail, is DnD capable in the inventory window(s) to allow the user to move items and organize their inventory easily.
 
- * Slaves: STUB - updated once the slave concept is finished.
+ * Equipment: The equipment window will serve as graphical representation of currently equipped or open equipment armor spots.  The window will consist of open item slots in front of a background of a warrior.  The open slots would be over the area where you would equip it. (For example, the chest slot would be over the chest of the warrior in the background.  The slots will be the same as the inventory slots of a bag, however they only accept equipment items whose requirements are met by the player trying to equip it.
 
  * Map: The map will not show any world objects (enemies, harvest nodes, NPCs, etc.) but will show players, landmarks, cities, mountains, forests, etc. The map will be displayed as the least transparent window (possibly none) and will feature a transparent grid over the map. Functions of the map will include updating the player's position on the map and scroll to ensure the player stays viewable.  The map will also display an (x,y) coordinate in the north-west corner of the map as the mouse hovers over the map.  The map can be right-clicked to save locations on. When saving locations the user may label each pin location as they choose.
 
@@ -36,4 +36,4 @@
 
 = World Object Interaction = 
 
- * STUB
+ * World objects such as Doors, Quest Objects, NPCs, Harvestable nodes, etc. will be double click or right clickable.   A right click will bring up a drop down menu (also transparent) with the actions available.  A double click will automatically take the first action available.  Each object needs to be within a certain range of the player to be able to interact with it.

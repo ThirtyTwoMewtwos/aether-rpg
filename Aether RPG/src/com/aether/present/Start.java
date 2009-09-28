@@ -37,7 +37,6 @@ import java.awt.Point;
 
 public class Start implements ViewEventListener,MoveEventListener
 {
-    
     private FileOutputStream file;
     private ObjectOutputStream output;
     

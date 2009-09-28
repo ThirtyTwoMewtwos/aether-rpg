@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.concurrent.Callable;
 
+import org.gap.jseed.ServiceStore;
+import org.gap.jseed.injection.annotation.Singleton;
+
+import com.aether.present.state.ShutdownService;
 import com.jmex.game.StandardGame;
 import com.jme.input.InputHandler;
 import com.jme.input.KeyBindingManager;
@@ -24,13 +28,14 @@ import com.jmex.bui.layout.AbsoluteLayout;
 import com.jmex.bui.util.Point;
 import com.jmex.game.state.BasicGameState;
 
+@Singleton
 public class MainWindow extends BasicGameState {
 	private BWindow mainWindow;
 	
 	private BButton startCampaign;
 	private BButton exitGame;
 
-	private final StandardGame game;
+	private final ShutdownService shutdownService;
 
 	static {
 		try {
@@ -43,9 +48,11 @@ public class MainWindow extends BasicGameState {
 		}
 	}
 	
-	public MainWindow(final StandardGame game) {
+	public MainWindow(final ShutdownService service) {
 		super("Main Window");
-		this.game = game;
+		this.shutdownService = service;
+		
+		
 		
 		defineControls();
 
@@ -83,7 +90,7 @@ public class MainWindow extends BasicGameState {
         exitGame.addListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				game.shutdown();
+				shutdownService.shutdown();
 			}
         });
         
@@ -116,7 +123,7 @@ public class MainWindow extends BasicGameState {
 		super.update(tpf);
 		
 		if (KeyBindingManager.getKeyBindingManager().isValidCommand("exit", true)) {
-			game.shutdown();
+			shutdownService.shutdown();
 		}
 	}
 }

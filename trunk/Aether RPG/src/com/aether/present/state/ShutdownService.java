@@ -1,17 +1,7 @@
 package com.aether.present.state;
 
-import com.jme.app.AbstractGame;
+public interface ShutdownService {
 
-public class ShutdownService {
-
-	private final AbstractGame game;
-
-	public ShutdownService(AbstractGame game) {
-		this.game = game;
-	}
-
-	public void shutdown() {
-		game.finish();
-	}
+	void shutdown();
 
 }

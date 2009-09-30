@@ -1,21 +1,30 @@
 package com.aether.present.css;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.Reader;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.jmex.bui.bss.BStyleSheetUtil;
-
 public class TestCssWriter {
 	
-	private BssWriter cssWriter;
+	private BssWriter bssWriter;
+	private String buttonDefaultBody;
 
 	@Before
 	public void setUp() {
-		cssWriter = new BssWriter();
+		bssWriter = new BssWriter();
+		
+		buttonDefaultBody = "\tfont: \"Dialog\" bold 12;\n" + 
+						"\tpadding: 3 5;\n" +
+						"\tcolor: #FF0000;\n" +
+						"\tbackground: solid #0000FF;\n" +
+						"\ttext-align: center;\n" + 
+						"\tvertical-align: center;\n" + 
+						"\ttext-effect: none;\n" + 
+						"\teffect-color: #FF0000;\n";
 	}
 	
 	//  padding: 3 5;
@@ -24,68 +33,82 @@ public class TestCssWriter {
 	//  text-effect: outline;
 	//  effect-color: #442288;
 	@Test
-	public void testDefaultButton() throws Exception {
-		BssStyleClass buttonWriter = cssWriter.button();
+	public void testButton() throws Exception {
+		BssStyleClass buttonWriter = bssWriter.button();
 		BssWriter writer = buttonWriter.end();
 		
-		assertEquals(cssWriter, writer);
+		assertEquals(bssWriter, writer);
+		
 		compareReaders(
 				"button {\n" +
-				"\tfont: Dialog bold 12;\n" + 
-				"\tpadding: 3 5;\n" +
-				"\tcolor: #FF0000;\n" +
-				"\tbackground: solid #0000FF;\n" +
-				"\ttext-align: center;\n" + 
-				"\tvertical-align: center;\n" + 
-				"\ttext-effect: none;\n" + 
+				buttonDefaultBody + 
 				"}", writer.asReader());
 	}
 	
 	@Test
-	public void testButtonWithValues() throws Exception {
-		BssStyleClass buttonWriter = cssWriter.button();
-		
-		buttonWriter.setColor(BssColor.RED);
-		buttonWriter.setBackground(BssColor.GREEN);
-		buttonWriter.setTextAlign(BssTextAlign.LEFT);
-		buttonWriter.setVerticalAlign(BssVerticalAlign.BOTTOM);
-		buttonWriter.setFont("Helvetica", BssFontStyle.PLAIN, 14);
-		buttonWriter.setTextEffect(BssTextEffect.OUTLINE);
-		buttonWriter.setPadding(5);
+	public void testButtonHover() throws Exception {
+		bssWriter.buttonHover();
 		
 		compareReaders(
-				"button {\n" +
-				"\tfont: Helvetica plain 14;\n" + 
-				"\tpadding: 5;\n" +
-				"\tcolor: #FF0000;\n" +
-				"\tbackground: solid #00FF00;\n" +
-				"\ttext-align: left;\n" + 
-				"\tvertical-align: bottom;\n" +
-				"\ttext-effect: outline;\n" + 
-				"}", cssWriter.asReader());
+				"button:hover {\n" +
+				buttonDefaultBody + 
+				"}", bssWriter.asReader());
 	}
 	
 	@Test
-	public void testDefaultLabel() throws Exception {
-		BssStyleClass labelWriter = cssWriter.label();
+	public void testButtonDown() throws Exception {
+		bssWriter.buttonDown();
+		
+		compareReaders(
+				"button:down {\n" +
+				buttonDefaultBody + 
+				"}", bssWriter.asReader());
+	}
+	
+	@Test
+	public void testButtonSelected() throws Exception {
+		bssWriter.buttonSelected();
+		
+		compareReaders(
+				"button:selected {\n" +
+				buttonDefaultBody + 
+				"}", bssWriter.asReader());
+	}
+	
+	@Test
+	public void testButtonDisabled() throws Exception {
+		bssWriter.buttonDisabled();
+		
+		compareReaders(
+				"button:disabled {\n" +
+				buttonDefaultBody + 
+				"}", bssWriter.asReader());
+	}
+	
+	
+	@Test
+	public void testLabel() throws Exception {
+		BssStyleClass labelWriter = bssWriter.label();
 		BssWriter writer = labelWriter.end();
 		
-		assertEquals(cssWriter, writer);
 		compareReaders(
 				"label {\n" +
-				"\tfont: Dialog bold 12;\n" + 
-				"\tpadding: 3 5;\n" +
-				"\tcolor: #FF0000;\n" +
-				"\tbackground: blank #0000FF;\n" +
-				"\ttext-align: center;\n" + 
-				"\tvertical-align: center;\n" + 
-				"\ttext-effect: none;\n" + 
+				"\tfont: \"Dialog\" bold 12;\n" + 
+				  "\tpadding: 3 5;\n" +
+				  "\tcolor: #FF0000;\n" +
+				  "\tbackground: blank #0000FF;\n" +
+				  "\ttext-align: center;\n" + 
+				  "\tvertical-align: center;\n" + 
+				  "\ttext-effect: none;\n" + 
+				  "\teffect-color: #FF0000;\n" +		
 				"}", writer.asReader());
 	}
 	
-	private void compareReaders(String expected, Reader actual) throws Exception {
+	private void compareReaders(String expected, Reader reader) throws Exception {
+		StringBuffer actual = new StringBuffer();
 		for (int i = 0; i < expected.length(); i++) {
-			assertEquals(expected.charAt(i), (char)actual.read());
+			actual.append((char)reader.read());
 		}
+		assertEquals(expected, actual.toString());
 	}
 }

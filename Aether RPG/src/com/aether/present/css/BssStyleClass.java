@@ -11,6 +11,7 @@ public class BssStyleClass {
 	private static final int LEFT = 3;
 
 	private final BssWriter cssWriter;
+	private final String name;
 
 	private Integer[] padding = {3, 5, null, null};
 	private BssColor color = BssColor.RED;
@@ -20,7 +21,7 @@ public class BssStyleClass {
 	private BssVerticalAlign verticalAlign = BssVerticalAlign.CENTER;
 	private BssTextEffect textEffect = BssTextEffect.NONE;
 	private FontProperty font = new FontProperty();
-	private final String name;
+	private BssColor effectColor = BssColor.RED;
 	
 	/*package*/ BssStyleClass(String name, BssWriter cssWriter) {
 		this.name = name;
@@ -63,6 +64,33 @@ public class BssStyleClass {
 		font.size = size;
 	}
 	
+	public void setPadding(int allSides) {
+		padding[TOP] = allSides;
+		padding[RIGHT] = padding[BOTTOM] = padding[LEFT] = null;
+	}
+
+	public void setPadding(int topAndBottom, int leftAndRight) {
+		padding[TOP] = topAndBottom;
+		padding[RIGHT] = leftAndRight;
+		padding[BOTTOM] = padding[LEFT] = null;
+	}
+	
+	public void setPadding(int top, int right, int bottom, int left) {
+		padding[TOP] = top;
+		padding[RIGHT] = right;
+		padding[BOTTOM] = bottom;
+		padding[LEFT] = left;
+	}
+
+	public void clearBackground() {
+		backgroundStyle = "blank";
+	}
+
+	public void setEffectColor(BssColor newEffectColor) {
+		this.effectColor  = newEffectColor;
+		
+	}
+	
 	public String writeBss() {
 		return name + " {\n" + 
 				writeFont() + 
@@ -72,12 +100,12 @@ public class BssStyleClass {
 			   	writeAction("text-align", textAlign) + 
 			   	writeAction("vertical-align", verticalAlign) +
 			   	writeAction("text-effect", textEffect) +
+			   	writeAction("effect-color", effectColor) +
 			   "}";
 	}
 
-
 	private String writeFont() {
-		return String.format("\tfont: %s %s %s;\n", font.family, font.style, font.size);
+		return String.format("\tfont: \"%s\" %s %s;\n", font.family, font.style, font.size);
 	}
 
 	private String writePaddingAction() {
@@ -103,27 +131,5 @@ public class BssStyleClass {
 
 	private String writeBackground() {
 		return String.format("\tbackground: %s %s;\n", backgroundStyle, backgroundColor);
-	}
-
-	public void setPadding(int allSides) {
-		padding[TOP] = allSides;
-		padding[RIGHT] = padding[BOTTOM] = padding[LEFT] = null;
-	}
-
-	public void setPadding(int topAndBottom, int leftAndRight) {
-		padding[TOP] = topAndBottom;
-		padding[RIGHT] = leftAndRight;
-		padding[BOTTOM] = padding[LEFT] = null;
-	}
-	
-	public void setPadding(int top, int right, int bottom, int left) {
-		padding[TOP] = top;
-		padding[RIGHT] = right;
-		padding[BOTTOM] = bottom;
-		padding[LEFT] = left;
-	}
-
-	public void clearBackground() {
-		backgroundStyle = "blank";
 	}
 }

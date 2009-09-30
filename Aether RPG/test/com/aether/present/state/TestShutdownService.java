@@ -14,7 +14,7 @@ public class TestShutdownService {
 	@Test
 	public void testGameShutdownIsCalled() throws Exception {
 		DummyGame standardGame = new DummyGame();
-		ShutdownService shutdownService = new ShutdownService(standardGame);
+		FinishGameService shutdownService = new FinishGameService(standardGame);
 		shutdownService.shutdown();
 		assertTrue("finish called: " + standardGame, standardGame.isFinished());
 	}

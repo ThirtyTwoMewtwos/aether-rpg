@@ -13,15 +13,15 @@ button {
   text-align: center;
 }
 
-button:down {
-  color: #0000FF;
-  background: solid #FF1111;
-  padding: 4 6 2 4;
-}
+//button:down {
+//  color: #0000FF;
+//  background: solid #FF1111;
+//  padding: 4 6 2 4;
+//}
 
-button:selected {
-  padding: 4 6 2 4;
-}
+//button:selected {
+//  padding: 4 6 2 4;
+//}
 
 label {
  	font: "Dialog" italic 30;

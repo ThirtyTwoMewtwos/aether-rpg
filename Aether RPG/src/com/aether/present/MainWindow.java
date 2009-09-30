@@ -1,27 +1,18 @@
 package com.aether.present;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.concurrent.Callable;
 
-import org.gap.jseed.ServiceStore;
 import org.gap.jseed.injection.annotation.Singleton;
 
 import com.aether.present.state.ShutdownService;
-import com.jmex.game.StandardGame;
-import com.jme.input.InputHandler;
 import com.jme.input.KeyBindingManager;
 import com.jme.input.KeyInput;
 import com.jme.system.DisplaySystem;
 import com.jme.util.GameTaskQueueManager;
-import com.jme.util.Timer;
 import com.jmex.bui.BButton;
 import com.jmex.bui.BLabel;
-import com.jmex.bui.BStyleSheet;
 import com.jmex.bui.BWindow;
 import com.jmex.bui.BuiSystem;
-import com.jmex.bui.PolledRootNode;
-import com.jmex.bui.bss.BStyleSheetUtil;
 import com.jmex.bui.event.ActionEvent;
 import com.jmex.bui.event.ActionListener;
 import com.jmex.bui.layout.AbsoluteLayout;
@@ -37,22 +28,9 @@ public class MainWindow extends BasicGameState {
 
 	private final ShutdownService shutdownService;
 
-	static {
-		try {
-			File file = new File("data/mainWindow.bss");
-			FileInputStream fileInputStream = new FileInputStream(file);
-			BStyleSheet styleSheet = BStyleSheetUtil.getStyleSheet(fileInputStream);
-			BuiSystem.init(new PolledRootNode(Timer.getTimer(), new InputHandler()), styleSheet);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 	public MainWindow(final ShutdownService service) {
 		super("Main Window");
 		this.shutdownService = service;
-		
-		
 		
 		defineControls();
 

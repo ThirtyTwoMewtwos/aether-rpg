@@ -15,13 +15,14 @@ public class BssStyleClass {
 
 	private Integer[] padding = {3, 5, null, null};
 	private BssColor color = BssColor.RED;
-	private BssColor backgroundColor = BssColor.BLUE;
-	private String backgroundStyle = "solid";
+	private BssBackground background = new BssBackground(BssColor.BLUE);
 	private BssTextAlign textAlign = BssTextAlign.CENTER;
 	private BssVerticalAlign verticalAlign = BssVerticalAlign.CENTER;
 	private BssTextEffect textEffect = BssTextEffect.NONE;
 	private FontProperty font = new FontProperty();
+	private int borderThickness = 0;
 	private BssColor effectColor = BssColor.RED;
+	private BssColor borderColor;
 	
 	/*package*/ BssStyleClass(String name, BssWriter cssWriter) {
 		this.name = name;
@@ -35,60 +36,86 @@ public class BssStyleClass {
 		return cssWriter;
 	}
 
-	public void setColor(BssColor newColor) {
+	public BssStyleClass setColor(BssColor newColor) {
 		color = newColor;
+		return this;
 	}
 
-	public void setBackground(BssColor newBackground) {
-		this.backgroundStyle = "solid";
-		this.backgroundColor  = newBackground;
+	public BssStyleClass setBackground(BssColor newBackground) {
+		this.background.setColor(newBackground);
+		return this;
 	}
 
-	public void setTextAlign(BssTextAlign newTextAlign) {
+	/**
+	 * 
+	 * @param fileLocation the URL used to find the image.
+	 * @param mode the mode to use.
+	 * @param insets inset values excepted are for top right bottom left.
+	 * @return
+	 */
+	public BssStyleClass setBackground(String fileLocation, BssBackgroundMode mode, int...insets) {
+		this.background.setImage(fileLocation, mode, insets);
+		return this;
+	}
+
+	public BssStyleClass setTextAlign(BssTextAlign newTextAlign) {
 		textAlign = newTextAlign;
+		return this;
 	}
 	
-	public void setVerticalAlign(BssVerticalAlign newVerticalAlign) {
+	public BssStyleClass setVerticalAlign(BssVerticalAlign newVerticalAlign) {
 		verticalAlign = newVerticalAlign;
+		return this;
 	}
 
-	public void setTextEffect(BssTextEffect newTextEffect) {
+	public BssStyleClass setTextEffect(BssTextEffect newTextEffect) {
 		textEffect = newTextEffect;
+		return this;
 	}
 	
-	public void setFont(String family, BssFontStyle style, int size) {
+	public BssStyleClass setFont(String family, BssFontStyle style, int size) {
 		Contract.argumentNotNull(family, "Family font must be specified");
 		Contract.argumentNotNull(style, "Style font must be specified");
 		font.family = family;
 		font.style = style.toString();
 		font.size = size;
+		return this;
 	}
 	
-	public void setPadding(int allSides) {
+	public BssStyleClass setPadding(int allSides) {
 		padding[TOP] = allSides;
 		padding[RIGHT] = padding[BOTTOM] = padding[LEFT] = null;
+		return this;
 	}
 
-	public void setPadding(int topAndBottom, int leftAndRight) {
+	public BssStyleClass setPadding(int topAndBottom, int leftAndRight) {
 		padding[TOP] = topAndBottom;
 		padding[RIGHT] = leftAndRight;
 		padding[BOTTOM] = padding[LEFT] = null;
+		return this;
 	}
 	
-	public void setPadding(int top, int right, int bottom, int left) {
+	public BssStyleClass setPadding(int top, int right, int bottom, int left) {
 		padding[TOP] = top;
 		padding[RIGHT] = right;
 		padding[BOTTOM] = bottom;
 		padding[LEFT] = left;
+		return this;
 	}
 
-	public void clearBackground() {
-		backgroundStyle = "blank";
+	public void setBorder(int thickness, BssColor color) {
+		borderThickness = thickness;
+		borderColor = color;
 	}
 
-	public void setEffectColor(BssColor newEffectColor) {
+	public BssStyleClass clearBackground() {
+		background.clearBackground();
+		return this;
+	}
+
+	public BssStyleClass setEffectColor(BssColor newEffectColor) {
 		this.effectColor  = newEffectColor;
-		
+		return this;		
 	}
 	
 	public String writeBss() {
@@ -96,13 +123,15 @@ public class BssStyleClass {
 				writeFont() + 
 				writePaddingAction() +
 			   	writeAction("color", color) +
-			   	writeBackground() + 
+			   	background.writeBss() + 
 			   	writeAction("text-align", textAlign) + 
 			   	writeAction("vertical-align", verticalAlign) +
 			   	writeAction("text-effect", textEffect) +
 			   	writeAction("effect-color", effectColor) +
+			   	writeBorderAction() + 
 			   "}";
 	}
+
 
 	private String writeFont() {
 		return String.format("\tfont: \"%s\" %s %s;\n", font.family, font.style, font.size);
@@ -127,8 +156,12 @@ public class BssStyleClass {
 		}
 		return String.format("\t%s: %s;\n", name, value);
 	}
-
-	private String writeBackground() {
-		return String.format("\tbackground: %s %s;\n", backgroundStyle, backgroundColor);
+	
+	private String writeBorderAction() {
+		if (borderThickness == 0) {
+			return "";
+		}
+		return String.format("\tborder: %s solid %s;\n", borderThickness, borderColor);
 	}
+
 }

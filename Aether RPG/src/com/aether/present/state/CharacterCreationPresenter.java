@@ -11,6 +11,7 @@ public class CharacterCreationPresenter implements ActiveState {
     private Race race;
     private Classification classification;
     public static final String MAIN_MENU_TRANSITION = "back.main.menu";
+    public static final String GAME_WINDOW_TRANSITION = "game.window";
 
     public CharacterCreationPresenter(CharacterCreationView view, StateTransition state) {
         this.view = view;
@@ -38,7 +39,15 @@ public class CharacterCreationPresenter implements ActiveState {
 
     public void setRace(Race newRace) {
         race = newRace;
-        view.setClasses(Classification.getAvailableFor(newRace));
+        
+        if (race == null) {
+        	view.clearClassifications();
+        } else {
+        	view.setClasses(Classification.getAvailableFor(newRace));
+        }
+        
+        classification = null;
+        
         evaluateCharacter();
     }
 
@@ -60,4 +69,8 @@ public class CharacterCreationPresenter implements ActiveState {
     public void exit() {
         view.deactivate();
     }
+
+	public void backToMainMenu() {
+		state.transition(this, MAIN_MENU_TRANSITION);
+	}
 }

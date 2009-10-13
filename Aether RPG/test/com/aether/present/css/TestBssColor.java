@@ -12,7 +12,7 @@ public class TestBssColor {
 	@Test
 	public void testDefaultColors() throws Exception {
 		assertEquals("#FF0000", BssColor.RED.toString());
-		assertEquals("#00FF00", BssColor.GREEN.toString());
+		assertEquals("#008000", BssColor.GREEN.toString());
 		assertEquals("#0000FF", BssColor.BLUE.toString());
 	}
 	

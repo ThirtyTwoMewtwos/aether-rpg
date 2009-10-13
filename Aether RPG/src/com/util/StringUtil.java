@@ -1,4 +1,4 @@
-package com.util;/*
+/*
  * Copyright (c) 2008, Tyler Hoersch
  * All rights reserved.
  *
@@ -25,9 +25,23 @@ package com.util;/*
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
+package com.util;
+
+import java.io.IOException;
+import java.io.Reader;
 
 public class StringUtil {
     public static boolean isEmptyOrNull(String s) {
         return "".equals(s) || s == null;
+    }
+    
+    public static String toString(Reader reader) throws IOException {
+    	StringBuffer actual = new StringBuffer();
+    	int value = reader.read();
+		while (value != -1) {
+			actual.append((char)value);
+			value = reader.read();
+		}
+		return actual.toString();
     }
 }

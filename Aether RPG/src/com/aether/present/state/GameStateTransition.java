@@ -1,16 +1,19 @@
 package com.aether.present.state;
 
+import org.gap.jseed.injection.annotation.Singleton;
+
 import java.util.Hashtable;
 import java.util.Map;
 
-public class GameStateTransitioner implements StateTransitioner {
+@Singleton
+public class GameStateTransition implements StateTransition {
 	private Map<ActiveState, Map<Object, ActiveState>> transitions = new Hashtable<ActiveState, Map<Object, ActiveState>>();
 	private ActiveState currentState;
 	
 	@Override
 	public void transition(ActiveState state, Object transition) {
 		if (state != currentState) {
-			String message = "The state given is not the active state!  Tried to transition from " + state + " with transition " + transition;
+			String message = "The state given is not the active state!  Tried to transition from " + state + " with transition " + transition + " when active state was " + currentState;
 			throw new IllegalStateException(message);
 		}
 		if (!transitions.get(currentState).containsKey(transition)) {

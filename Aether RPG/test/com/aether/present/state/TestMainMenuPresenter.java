@@ -8,7 +8,7 @@ public class TestMainMenuPresenter {
 	@Test
 	public void testInitializationAndShutdown() throws Exception {
 		MainMenuView view = createStrictMock("MainMenuView", MainMenuView.class);
-		StateTransitioner presentationState = createStrictMock("GameState", StateTransitioner.class);
+		StateTransition presentationState = createStrictMock("GameState", StateTransition.class);
 		ShutdownService exitService = createStrictMock("ExitService", ShutdownService.class);
 		
 		view.setPresenter((MainMenuPresenter)anyObject());

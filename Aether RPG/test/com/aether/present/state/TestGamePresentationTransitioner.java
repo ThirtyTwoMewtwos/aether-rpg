@@ -17,11 +17,11 @@ public class TestGamePresentationTransitioner {
 	private ActiveState stateA;
 	private ActiveState stateB;
 	private ActiveState stateC;
-	private GameStateTransitioner transition;
+	private GameStateTransition transition;
 
 	@Before
 	public void setUp() {
-		transition = new GameStateTransitioner();
+		transition = new GameStateTransition();
 
 		stateA = createMock("ActiveStateA", ActiveState.class);
 		stateB = createMock("ActiveStateB", ActiveState.class);

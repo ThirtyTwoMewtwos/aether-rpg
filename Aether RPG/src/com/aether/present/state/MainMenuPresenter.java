@@ -16,9 +16,9 @@ public class MainMenuPresenter implements ActiveState {
 	
 	private final ShutdownService exitService;
 	private final MainMenuView view;
-	private final StateTransitioner presentationState;
+	private final StateTransition presentationState;
 
-	public MainMenuPresenter(MainMenuView view, StateTransitioner presentationState, ShutdownService exitService) {
+	public MainMenuPresenter(MainMenuView view, StateTransition presentationState, ShutdownService exitService) {
 		this.view = view;
 		this.presentationState = presentationState;
 		this.exitService = exitService;

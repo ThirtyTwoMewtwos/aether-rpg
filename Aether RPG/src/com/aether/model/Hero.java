@@ -548,8 +548,8 @@ public class Hero implements Serializable
     }
     public String format(String incString)
     {
-        String formated = "";
-        String bytes = "";
+        String formatted = "";
+        String bytes;
         int count = 0;
         StringTokenizer st = new StringTokenizer(incString);
 
@@ -559,19 +559,19 @@ public class Hero implements Serializable
             {
                 bytes = st.nextToken();
                 count += bytes.length();
-                formated += bytes + " ";
+                formatted += bytes + " ";
             }
             else
             {
                 count = 0;
                 bytes = st.nextToken();
                 count += bytes.length();
-                formated += "\n" + bytes + " ";
+                formatted += "\n" + bytes + " ";
             }
         }
 
 
-        return formated;
+        return formatted;
     }
     @Override
     public String toString()

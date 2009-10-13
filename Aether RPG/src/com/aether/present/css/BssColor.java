@@ -3,7 +3,6 @@ package com.aether.present.css;
 import java.awt.Color;
 
 public class BssColor {
-//	#FFFFFF PZ bgcolor, default #FFFFFF white
 //	#CC0000 PZ errorText, default #CC0000 old red
 //	#999999 PZ lightestSubText, default #999999 medium gray
 //	#666666 PZ lightSubText, default #666666 dark gray
@@ -11,7 +10,6 @@ public class BssColor {
 //	#0D447F PZ tableBack, default #0D447F deep blue
 //	#D4E5FA PZ tableBody1, default #D4E5FA light blue
 //	#EEF3F9 PZ tableBody2, default #EEF3F9 pale blue
-//	#000000 PZ text, default #000000 true black
 //	#003366 PZ link, default #003366 ultra dark blue
 //	#CC0000 PZ alink, default #CC0000 old red
 //	#003366 PZ vlink, default #003366 ultra dark blue
@@ -37,16 +35,17 @@ public class BssColor {
 	}
 	
 	public BssColor(Color color) {
-		String red = Integer.toHexString(color.getRed());
+        String tmpColor;
+        String red = Integer.toHexString(color.getRed());
 		String green = Integer.toHexString(color.getGreen());
 		String blue = Integer.toHexString(color.getBlue());
-		if (color.getAlpha() == 255) {
-			this.hashColor = "#" + getHexValue(red) + getHexValue(green) + getHexValue(blue);
-		} else {
+        tmpColor = "#" + getHexValue(red) + getHexValue(green) + getHexValue(blue);
+        if (color.getAlpha() != 255) {
 			String alpha = Integer.toHexString(color.getAlpha());
-			this.hashColor = "#" + getHexValue(red) + getHexValue(green) + getHexValue(blue) + getHexValue(alpha);
+			tmpColor += getHexValue(alpha);
 		}
-	}
+        hashColor = tmpColor;
+    }
 
 	private String getHexValue(String hex) {
 		return (hex.length() == 2? hex: "0" + hex).toUpperCase();

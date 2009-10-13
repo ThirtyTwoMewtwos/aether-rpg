@@ -109,17 +109,16 @@ public class BssStyleClass {
 	}
 
 	private String writePaddingAction() {
-		StringBuffer buffer = new StringBuffer("\tpadding:");
-		
+		String result = "\tpadding:";
 		for (Integer each : padding) {
 			if (each != null) {
-				buffer.append(" " + each);
+				result += " " + each;
 			} else {
 				break;
 			}
 		}
 		
-		return buffer + ";\n";
+		return result + ";\n";
 	}
 
 	private String writeAction(String name, Object value) {

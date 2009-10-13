@@ -2,6 +2,7 @@ package com.aether.present;
 
 import java.util.concurrent.Callable;
 
+import com.aether.present.state.StateTransition;
 import org.gap.jseed.injection.annotation.Singleton;
 
 import com.aether.present.state.FinishGameService;
@@ -30,11 +31,13 @@ public class MainWindow extends BasicGameState implements MainMenuView {
 	private BButton exitGame;
 
 	private MainMenuPresenter presenter;
+    private StateTransition stateTransition;
 
-	public MainWindow() {
+    public MainWindow(StateTransition transition) {
 		super("Main Window");
-		
-		defineControls();
+        stateTransition = transition;
+
+        defineControls();
 
 		DisplaySystem display = DisplaySystem.getDisplaySystem();
 		mainWindow = new BWindow(BuiSystem.getStyle(), new AbsoluteLayout());
@@ -54,13 +57,13 @@ public class MainWindow extends BasicGameState implements MainMenuView {
 		titleLabel.setPreferredSize(buttonWidth + 80, buttonHeight);
 		mainWindow.add(titleLabel, new Point(posX - 40, startPosY - stepPosY * counter++));
 
-		startCampaign = new BButton("Create Campaign");
+		startCampaign = new BButton("New Campaign");
         startCampaign.setPreferredSize(buttonWidth, buttonHeight);
 		mainWindow.add(startCampaign, new Point(posX, startPosY - stepPosY * counter++));
 		startCampaign.addListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				System.out.println("and we are off!");
+                presenter.performCreateCharacter();
 			}
 		});
 

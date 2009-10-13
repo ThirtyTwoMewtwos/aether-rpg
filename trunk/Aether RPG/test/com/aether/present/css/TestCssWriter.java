@@ -1,6 +1,5 @@
 package com.aether.present.css;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 import java.io.Reader;
@@ -26,12 +25,7 @@ public class TestCssWriter {
 						"\ttext-effect: none;\n" + 
 						"\teffect-color: #FF0000;\n";
 	}
-	
-	//  padding: 3 5;
-	//  font: "Dialog" bold 24;
-	//  text-align: center;
-	//  text-effect: outline;
-	//  effect-color: #442288;
+
 	@Test
 	public void testButton() throws Exception {
 		BssStyleClass buttonWriter = bssWriter.button();
@@ -43,6 +37,14 @@ public class TestCssWriter {
 				"button {\n" +
 				buttonDefaultBody + 
 				"}", writer.asReader());
+	}
+
+	private void compareReaders(String expected, Reader reader) throws Exception {
+		StringBuffer actual = new StringBuffer();
+		for (int i = 0; i < expected.length(); i++) {
+			actual.append((char)reader.read());
+		}
+		assertEquals(expected, actual.toString());
 	}
 	
 	@Test
@@ -103,12 +105,68 @@ public class TestCssWriter {
 				  "\teffect-color: #FF0000;\n" +		
 				"}", writer.asReader());
 	}
+
+    @Test
+    public void testTextField() throws Exception {
+        BssStyleClass textField = bssWriter.textField();
+		BssWriter writer = textField.end();
+
+		compareReaders(
+				"textfield {\n" +
+				"\tfont: \"Dialog\" bold 12;\n" +
+				  "\tpadding: 5;\n" +
+				  "\tcolor: #000088;\n" +
+				  "\tbackground: solid #0000FF;\n" +
+				  "\ttext-align: center;\n" +
+				  "\tvertical-align: center;\n" +
+				  "\ttext-effect: none;\n" +
+				  "\teffect-color: #FF0000;\n" +
+				"}", writer.asReader());
+    }
+    
+    @Test
+    public void testComboBox() throws Exception {
+        BssStyleClass comboBox = bssWriter.comboBox();
+		BssWriter writer = comboBox.end();
+
+		compareReaders(
+				"combobox {\n" +
+				"\tfont: \"Dialog\" bold 12;\n" +
+				  "\tpadding: 3 5;\n" +
+				  "\tcolor: #FF0000;\n" +
+				  "\tbackground: solid #0000FF;\n" +
+				  "\ttext-align: center;\n" +
+				  "\tvertical-align: center;\n" +
+				  "\ttext-effect: none;\n" +
+				  "\teffect-color: #FF0000;\n" +
+				"}\n" + 
+				"menuitem {\n" +
+				"\tfont: \"Dialog\" bold 12;\n" +
+				  "\tpadding: 3 5;\n" +
+				  "\tcolor: #FF0000;\n" +
+				  "\tbackground: solid #0000FF;\n" +
+				  "\ttext-align: center;\n" +
+				  "\tvertical-align: center;\n" +
+				  "\ttext-effect: none;\n" +
+				  "\teffect-color: #FF0000;\n" +
+				"}", writer.asReader());
+    }
 	
-	private void compareReaders(String expected, Reader reader) throws Exception {
-		StringBuffer actual = new StringBuffer();
-		for (int i = 0; i < expected.length(); i++) {
-			actual.append((char)reader.read());
-		}
-		assertEquals(expected, actual.toString());
-	}
+    @Test
+    public void testMenuItem() throws Exception {
+        BssStyleClass menuItem = bssWriter.menuItem();
+		BssWriter writer = menuItem.end();
+
+		compareReaders(
+				"menuitem {\n" +
+				"\tfont: \"Dialog\" bold 12;\n" +
+				  "\tpadding: 3 5;\n" +
+				  "\tcolor: #FF0000;\n" +
+				  "\tbackground: solid #0000FF;\n" +
+				  "\ttext-align: center;\n" +
+				  "\tvertical-align: center;\n" +
+				  "\ttext-effect: none;\n" +
+				  "\teffect-color: #FF0000;\n" +
+				"}", writer.asReader());
+    }
 }

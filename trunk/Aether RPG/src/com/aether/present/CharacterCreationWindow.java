@@ -1,14 +1,12 @@
 package com.aether.present;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import com.aether.model.character.Classification;
 import com.aether.model.character.Race;
 import com.aether.present.state.CharacterCreationPresenter;
 import com.aether.present.state.CharacterCreationView;
 import com.jme.system.DisplaySystem;
-import com.jme.util.GameTaskQueueManager;
 import com.jmex.bui.BButton;
 import com.jmex.bui.BComboBox;
 import com.jmex.bui.BLabel;
@@ -21,15 +19,13 @@ import com.jmex.bui.event.ActionListener;
 import com.jmex.bui.layout.TableLayout;
 import com.jmex.bui.text.Document;
 import com.jmex.bui.text.Document.Listener;
-import com.jmex.game.state.BasicGameState;
 import com.jmex.game.state.GameStateManager;
 
-public class CharacterCreationWindow extends BasicGameState implements CharacterCreationView {
+public class CharacterCreationWindow extends BaseWindow implements CharacterCreationView {
     private static final Item PLEASE_SELECT_ITEM = new BComboBox.Item(null, "<Select>");
 
     private CharacterCreationPresenter presenter;
     
-    private BWindow mainWindow;
     private BTextField nameField;
 	private BComboBox raceSelection;
 	private BComboBox classSelection;
@@ -44,8 +40,9 @@ public class CharacterCreationWindow extends BasicGameState implements Character
         TableLayout tableLayout = new TableLayout(2);
         tableLayout.setHorizontalAlignment(TableLayout.LEFT);
         tableLayout.setVerticalAlignment(TableLayout.CENTER);
-        mainWindow = new BWindow(BuiSystem.getStyle(), tableLayout);
-        mainWindow.setSize(display.getWidth() - 80, display.getHeight() - 100);
+        BWindow window = new BWindow(BuiSystem.getStyle(), tableLayout);
+        window.setSize(display.getWidth() - 80, display.getHeight() - 100);
+        setWindow(window);
 
 		initNameField();
         initRaceSelection();
@@ -53,18 +50,16 @@ public class CharacterCreationWindow extends BasicGameState implements Character
         initBackToMainMenu();
         initSaveCharacter();
 
-		mainWindow.center();
+		window.center();
 
 		GameStateManager.getInstance().attachChild(this);
     }
 
-
-
 	private void initNameField() {
-		mainWindow.add(new BLabel("Name: "));
+		getWindow().add(new BLabel("Name: "));
         nameField = new BTextField("");
         nameField.setPreferredSize(300, 45);
-        mainWindow.add(nameField);
+        getWindow().add(nameField);
         nameField.getDocument().addListener(new Listener() {
 			@Override
 			public void textInserted(Document document, int offset, int length) {
@@ -78,7 +73,7 @@ public class CharacterCreationWindow extends BasicGameState implements Character
 	}
 
 	private void initRaceSelection() {
-		mainWindow.add(new BLabel("Race: "));
+		getWindow().add(new BLabel("Race: "));
         raceSelection = new BComboBox();
         raceSelection.setPreferredSize(300, 40);
         raceSelection.addItem(PLEASE_SELECT_ITEM);
@@ -91,55 +86,44 @@ public class CharacterCreationWindow extends BasicGameState implements Character
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				Object selectedItem = raceSelection.getSelectedValue();
-				if (selectedItem instanceof Race) {
-					classSelection.setEnabled(true);
-					presenter.setRace((Race)selectedItem);
-				} else {
-					classSelection.setEnabled(false);
-					classSelection.clearItems();
-					classSelection.addItem(PLEASE_SELECT_ITEM);
-					classSelection.selectItem(0);
-				}
+				presenter.setRace((Race)selectedItem);
 			}
         });
-        mainWindow.add(raceSelection);
+        getWindow().add(raceSelection);
 	}
 
 	private void initClassSelection() {
-		mainWindow.add(new BLabel("Class: "));
+		getWindow().add(new BLabel("Class: "));
 		classSelection = new BComboBox();
 		classSelection.setPreferredSize(300, 40);
-		classSelection.addItem(PLEASE_SELECT_ITEM);
-		classSelection.addItem(PLEASE_SELECT_ITEM);
-		classSelection.selectItem(0);
+		
 		classSelection.addListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				Object selectedItem = classSelection.getSelectedValue();
-				if (selectedItem instanceof Classification) {
-					presenter.setClassification((Classification)selectedItem);
-				}
+				presenter.setClassification((Classification)selectedItem);
 			}
 		});
-		classSelection.setEnabled(false);
-		mainWindow.add(classSelection);
+		
+		clearClassifications();
+		getWindow().add(classSelection);
 	}
 
 	private void initBackToMainMenu() {
 		backButton = new BButton("Back");
-		mainWindow.add(backButton);
+		getWindow().add(backButton);
 		backButton.setPreferredSize(200, 40);
 		backButton.addListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				presenter.finish();
+				presenter.backToMainMenu();
 			}
 		});
 	}
 	
 	private void initSaveCharacter() {
 		saveCharacter = new BButton("Finish");
-		mainWindow.add(saveCharacter);
+		getWindow().add(saveCharacter);
 		saveCharacter.setPreferredSize(200, 40);
 		saveCharacter.addListener(new ActionListener() {
 			@Override
@@ -166,49 +150,19 @@ public class CharacterCreationWindow extends BasicGameState implements Character
 
     @Override
     public void setClasses(List<Classification> availableFor) {
-    	classSelection.clearItems();
-		classSelection.addItem(PLEASE_SELECT_ITEM);
+    	clearClassifications();
     	for (Classification each : availableFor) {
     		Item item = new BComboBox.Item(each, each.getName());
     		classSelection.addItem(item);
 		}
+    	classSelection.setEnabled(true);
     }
 
-    public void activate() {
-		// activate the main GameState
-		super.setActive(true);
-
-		// Display the GBUI portion
-		getRootNode().attachChild(BuiSystem.getRootNode());
-		getRootNode().updateRenderState();
-
-		addWindow();
-	}
-
-	private void addWindow() {
-		GameTaskQueueManager.getManager().update(new Callable<Object>() {
-			public Object call() throws Exception {
-				BuiSystem.addWindow(mainWindow);
-				return null;
-			}
-		});
-	}
-
 	@Override
-	public void deactivate() {
-		super.setActive(false);
-
-		getRootNode().detachChild(BuiSystem.getRootNode());
-
-		removeWindow();
-	}
-
-	private void removeWindow() {
-		GameTaskQueueManager.getManager().update(new Callable<Object>() {
-			public Object call() throws Exception {
-				BuiSystem.removeWindow(mainWindow);
-				return null;
-			}
-		});
+	public void clearClassifications() {
+		classSelection.clearItems();
+		classSelection.addItem(PLEASE_SELECT_ITEM);
+		classSelection.selectItem(PLEASE_SELECT_ITEM);
+		classSelection.setEnabled(false);
 	}
 }

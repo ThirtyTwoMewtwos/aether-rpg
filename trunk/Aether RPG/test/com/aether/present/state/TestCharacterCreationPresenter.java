@@ -57,4 +57,18 @@ public class TestCharacterCreationPresenter {
         presenter.exit();
         verify(view, stateTransition);
     }
+    
+    @Test
+    public void testRacialSelectionState() throws Exception {
+    	view.setClasses(Classification.getAvailableFor(Race.HUMAN));
+    	view.disableSave();
+    	view.clearClassifications();
+    	view.disableSave();
+    	 
+        replay(view, stateTransition);
+        CharacterCreationPresenter presenter = new CharacterCreationPresenter(view, stateTransition);
+        presenter.setRace(Race.HUMAN);
+        presenter.setRace(null);
+        verify(view, stateTransition);
+    }
 }

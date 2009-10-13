@@ -17,4 +17,6 @@ public interface CharacterCreationView {
     void deactivate();
 
     void activate();
+
+	void clearClassifications();
 }

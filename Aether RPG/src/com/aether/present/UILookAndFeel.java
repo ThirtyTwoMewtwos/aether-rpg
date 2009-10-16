@@ -11,10 +11,6 @@ import static com.aether.present.css.BssWriter.StyleType.window;
 
 import java.awt.Color;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URL;
-
-import sun.misc.ClassLoaderUtil;
 
 import com.aether.present.css.BssBackgroundMode;
 import com.aether.present.css.BssColor;
@@ -30,7 +26,6 @@ import com.jmex.bui.BStyleSheet;
 import com.jmex.bui.BuiSystem;
 import com.jmex.bui.PolledRootNode;
 import com.jmex.bui.bss.BStyleSheetUtil;
-import com.jmex.bui.provider.DefaultResourceProvider;
 import com.util.StringUtil;
 
 public class UILookAndFeel {
@@ -54,7 +49,7 @@ public class UILookAndFeel {
 	}
 
 	private void setupWindow() {
-		BssColor fadedBlack = new BssColor("0003");
+		BssColor fadedBlack = new BssColor("00000088");
 		writer.createStyle(window)
 				.setBackground(fadedBlack)
 				.setEffectColor(BssColor.WHITE);
@@ -72,51 +67,57 @@ public class UILookAndFeel {
 				.setBackground("images/button_up.png", BssBackgroundMode.FRAMEXY, 4, 4, 4, 4)
 				.setEffectColor(new BssColor(new Color(255, 0, 0, 50)));
 		
-		makeDisabledWidgetStyle(button);
+		makeDisabledButton(button);
 	}
 
     private void setupLabels() {
 		writer.createStyle(label)
-				.setFont(FONT_FAMILY, BssFontStyle.ITALIC, 30)
+				.setFont(FONT_FAMILY, BssFontStyle.ITALIC, 20)
+				.setTextAlign(BssTextAlign.LEFT)
 				.setColor(BssColor.GREEN)
 				.clearBackground();
 	}
 
     private void setupTextField() {
         writer.createStyle(textfield)
-        		.setFont(FONT_FAMILY, BssFontStyle.PLAIN, 30)
-        		.setBackground(BssColor.RED)
+        		.setFont(FONT_FAMILY, BssFontStyle.PLAIN, 16)
+        		.setBackground("images/textfield.png", BssBackgroundMode.FRAMEXY)
         		.setColor(BssColor.BLACK);
     }
     
     private void setupComboBox() throws IOException {
     	writer.createStyle(combobox)
-    			.setFont(FONT_FAMILY, BssFontStyle.BOLD, BUTTON_FONT_SIZE)
+    			.setFont(FONT_FAMILY, BssFontStyle.BOLD, 16)
     			.setPadding(8)
-    			.setColor(BssColor.RED)
-    			.setBackground(BssColor.BLUE);
+    			.setColor(BssColor.WHITE)
+    			.setBackground("images/combobox_up.png", BssBackgroundMode.FRAMEX);
     	
-    	makeDisabledWidgetStyle(combobox);
+    	writer.createStyle(combobox, disabled)
+				.setFont(FONT_FAMILY, BssFontStyle.PLAIN, 16)
+				.setPadding(8)
+				.setColor(BssColor.DARK_GRAY)
+				.setBackground("images/button_disabled.png", BssBackgroundMode.FRAMEXY);
     }
 
-	private BssStyleClass makeDisabledWidgetStyle(StyleType widget) throws IOException {
+	private BssStyleClass makeDisabledButton(StyleType widget) throws IOException {
 		return writer.createStyle(widget, disabled)
     			.setFont(FONT_FAMILY, BssFontStyle.PLAIN, BUTTON_FONT_SIZE)
     			.setPadding(8)
     			.setColor(BssColor.DARK_GRAY)
-    			.setBackground("images/button_disabled.png", BssBackgroundMode.FRAMEXY, 4, 4, 4, 4);
+    			.setBackground("images/button_disabled.png", BssBackgroundMode.FRAMEXY);
 	}
     
     private void setupMenuItem() {
     	writer.createStyle(menuitem)
-        		.setFont(FONT_FAMILY, BssFontStyle.PLAIN, BUTTON_FONT_SIZE)
+        		.setFont(FONT_FAMILY, BssFontStyle.PLAIN, 16)
         		.setTextAlign(BssTextAlign.LEFT)
-        		.setBackground(BssColor.BLUE);
+        		.setBackground(BssColor.IVORY)
+        		.setBorder(1, BssColor.LIGHT_GRAY);
     }
 
     private void setupDefaultStyleSheet() {
 		BStyleSheet styleSheet = BStyleSheetUtil.getStyleSheet(writer.asReader());
-		printOutBssToConsole();
+		// printOutBssToConsole();
 		BuiSystem.init(new PolledRootNode(Timer.getTimer(), new InputHandler()), styleSheet);
 	}
 

@@ -1,0 +1,62 @@
+package com.aether.present.state;
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.aether.gbui.BButtonOperator;
+import com.aether.gbui.BComboBoxOperator;
+import com.aether.gbui.BComponentOperatorUtil;
+import com.aether.gbui.BTextFieldOperator;
+import com.aether.gbui.NameOperatorSearch;
+import com.aether.model.character.Classification;
+import com.aether.model.character.Race;
+import com.aether.present.Main;
+import com.jmex.bui.BWindow;
+import com.jmex.bui.BuiSystem;
+
+public class TestCreateCharacterWindow {
+	
+	private static final int WAIT_TIME = 20 * 1000;
+	private BWindow window;
+	private BButtonOperator finishButton;
+	@Before
+	public void setUp() throws Exception {
+		Main.main(new String[]{});
+
+		BWindow mainWindow = BComponentOperatorUtil.getWindowWithId(MainMenuView.ID);
+		new BButtonOperator(mainWindow, "New Campaign").click();
+		window = BComponentOperatorUtil.getWindowWithId(CharacterCreationView.ID);
+		finishButton = new BButtonOperator(window, "Finish");
+	}
+
+	@Test (timeout= WAIT_TIME)
+	public void test_navigate_to_create_character_then_back() throws Exception {
+		Assert.assertFalse(finishButton.isEnabled());
+		new BButtonOperator(window, "Back").click();
+		BComponentOperatorUtil.getWindowWithId(MainMenuView.ID);
+	}
+	
+	@Test //(timeout= WAIT_TIME)
+	public void test_create_character_is_not_allowed_until_all_fields_entered() throws Exception {
+		assertFalse(finishButton.isEnabled());
+		new BTextFieldOperator(window, "").setText("Joe the Invinceable");
+		Assert.assertFalse(finishButton.isEnabled());
+		BComboBoxOperator raceSelection = new BComboBoxOperator(window, new NameOperatorSearch("set.race"));
+		BComboBoxOperator classSelection = new BComboBoxOperator(window, new NameOperatorSearch("set.class"));
+		assertFalse(classSelection.isEnabled());
+		raceSelection.select(Race.HUMAN);
+		assertTrue(classSelection.isEnabled());
+		classSelection.select(Classification.Crusader);
+		assertTrue(finishButton.isEnabled());
+		finishButton.click();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		Main.shutdown();
+	}
+}

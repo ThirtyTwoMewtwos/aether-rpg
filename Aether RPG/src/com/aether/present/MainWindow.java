@@ -22,6 +22,7 @@ public class MainWindow extends BaseWindow implements MainMenuView {
 	private static final int MENU_ITEMS = 2;
 	private static final int BUTTON_HEIGHT = 40;
 	private static final int BUTTON_WIDTH = 250;
+	
 	private BButton startCampaign;
 	private BButton exitGame;
 
@@ -30,12 +31,13 @@ public class MainWindow extends BaseWindow implements MainMenuView {
 	private int counter = 0;
 
     public MainWindow() {
-		super("Main Window");
+		super(ID);
 
         defineControls();
 
 		DisplaySystem display = DisplaySystem.getDisplaySystem();
 		BWindow mainWindow = new BWindow(BuiSystem.getStyle(), new AbsoluteLayout());
+		mainWindow.setName(ID);
 		setWindow(mainWindow);
         mainWindow.setSize(BUTTON_WIDTH + 150, BUTTON_HEIGHT * MENU_ITEMS + 220);
                 

@@ -1,6 +1,7 @@
 package com.aether.present.state;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -16,11 +17,8 @@ import com.aether.model.character.Classification;
 import com.aether.model.character.Race;
 import com.aether.present.Main;
 import com.jmex.bui.BWindow;
-import com.jmex.bui.BuiSystem;
 
 public class TestCreateCharacterWindow {
-	
-	private static final int WAIT_TIME = 20 * 1000;
 	private BWindow window;
 	private BButtonOperator finishButton;
 	@Before
@@ -33,14 +31,14 @@ public class TestCreateCharacterWindow {
 		finishButton = new BButtonOperator(window, "Finish");
 	}
 
-	@Test (timeout= WAIT_TIME)
+	@Test
 	public void test_navigate_to_create_character_then_back() throws Exception {
 		Assert.assertFalse(finishButton.isEnabled());
 		new BButtonOperator(window, "Back").click();
 		BComponentOperatorUtil.getWindowWithId(MainMenuView.ID);
 	}
 	
-	@Test //(timeout= WAIT_TIME)
+	@Test
 	public void test_create_character_is_not_allowed_until_all_fields_entered() throws Exception {
 		assertFalse(finishButton.isEnabled());
 		new BTextFieldOperator(window, "").setText("Joe the Invinceable");
@@ -53,6 +51,17 @@ public class TestCreateCharacterWindow {
 		classSelection.select(Classification.Crusader);
 		assertTrue(finishButton.isEnabled());
 		finishButton.click();
+	}
+	
+	@Test
+	public void test_Classification_field_unavailable_until_a_race_is_selected() throws Exception {
+		BComboBoxOperator raceSelection = new BComboBoxOperator(window, new NameOperatorSearch("set.race"));
+		BComboBoxOperator classSelection = new BComboBoxOperator(window, new NameOperatorSearch("set.class"));
+		assertFalse(classSelection.isEnabled());
+		raceSelection.select(Race.HUMAN);
+		assertTrue(classSelection.isEnabled());
+		raceSelection.select(0);
+		assertFalse(classSelection.isEnabled());
 	}
 
 	@After

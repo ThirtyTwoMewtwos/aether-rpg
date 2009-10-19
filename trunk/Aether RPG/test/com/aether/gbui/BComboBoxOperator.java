@@ -1,6 +1,7 @@
 package com.aether.gbui;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 
 import com.aether.model.character.Race;
 import com.jmex.bui.BComboBox;
@@ -16,7 +17,7 @@ public class BComboBoxOperator {
 		comboBox = (BComboBox)BComponentOperatorUtil.findWidget(window, componentSearch);
 	}
 
-	public void select(final Object value) {
+	public void select(Object value) {
 		comboBox.selectItem(value);
 		for (int i = 0; i < comboBox.getItemCount(); i++) {
 			Object item = comboBox.getItem(i);
@@ -26,19 +27,19 @@ public class BComboBoxOperator {
 			}
 			if (value.equals(currentItem)) {
 				select(i);
-				BComponentOperatorUtil.waitFor(new Condition() {
-					@Override
-					public boolean existing() {
-						return comboBox.getSelectedValue() != value;
-					}
-				});
 				return;
 			} 
 		}
 		throw new IllegalArgumentException("The given value '" + value + "' is not in the comboBox");
 	}
 
-	private void select(final int index) {
+	public void select(final int index) {
+		performSelection(index);
+		waitForSelection(index);
+	}
+
+
+	private void performSelection(final int index) {
 		BComponentOperatorUtil.callInBuiThread(new Callable<Object>() {
 			public Object call() throws Exception {
 				comboBox.selectItem(index);
@@ -47,8 +48,22 @@ public class BComboBoxOperator {
 		});
 	}
 
-	public boolean isEnabled() {
-		return comboBox.isEnabled();
+	private void waitForSelection(final int index) {
+		System.out.println("Selecting from comboBox index [" + index + "]");
+		BComponentOperatorUtil.waitFor(new Condition() {
+			@Override
+			public boolean existing() {
+				return comboBox.getSelectedIndex() != index;
+			}
+		});
 	}
-	
+
+	public boolean isEnabled() {
+		Callable<Boolean> callable = new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return comboBox.isEnabled();
+			}
+		};
+		return BComponentOperatorUtil.callInBuiThread(callable);
+	}
 }

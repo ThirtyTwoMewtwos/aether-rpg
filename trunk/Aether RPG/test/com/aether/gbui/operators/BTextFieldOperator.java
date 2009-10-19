@@ -1,16 +1,14 @@
-package com.aether.gbui;
+package com.aether.gbui.operators;
 
 import java.util.concurrent.Callable;
 
-import com.jme.system.DisplaySystem;
-import com.jme.util.GameTaskQueueManager;
+import com.aether.gbui.LabeledOperatorSearcher;
+import com.jmex.bui.BComponent;
 import com.jmex.bui.BTextField;
 import com.jmex.bui.BWindow;
 import com.jmex.bui.event.FocusEvent;
-import com.jmex.game.state.GameStateManager;
 
-public class BTextFieldOperator {
-
+public class BTextFieldOperator extends BComponentOperator {
 	private BTextField textField;
 
 	public BTextFieldOperator(BWindow window, String label) {
@@ -25,5 +23,10 @@ public class BTextFieldOperator {
 				return null;
 			}
 		});
+	}
+	
+	@Override
+	public BComponent getComponent() {
+		return textField;
 	}
 }

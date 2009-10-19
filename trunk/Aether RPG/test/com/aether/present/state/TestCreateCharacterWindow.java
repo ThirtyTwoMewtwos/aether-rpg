@@ -8,11 +8,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aether.gbui.BButtonOperator;
-import com.aether.gbui.BComboBoxOperator;
-import com.aether.gbui.BComponentOperatorUtil;
-import com.aether.gbui.BTextFieldOperator;
 import com.aether.gbui.NameOperatorSearch;
+import com.aether.gbui.operators.BButtonOperator;
+import com.aether.gbui.operators.BComboBoxOperator;
+import com.aether.gbui.operators.BComponentOperatorUtil;
+import com.aether.gbui.operators.BTextFieldOperator;
 import com.aether.model.character.Classification;
 import com.aether.model.character.Race;
 import com.aether.present.Main;

@@ -1,9 +1,11 @@
-package com.aether.gbui;
+package com.aether.gbui.operators;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import com.aether.gbui.ComponentSearch;
+import com.aether.gbui.Condition;
 import com.jme.util.GameTaskQueueManager;
 import com.jmex.bui.BComponent;
 import com.jmex.bui.BWindow;
@@ -52,21 +54,29 @@ public class BComponentOperatorUtil {
 		long startTime = System.currentTimeMillis();
 		long elapsedTime = 0;
 		while (elapsedTime < DEFAULT_SEARCH_TIMOUT) {
-			for (int i = 0; i < window.getComponentCount(); i++) {
-				BComponent component = window.getComponent(i);
-				if (!component.isShowing()) {
-					continue;
-				}
-				if (searcher.isMatch(component)) {
-					return component;
-				}
+			BComponent component = searchForWidget(window, searcher);
+			if (component != null) {
+				return component;
 			}
 			System.out.println("searching for widget!" );
 
 			performWaitOnThread();
 			elapsedTime= System.currentTimeMillis() - startTime;
 		}
-		throw new IllegalStateException("Unable to find button 'widget'");
+		throw new IllegalStateException("Unable to find 'widget': " + searcher);
+	}
+
+	private static BComponent searchForWidget(BWindow window, ComponentSearch searcher) {
+		for (int i = 0; i < window.getComponentCount(); i++) {
+			BComponent component = window.getComponent(i);
+			if (!component.isShowing()) {
+				continue;
+			}
+			if (searcher.isMatch(component)) {
+				return component;
+			}
+		}
+		return null;
 	}
 	
 	private static void performWaitOnThread() {

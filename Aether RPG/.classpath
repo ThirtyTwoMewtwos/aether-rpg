@@ -15,7 +15,6 @@
 	<classpathentry kind="lib" path="lib/lwjgl/lwjgl_util.jar"/>
 	<classpathentry kind="lib" path="lib/lwjgl/lwjgl.jar"/>
 	<classpathentry kind="lib" path="lib/jme-colladabinding-src.jar"/>
-	<classpathentry kind="lib" path="lib/jME2.jar" sourcepath="D:/java/Aether RPG/lib/jME2_src.zip"/>
 	<classpathentry kind="lib" path="lib/ode/odejava-jni.jar"/>
 	<classpathentry kind="lib" path="lib/jMEPhysics.jar"/>
 	<classpathentry kind="lib" path="lib/testing/easymock-2.5.2.jar" sourcepath="D:/java/Aether RPG/lib/testing/easymock-2.5.2-sources.jar">
@@ -25,5 +24,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/gbui.jar" sourcepath="lib/gbui-src.zip"/>
 	<classpathentry kind="lib" path="D:/java/components/jemmy.jar"/>
+	<classpathentry kind="lib" path="lib/jME2.jar" sourcepath="D:/java/Aether RPG/lib/jME2_src.zip"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

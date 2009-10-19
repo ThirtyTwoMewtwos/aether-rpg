@@ -1,15 +1,15 @@
-package com.aether.gbui;
+package com.aether.gbui.operators;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
 
-import com.aether.model.character.Race;
+import com.aether.gbui.ComponentSearch;
+import com.aether.gbui.Condition;
 import com.jmex.bui.BComboBox;
+import com.jmex.bui.BComponent;
 import com.jmex.bui.BWindow;
 import com.jmex.bui.BComboBox.Item;
-import com.jmex.bui.event.FocusEvent;
 
-public class BComboBoxOperator {
+public class BComboBoxOperator extends BComponentOperator {
 
 	private BComboBox comboBox;
 
@@ -58,12 +58,8 @@ public class BComboBoxOperator {
 		});
 	}
 
-	public boolean isEnabled() {
-		Callable<Boolean> callable = new Callable<Boolean>() {
-			public Boolean call() throws Exception {
-				return comboBox.isEnabled();
-			}
-		};
-		return BComponentOperatorUtil.callInBuiThread(callable);
+	@Override
+	public BComponent getComponent() {
+		return comboBox;
 	}
 }

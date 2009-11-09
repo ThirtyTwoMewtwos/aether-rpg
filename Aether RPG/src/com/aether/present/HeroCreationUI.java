@@ -30,10 +30,27 @@ package com.aether.present;
  * 
  */
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 import com.aether.model.Hero;
-import java.awt.event.*;
-import java.awt.*;
-import javax.swing.*;
+import com.aether.model.character.Classification;
 
 public class HeroCreationUI extends JDialog implements ActionListener, ItemListener
 {
@@ -132,7 +149,7 @@ public class HeroCreationUI extends JDialog implements ActionListener, ItemListe
                 if(formattedClass.indexOf(" ") != -1)
                     formattedClass = formattedClass.substring(0,formattedClass.indexOf(" ")) + formattedClass.substring(formattedClass.indexOf(" ")+ 1, formattedClass.length());
                 Hero.Class hClass = Hero.Class.valueOf(formattedClass.toUpperCase());
-                hero = new Hero(formattedName, bioField.getText(),"" + sexDropDown.getSelectedItem(),hClass);
+                hero = new Hero(formattedName, bioField.getText(),"" + sexDropDown.getSelectedItem(), Enum.valueOf(Classification.class, hClass.name()));
                 created = true;
             }
             else

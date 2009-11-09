@@ -83,7 +83,7 @@ public class CharacterCreationWindow extends BaseWindow implements CharacterCrea
         raceSelection = new BComboBox();
         raceSelection.setPreferredSize(BUTTON_WIDTH, 25);
         raceSelection.addItem(PLEASE_SELECT_ITEM);
-        raceSelection.setName("set.race");
+        raceSelection.setName(RACE_SELELECTION_NAME);
         for (Race each : Race.values()) {
 			Item item = new BComboBox.Item(each, each.name());
 			raceSelection.addItem(item);
@@ -103,7 +103,7 @@ public class CharacterCreationWindow extends BaseWindow implements CharacterCrea
 		getWindow().add(createLabel("Class: "));
 		classSelection = new BComboBox();
 		classSelection.setPreferredSize(BUTTON_WIDTH, 25);
-		classSelection.setName("set.class");
+		classSelection.setName(CLASS_SELECTION_NAME);
 		
 		classSelection.addListener(new ActionListener() {
 			@Override

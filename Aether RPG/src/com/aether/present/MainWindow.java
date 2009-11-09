@@ -35,7 +35,7 @@ public class MainWindow extends BaseWindow implements MainMenuView {
 
         defineControls();
 
-		DisplaySystem display = DisplaySystem.getDisplaySystem();
+		DisplaySystem.getDisplaySystem();
 		BWindow mainWindow = new BWindow(BuiSystem.getStyle(), new AbsoluteLayout());
 		mainWindow.setName(ID);
 		setWindow(mainWindow);

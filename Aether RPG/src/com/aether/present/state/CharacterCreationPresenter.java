@@ -1,5 +1,7 @@
 package com.aether.present.state;
 
+import com.aether.model.Hero;
+import com.aether.model.character.CharacterLocator;
 import com.aether.model.character.Classification;
 import com.aether.model.character.Race;
 import com.util.StringUtil;
@@ -10,12 +12,14 @@ public class CharacterCreationPresenter implements ActiveState {
     private String name;
     private Race race;
     private Classification classification;
-    public static final String MAIN_MENU_TRANSITION = "back.main.menu";
+    public static final String CANCEL_CREATE_CHARACTER_TRANSITION = "back.main.menu";
     public static final String GAME_WINDOW_TRANSITION = "game.window";
+	private final CharacterLocator characterManager;
 
-    public CharacterCreationPresenter(CharacterCreationView view, StateTransition state) {
+    public CharacterCreationPresenter(CharacterCreationView view, StateTransition state, CharacterLocator characterManager) {
         this.view = view;
         this.state = state;
+		this.characterManager = characterManager;
         view.setPresenter(this);
         view.disableSave();
 	}
@@ -56,8 +60,13 @@ public class CharacterCreationPresenter implements ActiveState {
         evaluateCharacter();
     }
 
+    public void backToMainMenu() {
+    	state.transition(this, CANCEL_CREATE_CHARACTER_TRANSITION);
+    }
+
     public void finish() {
-        state.transition(this, MAIN_MENU_TRANSITION);
+    	characterManager.setPlayer(new Hero(name, "", "", classification));
+        state.transition(this, GAME_WINDOW_TRANSITION);
     }
 
     @Override
@@ -69,8 +78,4 @@ public class CharacterCreationPresenter implements ActiveState {
     public void exit() {
         view.deactivate();
     }
-
-	public void backToMainMenu() {
-		state.transition(this, MAIN_MENU_TRANSITION);
-	}
 }

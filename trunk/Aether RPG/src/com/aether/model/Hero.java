@@ -33,6 +33,9 @@ import java.awt.Point;
 import java.awt.Color;
 import java.util.*;
 import java.io.*;
+
+import com.aether.model.character.Classification;
+import com.aether.model.character.Race;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
 
@@ -81,13 +84,13 @@ public class Hero implements Serializable
     private String name;
     private String bio;
     private String sex;
-    private String race;
+    private Race race;
 
     private Point location;
     private Vector<Item> inventory;
     private Vector<Quest> questLog;
     private Equipment[] equiped;
-    private Class role;
+    private Classification role;
     
     public enum Class
     {
@@ -123,8 +126,8 @@ public class Hero implements Serializable
             return race;
         }
     }
-    public Hero(String hName,String hBio, String sex,Class hClass)
-    {
+    
+    public Hero(String hName,String hBio, String sex, Classification hClass) {
         level = 1;
         setXPToLevel(100);
         setLocation(new Point(20,20));
@@ -143,7 +146,8 @@ public class Hero implements Serializable
         setBio(hBio);
         setSex(sex);
         setHeroClass(hClass);
-    }   
+    } 
+    
     private void updateStats(Equipment equipment, boolean equip)
     {
         //equip case
@@ -284,6 +288,7 @@ public class Hero implements Serializable
     {
         bio = heroBio;
     }
+    
     public String getSex()
     {
         return sex;
@@ -295,23 +300,24 @@ public class Hero implements Serializable
         else
            sex = SEXS[FEMALE];
     }
-    public void setRace(String hRace)
+    public void setRace(Race hRace)
     {
         race = hRace;
     }
-    public String getRace()
+    public Race getRace()
     {
         return race;
     }
-    public void setHeroClass(Hero.Class hClass)
+    public void setHeroClass(Classification hClass)
     {
         role = hClass;
-        setRace(hClass.getRace());
+        setRace(role.getRace());
     }
-    public Hero.Class getHeroClass()
+    public Classification getHeroClass()
     {
         return role;
     }
+    
     public int getDefense()
     {
         return defense;

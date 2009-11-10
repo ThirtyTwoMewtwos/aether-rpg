@@ -1,6 +1,8 @@
 #labels UI,Concept,Design
 #UI concept and design ideas and planning
 
+<wiki:toc max_depth="2" />
+
 = UI Layout and Controls =
 
  * Player HUD system.  This is a display located in the north-west corner of the screen that displays the player's class symbol such as a sword and shield for a Holy Knight, the players hit points in a bar form (bar is red), and the players magic points also displayed in bar form (bar is blue).
@@ -35,6 +37,13 @@
  * Social: The social window will be a tabbed pane.  The Tabs will be: { Friends, Ignore, Raid }.  The Friends tab be a simple list of names and a buttons to add and remove other players from. Each name in the list will have a subscript that gives details (Level, class, and location) of that friend. Ignore will be the same as the Friends tab, however, the ignore tab will not have any subscript detail. The Raid tab will be an organized list grouping each member of the individual group together. The leader of the Raid will have the ability to drag members from one group to another in order to easily organize the raid.
 
  * Quests: The Quest window will consist of 2 total windows, but only 1 will appear when you click the Quests button (or use the keyboard shortcut).  The first window is a list of active quests, color coated based on the suggested level versus the players current level.  The window will be organized in sections by areas of the quest locations. Each quest in the Quest window will also display the suggest level of the quest next to the quest's name.  If a user clicks a quest in the list, a second window is then displayed next to the original one to explain the the quest in detail.
+
+== On to Design ==
+Windows are setup as simple UI layout objects that delegate the work down to a presenter.   Presenters contain the logic to; navigate the next window and handle interaction with the model.  This is the common [http://martinfowler.com/eaaDev/PassiveScreen.html Passive View Pattern].  All windows are defined by an interface known as the _View_.  This view is passed into the presenter upon startup and is used to initialize the view and presenter together.    Each View is implemented by a _Window_ which is responsible for setting up the default look and arranging any setup of controls and special keys.  To help facilitate some of the setup and handling of key bindings a _Window_ can be extended by a _BaseWindow_ which provides these functions (such as activation, deactivation of a _Window_ along with the handling of key bindings).
+
+To help facilitate with testing a simple, and very much incomplete set of widget operators has been created to simulate button presses, enter of text into text fields, as well as selection of items within a combo box.  This can be found in the _com.aether.gbui_ and _com.aether.gbui.operators_ packages.  It is expected that as we continue forward developing more widgets that new operators will be created to help support testing purposes.  Most of the views/windows have been wrapped into a _Page_ object, which comes from the [http://code.google.com/p/webdriver/wiki/PageObjects Page Object Pattern], to help simplify testing.  For an example of how to use these _Page_ objects or the _Operators_ please refer to the functional tests respectively.
+
+ * _Note: _Page_ objects can be found in the _com.aether.presenter.state_ package.
 
 = World Object Interaction = 
 

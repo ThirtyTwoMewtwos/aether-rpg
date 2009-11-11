@@ -3,10 +3,10 @@ package com.aether.present.state;
 import static org.easymock.EasyMock.anyObject;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.createStrictMock;
+import static org.easymock.EasyMock.createNiceMock;
 import static org.easymock.EasyMock.matches;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
-import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -32,12 +32,9 @@ public class TestCharacterCreationPresenter {
 
     @Test
     public void testCharacterCreation() throws Exception {
-        view.disableSave();
+    	view = createNiceMock(CharacterCreationView.class);
+    	view.setPresenter((CharacterCreationPresenter)anyObject());
         view.setClasses(Classification.getAvailableFor(Race.HUMAN));
-        view.disableSave();
-        view.enableSave();
-        view.disableSave();
-        view.enableSave();
         characterManager.setPlayer((Hero)anyObject());
         stateTransition.transition((ActiveState)anyObject(), matches(CharacterCreationPresenter.GAME_WINDOW_TRANSITION));
 

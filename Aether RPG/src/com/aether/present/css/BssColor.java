@@ -3,25 +3,13 @@ package com.aether.present.css;
 import java.awt.Color;
 
 public class BssColor {
-//	#CC0000 PZ errorText, default #CC0000 old red
-//	#999999 PZ lightestSubText, default #999999 medium gray
-//	#666666 PZ lightSubText, default #666666 dark gray
-//	#FF6600 PZ specialText, default #FF6600 orange red
-//	#0D447F PZ tableBack, default #0D447F deep blue
-//	#D4E5FA PZ tableBody1, default #D4E5FA light blue
-//	#EEF3F9 PZ tableBody2, default #EEF3F9 pale blue
-//	#003366 PZ link, default #003366 ultra dark blue
-//	#CC0000 PZ alink, default #CC0000 old red
-//	#003366 PZ vlink, default #003366 ultra dark blue
-//	#6699CC PZ DarkSubtextColor, default #6699CC medium dark blue
-//	#FAF4CD PZ HiLiteColor, default #FAF4CD pale yellow
-//	#33CC33 PZ ButtonColor, default #33CC33 bright green
-	
 	public static final BssColor RED = new BssColor("F00"), 
 								 BLUE = new BssColor("00F"), 
+								 blue = new BssColor("00F"),
 								 DARK_BLUE = new BssColor("44F"),
 								 WHITE = new BssColor("FFF"), 
 								 BLACK = new BssColor("000"),
+								 black = new BssColor("000"),
 								 LIGHT_GRAY = new BssColor("CCC"),
 								 AQUA = new BssColor("00ffff"),
 								 BEIGE = new BssColor("f5f5dc"),
@@ -128,7 +116,6 @@ public class BssColor {
 								 yellow	= new BssColor("ffff00"),
 								 yellowgreen = new BssColor("9acd32");
 
-	
 	private final String hashColor;
 
 	public BssColor(String color) {

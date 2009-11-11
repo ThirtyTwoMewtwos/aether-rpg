@@ -13,11 +13,12 @@ import com.jmex.bui.BuiSystem;
 
 public class BComponentOperatorUtil {
 	private static final int TIME_TO_WAIT_FOR_EVENT = 20;
-	private static final long DEFAULT_SEARCH_TIMOUT = 10 * 1000; 
+	private static final long DEFAULT_SEARCH_TIMOUT = 5 * 1000; 
+	
 	public static final String WAIT_TIME_PROPERTY = "wait.time";
 	public static final String SEARCH_FOR_COMPONENT_TIMEOUT_PROPERTY = "search.for.component.timeout";
 
-	public static BWindow getWindowWithId(String id) throws InterruptedException {
+	public static BWindow windowWithId(String id) throws InterruptedException {
 		waitForRootNodeSet();
 		BWindow result = null;
 		long startTime = System.currentTimeMillis();
@@ -25,7 +26,9 @@ public class BComponentOperatorUtil {
 			if (System.currentTimeMillis() - startTime > DEFAULT_SEARCH_TIMOUT) {
 				throw new IllegalStateException("Unable to find window with id [" + id + "]");
 			}
-			result = BuiSystem.getWindow(id);
+			try {
+				result = BuiSystem.getWindow(id);
+			} catch (Exception e) {}
 			performWaitOnThread();
 		}
 		return result;
@@ -33,20 +36,7 @@ public class BComponentOperatorUtil {
 
 	private static void waitForRootNodeSet() throws InterruptedException {
 		while (BuiSystem.getRootNode() == null) {
-			Thread.sleep(TIME_TO_WAIT_FOR_EVENT);
-		}
-	}
-
-	public static void performPause() {
-		try {
-			String property = System.getProperty(WAIT_TIME_PROPERTY);
-			if (property == null) {
-				Thread.sleep(TIME_TO_WAIT_FOR_EVENT);
-			} else {
-				Thread.sleep(Integer.getInteger(property));
-			}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			performWaitOnThread();
 		}
 	}
 
@@ -107,9 +97,13 @@ public class BComponentOperatorUtil {
     }
 	
 	public static void waitFor(Condition condition) {
-		while (condition.existing()) {
+		long startTime = System.currentTimeMillis();
+		while (!condition.existing()) {
 			performWaitOnThread();
-			System.out.println("Waiting for condition");
+			long elapsedTime = System.currentTimeMillis() - startTime;
+			if (elapsedTime > DEFAULT_SEARCH_TIMOUT) {
+				break;
+			}
 		}
 	}
 }

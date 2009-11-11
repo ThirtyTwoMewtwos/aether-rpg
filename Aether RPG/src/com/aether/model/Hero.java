@@ -36,6 +36,7 @@ import java.io.*;
 
 import com.aether.model.character.Classification;
 import com.aether.model.character.Race;
+import com.aether.model.character.Statistic;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
 
@@ -56,7 +57,7 @@ public class Hero implements Serializable
     private final static String[] SEXS = { "Male", "Female" };
     private final static String[] RACES = { "Revenant", "Human" };
 
-    private int hp;
+    private Statistic hitPoints;
     private int mp;
     private int maxHP;
     private int maxMP;
@@ -146,6 +147,8 @@ public class Hero implements Serializable
         setBio(hBio);
         setSex(sex);
         setHeroClass(hClass);
+        
+        hitPoints = new Statistic(10);
     } 
     
     private void updateStats(Equipment equipment, boolean equip)
@@ -422,14 +425,11 @@ public class Hero implements Serializable
     {
         wisdom = wis;
     }
-    public int getHP()
-    {
-        return hp;
+    
+    public Statistic getHealth() {
+    	return hitPoints;
     }
-    public void setHP(int heroHP)
-    {
-        hp = heroHP;
-    }
+   
     public int getMP()
     {
         return mp;
@@ -590,7 +590,7 @@ public class Hero implements Serializable
         buffer.append(getSex() + "\n");
         buffer.append( getHeroClass() + "\n");
         buffer.append("Bio: " + format(getBio()) + "\n\n");
-        buffer.append("HP: " + getHP() + "/" + getMaxHP() +"\n");
+        buffer.append("HP: " + getHealth().getValue() + "/" + getHealth().getMax() +"\n");
         buffer.append("MP: " + getMP() + "/" + getMaxMP() +"\n\n");
         buffer.append("Strength: " + getStrength() + "\n");
         buffer.append("Dexterity: " + getDexterity() + "\n");
@@ -618,7 +618,7 @@ public class Hero implements Serializable
     {
         try{
             Document document = new Document(PageSize.A4, 50, 50, 50, 50);
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("heroes/"+ getName() +".pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("heroes/"+ getName() +".pdf"));
 
             document.open();
 
@@ -631,7 +631,7 @@ public class Hero implements Serializable
             Section section = chapter.addSection(subTitle);
 
             Paragraph content = new Paragraph("Biography: " + getBio() + "\n"
-                                                + "HP: " + getHP() + "/" + getMaxHP() + "\n"
+                                                + "HP: " + getHealth().getValue() + "/" + getHealth().getMax() + "\n"
                                                 + "MP: " + getMP() + "/" + getMaxMP() + "\n"
                                                 + "Strength: " + getStrength() + "\n"
                                                 + "Dexterity: " + getDexterity() + "\n"

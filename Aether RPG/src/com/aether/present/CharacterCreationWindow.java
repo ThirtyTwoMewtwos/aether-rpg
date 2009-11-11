@@ -6,6 +6,7 @@ import com.aether.model.character.Classification;
 import com.aether.model.character.Race;
 import com.aether.present.state.CharacterCreationPresenter;
 import com.aether.present.state.CharacterCreationView;
+import com.jme.input.KeyInput;
 import com.jme.system.DisplaySystem;
 import com.jmex.bui.BButton;
 import com.jmex.bui.BComboBox;
@@ -22,7 +23,9 @@ import com.jmex.bui.text.Document.Listener;
 import com.jmex.game.state.GameStateManager;
 
 public class CharacterCreationWindow extends BaseWindow implements CharacterCreationView {
-    private static final Item PLEASE_SELECT_ITEM = new BComboBox.Item(null, "<Select>");
+    private static final String DEFAULT_WINDOW = "base";
+	private static final String HIDDEN_CREATE_CHARACTER = "hidden.create.character";
+	private static final Item PLEASE_SELECT_ITEM = new BComboBox.Item(null, "<Select>");
 	private static final int BUTTON_HEIGHT = 40;
 	private static final int BUTTON_WIDTH = 250;
 	
@@ -38,14 +41,9 @@ public class CharacterCreationWindow extends BaseWindow implements CharacterCrea
     public CharacterCreationWindow() {
 		super("Character Creation Window");
 
-		DisplaySystem display = DisplaySystem.getDisplaySystem();
-        TableLayout tableLayout = new TableLayout(2, 8, 8);
-        tableLayout.setHorizontalAlignment(TableLayout.LEFT);
-        tableLayout.setVerticalAlignment(TableLayout.CENTER);
-        BWindow window = new BWindow(BuiSystem.getStyle(), tableLayout);
-        window.setName(ID);
-        window.setSize(display.getWidth() - 80, display.getHeight() - 100);
-        setWindow(window);
+		bindHiddenKeyFeature();
+		
+		BWindow window = initWindow();
 
 		initNameField();
         initRaceSelection();
@@ -60,11 +58,38 @@ public class CharacterCreationWindow extends BaseWindow implements CharacterCrea
     }
 
 
+	private BWindow initWindow() {
+		DisplaySystem display = DisplaySystem.getDisplaySystem();
+        TableLayout tableLayout = new TableLayout(2, 8, 8);
+        tableLayout.setHorizontalAlignment(TableLayout.LEFT);
+        tableLayout.setVerticalAlignment(TableLayout.CENTER);
+        BWindow window = new BWindow(BuiSystem.getStyle(), tableLayout);
+        window.setName(ID);
+        window.setSize(display.getWidth() - 80, display.getHeight() - 100);
+        addWindow(DEFAULT_WINDOW, window);
+		return window;
+	}
+
+
+	private void bindHiddenKeyFeature() {
+		registerBinding(HIDDEN_CREATE_CHARACTER, KeyInput.KEY_F4);
+	}
+	
+	@Override
+	protected void handleBinding(String name) {
+		if (HIDDEN_CREATE_CHARACTER.equals(name)) {
+			presenter.setName("Joe the berzerker");
+			presenter.setRace(Race.HUMAN);
+			presenter.setClassification(Classification.Acolyte);
+			presenter.finish();
+		}
+	}
+
 	private void initNameField() {
-		getWindow().add(new BLabel("Name: "));
+		getWindow(DEFAULT_WINDOW).add(new BLabel("Name: "));
         nameField = new BTextField("");
         nameField.setPreferredSize(BUTTON_WIDTH, 25);
-        getWindow().add(nameField);
+        getWindow(DEFAULT_WINDOW).add(nameField);
         nameField.setName("set.name");
         nameField.getDocument().addListener(new Listener() {
 			@Override
@@ -79,7 +104,7 @@ public class CharacterCreationWindow extends BaseWindow implements CharacterCrea
 	}
 
 	private void initRaceSelection() {
-		getWindow().add(new BLabel("Race: "));
+		getWindow(DEFAULT_WINDOW).add(new BLabel("Race: "));
         raceSelection = new BComboBox();
         raceSelection.setPreferredSize(BUTTON_WIDTH, 25);
         raceSelection.addItem(PLEASE_SELECT_ITEM);
@@ -96,11 +121,11 @@ public class CharacterCreationWindow extends BaseWindow implements CharacterCrea
 				presenter.setRace((Race)selectedItem);
 			}
         });
-        getWindow().add(raceSelection);
+        getWindow(DEFAULT_WINDOW).add(raceSelection);
 	}
 
 	private void initClassSelection() {
-		getWindow().add(createLabel("Class: "));
+		getWindow(DEFAULT_WINDOW).add(createLabel("Class: "));
 		classSelection = new BComboBox();
 		classSelection.setPreferredSize(BUTTON_WIDTH, 25);
 		classSelection.setName(CLASS_SELECTION_NAME);
@@ -114,7 +139,7 @@ public class CharacterCreationWindow extends BaseWindow implements CharacterCrea
 		});
 		
 		clearClassifications();
-		getWindow().add(classSelection);
+		getWindow(DEFAULT_WINDOW).add(classSelection);
 	}
 
 	private BLabel createLabel(String text) {
@@ -123,7 +148,7 @@ public class CharacterCreationWindow extends BaseWindow implements CharacterCrea
 
 	private void initBackToMainMenu() {
 		backButton = new BButton("Back");
-		getWindow().add(backButton);
+		getWindow(DEFAULT_WINDOW).add(backButton);
 		backButton.setPreferredSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 		backButton.addListener(new ActionListener() {
 			@Override
@@ -135,7 +160,7 @@ public class CharacterCreationWindow extends BaseWindow implements CharacterCrea
 	
 	private void initSaveCharacter() {
 		saveCharacter = new BButton("Finish");
-		getWindow().add(saveCharacter);
+		getWindow(DEFAULT_WINDOW).add(saveCharacter);
 		saveCharacter.setPreferredSize(200, 40);
 		saveCharacter.addListener(new ActionListener() {
 			@Override

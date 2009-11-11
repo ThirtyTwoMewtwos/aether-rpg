@@ -20,14 +20,8 @@ public class BButtonOperator extends BComponentOperator {
 		BComponentOperatorUtil.callInBuiThread(new Callable<Object>() {
 			@Override
 			public Object call() throws Exception {
-				button.dispatchEvent(new MouseEvent(this, System.currentTimeMillis(), 0, MouseEvent.MOUSE_PRESSED, 0, 0, 0));
-				return null;
-			}
-		});
-		BComponentOperatorUtil.callInBuiThread(new Callable<Object>() {
-			@Override
-			public Object call() throws Exception {
-				button.dispatchEvent(new MouseEvent(this, System.currentTimeMillis(), 0, MouseEvent.MOUSE_RELEASED, 0, 0, 0));
+				button.dispatchEvent(new MouseEvent(this, System.currentTimeMillis(), 0, MouseEvent.MOUSE_PRESSED, MouseEvent.BUTTON1, 0, 0));
+				button.dispatchEvent(new MouseEvent(this, System.currentTimeMillis(), 0, MouseEvent.MOUSE_RELEASED, MouseEvent.BUTTON1, 0, 0));
 				return null;
 			}
 		});

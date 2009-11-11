@@ -6,4 +6,6 @@ public interface CharacterLocator {
 
 	void setPlayer(Hero anyObject);
 
+	Hero getPlayer();
+
 }

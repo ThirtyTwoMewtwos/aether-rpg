@@ -1,13 +1,7 @@
 package com.aether.present;
 
-import static com.aether.present.css.BssWriter.StyleState.disabled;
-import static com.aether.present.css.BssWriter.StyleState.hover;
-import static com.aether.present.css.BssWriter.StyleType.button;
-import static com.aether.present.css.BssWriter.StyleType.combobox;
-import static com.aether.present.css.BssWriter.StyleType.label;
-import static com.aether.present.css.BssWriter.StyleType.menuitem;
-import static com.aether.present.css.BssWriter.StyleType.textfield;
-import static com.aether.present.css.BssWriter.StyleType.window;
+import static com.aether.present.css.BssWriter.StyleState.*;
+import static com.aether.present.css.BssWriter.StyleType.*;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -26,15 +20,25 @@ import com.jmex.bui.BStyleSheet;
 import com.jmex.bui.BuiSystem;
 import com.jmex.bui.PolledRootNode;
 import com.jmex.bui.bss.BStyleSheetUtil;
-import com.util.StringUtil;
 
 public class UILookAndFeel {
+	public static final String CHAT_LAYOUT = "chatlayout";
+	public static final String CHAT_INPUT = "chattext";
+
+	public static final String STATISTICS_HEALTH = "statistics_hitpoints";
+	public static final String STATISTICS_MANA_POINTS = "statistics_manapoints";
+	public static final String STATISTICS_TOOLTIP_TEXT = "tooltip_text";
+	
 	private static final int BUTTON_FONT_SIZE = 24;
 	private static final String FONT_FAMILY = "Helvetica";
-	BssWriter writer = new BssWriter();
+
+	private BssColor fadedBlack = new BssColor("00000088");
+	private BssWriter writer = new BssWriter();
 
 	public void loadBaseStyleSheet() {
 		try {
+			setupInGameStatistics();
+			setupInGameChatBox();
 			setupWindow();
 			setupButtons();
 			setupLabels();
@@ -48,8 +52,37 @@ public class UILookAndFeel {
 		setupDefaultStyleSheet();
 	}
 
+	private void setupInGameStatistics() {
+		writer.createStyle(STATISTICS_TOOLTIP_TEXT)
+				.setBackground(BssColor.black)
+				.setColor(BssColor.WHITE)
+				.setFont(FONT_FAMILY, BssFontStyle.ITALIC, 11);
+		
+		writer.createStyle(STATISTICS_HEALTH)
+				.setBackground(BssColor.black)
+				.setColor(BssColor.red)
+				.setBorder(1, BssColor.white);
+		
+		writer.createStyle(STATISTICS_MANA_POINTS)
+				.setBackground(BssColor.black)
+				.setColor(BssColor.blue)
+				.setBorder(1, BssColor.white);
+	}
+
+	private void setupInGameChatBox() {
+		writer.createStyle(CHAT_LAYOUT)
+				.setBackground(fadedBlack)
+				.setTextAlign(BssTextAlign.LEFT)
+				.setColor(BssColor.yellow);
+		
+		writer.createStyle(CHAT_INPUT)
+				.setBackground(fadedBlack)
+				.setTextAlign(BssTextAlign.LEFT)
+				.setBorder(1, BssColor.white)
+				.setColor(BssColor.white);
+	}
+
 	private void setupWindow() {
-		BssColor fadedBlack = new BssColor("00000088");
 		writer.createStyle(window)
 				.setBackground(fadedBlack)
 				.setEffectColor(BssColor.WHITE);
@@ -117,18 +150,6 @@ public class UILookAndFeel {
 
     private void setupDefaultStyleSheet() {
 		BStyleSheet styleSheet = BStyleSheetUtil.getStyleSheet(writer.asReader());
-		// printOutBssToConsole();
 		BuiSystem.init(new PolledRootNode(Timer.getTimer(), new InputHandler()), styleSheet);
-	}
-
-	private void printOutBssToConsole() {
-		try {
-			int lineNo = 1;
-			for (String each : StringUtil.toString(writer.asReader()).split("\n")) {
-				System.out.println(lineNo + ": " + each);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 }

@@ -1,10 +1,13 @@
 package com.aether.present.css;
 
+import static com.aether.present.css.BssWriter.StyleState.disabled;
+import static com.aether.present.css.BssWriter.StyleState.down;
+import static com.aether.present.css.BssWriter.StyleState.hover;
+import static com.aether.present.css.BssWriter.StyleState.selected;
+import static com.aether.present.css.BssWriter.StyleType.button;
 import static org.junit.Assert.assertEquals;
 
 import java.io.Reader;
-import static com.aether.present.css.BssWriter.StyleState.*;
-import static com.aether.present.css.BssWriter.StyleType.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,13 +17,13 @@ import com.util.StringUtil;
 public class TestBssWriter {
 	
 	private BssWriter bssWriter;
-	private String buttonDefaultBody;
+	private String defaultBody;
 
 	@Before
 	public void setUp() {
 		bssWriter = new BssWriter();
 		
-		buttonDefaultBody = "\tfont: \"Dialog\" bold 12;\n" + 
+		defaultBody = "\tfont: \"Dialog\" bold 12;\n" + 
 						"\tpadding: 3 5;\n" +
 						"\tcolor: #FF0000;\n" +
 						"\tbackground: solid #0000FF;\n" +
@@ -39,7 +42,7 @@ public class TestBssWriter {
 		
 		compareReaders(
 				"button {\n" +
-				buttonDefaultBody + 
+				defaultBody + 
 				"}", writer.asReader());
 	}
 
@@ -54,7 +57,7 @@ public class TestBssWriter {
 		
 		compareReaders(
 				"button:hover {\n" +
-				buttonDefaultBody + 
+				defaultBody + 
 				"}", bssWriter.asReader());
 	}
 	
@@ -64,7 +67,7 @@ public class TestBssWriter {
 		
 		compareReaders(
 				"button:down {\n" +
-				buttonDefaultBody + 
+				defaultBody + 
 				"}", bssWriter.asReader());
 	}
 	
@@ -74,7 +77,7 @@ public class TestBssWriter {
 		
 		compareReaders(
 				"button:selected {\n" +
-				buttonDefaultBody + 
+				defaultBody + 
 				"}", bssWriter.asReader());
 	}
 	
@@ -84,7 +87,17 @@ public class TestBssWriter {
 		
 		compareReaders(
 				"button:disabled {\n" +
-				buttonDefaultBody + 
+				defaultBody + 
+				"}", bssWriter.asReader());
+	}
+	
+	@Test
+	public void testStyleClassDefinedByString() throws Exception {
+		bssWriter.createStyle("wordup");
+		
+		compareReaders(
+				"wordup {\n" +
+				defaultBody + 
 				"}", bssWriter.asReader());
 	}
 }

@@ -26,6 +26,14 @@ public class Main {
 
 	private static StandardGame game;
 
+	public static void startGame() {
+		try {
+			Main.main(new String[] {});
+		} catch (IOException e) {
+			throw new IllegalStateException("Unable to start game: ", e);
+		}
+	}
+	
 	public static void main(String[] args) throws IOException {
 		game = new StandardGame("Aether RPG");
 		game.setBackgroundColor(ColorRGBA.red);
@@ -48,7 +56,7 @@ public class Main {
 	}
 
 	private static void bindGameState(ServiceStore store) {
-		store.bind(MainMenuView.class, MainWindow.class);
+		store.bind(MainMenuView.class, MainMenuWindow.class);
 		store.bind(MainMenuPresenter.class, MainMenuPresenter.class);
 		store.bind(CharacterCreationView.class, CharacterCreationWindow.class);
 		store.bind(CharacterCreationPresenter.class, CharacterCreationPresenter.class);
@@ -74,7 +82,7 @@ public class Main {
 		assureGameIsShutdown();
 	}
 
-	private static void assureGameIsShutdown() {
+	public static void assureGameIsShutdown() {
 		while (game.isStarted()) {
 			try {
 				Thread.sleep(20);
@@ -82,5 +90,9 @@ public class Main {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public static StandardGame getGame() {
+		return game;
 	}
 }

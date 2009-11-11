@@ -103,9 +103,10 @@ public class BssStyleClass {
 		return this;
 	}
 
-	public void setBorder(int thickness, BssColor color) {
+	public BssStyleClass setBorder(int thickness, BssColor color) {
 		borderThickness = thickness;
 		borderColor = color;
+		return this;
 	}
 
 	public BssStyleClass clearBackground() {

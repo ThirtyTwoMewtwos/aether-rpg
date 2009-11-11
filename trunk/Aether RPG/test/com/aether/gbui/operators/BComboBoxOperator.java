@@ -53,7 +53,7 @@ public class BComboBoxOperator extends BComponentOperator {
 		BComponentOperatorUtil.waitFor(new Condition() {
 			@Override
 			public boolean existing() {
-				return comboBox.getSelectedIndex() != index;
+				return comboBox.getSelectedIndex() == index;
 			}
 		});
 	}

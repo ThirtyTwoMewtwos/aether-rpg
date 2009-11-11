@@ -5,13 +5,25 @@
 
 = UI Layout and Controls =
 
- * Player HUD system.  This is a display located in the north-west corner of the screen that displays the player's class symbol such as a sword and shield for a Holy Knight, the players hit points in a bar form (bar is red), and the players magic points also displayed in bar form (bar is blue).
+ * Player HUD system.  This is a display located in the north-west corner of the screen that displays the player's statistics as follows:
+  * class symbol such as a sword and shield for a Holy Knight.
+  * the players health/hitpoints in a bar form (bar is red).
+  * the players mana/magic points n a bar form (bar is blue).
 
  * Chat.  The chat system consists of multiple GUI elements melded into one.  A tabbed pane holds a message box (scrollable), a text input, and a send button.  Each tab on a tabbed pane is a channel.  An example of this would could be a tab for general chat, one for combat output, one for group chat, etc.  The user can split these up into multiple tabs *OR* can combine them *OR* a combination of both.  Messages broadcasted will follow the color standards (Cyan when talking in group chat, etc.).  The send button is also accessed by the enter/return key when the input box has focus.
 
  * Player skill bar(s).  This is a bar containing slots to assign skills/abilities to a location in the bar.  This bar will contain 12 slots per bar.  Each bar will be given a keyboard shortcut {1,2,3,4,5,6,7,8,9,0,-,=} for the default bar and then shift + the shortcut set, lastly followed by crtl + the shortcut set. Any additional bars will have no keyboard shortcuts.  Alternatively, you can mouse click a skill in a bar to activate that skill (if the skill is applicable to be used). The mouse click is the only way to activate skills on bars more than 3 (the ones with no shortcuts).
 
- * Window Buttons.  These are clickable buttons that produce various windows to aid users.  The available buttons (explaned in the windows section in more detail) will be:  Options, Persona, Skills/Abilities, Inventory, Equipment, Map, Guild, Social, Quests.  These buttons will be toggle buttons and textured with only an icon.  These windows might have successor windows.  Each of the 9 parent windows will have a keyboard shortcut { options = esc; persona = p; skills = k; inventory = i; Equipment = c; map = m; guild = g; social = o; quests = j;}
+ * Window Buttons.  These are clickable buttons that produce various windows to aid users.  The available buttons (explaned in the windows section in more detail) will be:  Options, Persona, Skills/Abilities, Inventory, Equipment, Map, Guild, Social, Quests.  These buttons will be toggle buttons and textured with only an icon.  These windows might have successor windows.  Each of the 9 parent windows will have a keyboard shortcut's:
+  * options = esc
+  * persona = p
+  * skills = k
+  * inventory = i
+  * equipment = c
+  * map = m
+  * guild = g
+  * social = o
+  * quests = j
 
  * Mini-map.  Spherical radius of player using standard colored dots to represent a top-down view of immediate surroundings.
 

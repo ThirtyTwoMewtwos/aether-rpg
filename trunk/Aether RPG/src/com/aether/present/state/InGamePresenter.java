@@ -1,8 +1,11 @@
 package com.aether.present.state;
 
-import com.aether.model.Hero;
+import java.net.MalformedURLException;
+
+import com.aether.model.CharacterSheet;
 import com.aether.model.character.CharacterLocator;
 import com.aether.model.character.Statistic;
+import com.aether.present.CharacterTypeImage;
 
 public class InGamePresenter implements ActiveState {
 
@@ -25,9 +28,15 @@ public class InGamePresenter implements ActiveState {
 	@Override
 	public void enter() {
 		view.activate();
-		Hero player = characterLocator.getPlayer();
-		Statistic hitPoints = player.getHealth();
-		view.setHealth(hitPoints.getMax(), hitPoints.getValue());
+		CharacterSheet player = characterLocator.getPlayer();
+		
+		Statistic health = player.getHealth();
+		view.setHealth(health.getMax(), health.getValue());
+		
+		Statistic mana = player.getMana();
+		view.setMana(mana.getMax(), mana.getValue());
+		
+		view.setImage(CharacterTypeImage.getImage(player.getClassification()));
 	}
 
 	@Override

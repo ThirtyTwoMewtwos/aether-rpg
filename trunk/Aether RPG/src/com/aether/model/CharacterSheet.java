@@ -40,9 +40,13 @@ import com.aether.model.character.Statistic;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
 
-public class Hero implements Serializable
-{
-    public final static int MOVE_MODIFIER = 2;
+public class CharacterSheet implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public final static int MOVE_MODIFIER = 2;
 
     private final int ATTRIBUTE_MODIFER = 2;
     private final double EXPIERENCE_MODIFER = 0.05;
@@ -52,15 +56,11 @@ public class Hero implements Serializable
     private final double SMALL_STAT_MODIFIER = 0.02;
     private final static int MALE = 0;
     private final static int FEMALE = 1;
-    private final static int REVENANT = 0;
-    private final static int HUMAN = 1;
     private final static String[] SEXS = { "Male", "Female" };
-    private final static String[] RACES = { "Revenant", "Human" };
 
-    private Statistic hitPoints;
-    private int mp;
-    private int maxHP;
-    private int maxMP;
+    private Statistic health;
+    private Statistic mana;
+    
     private int strength;
     private int dexterity;
     private int toughness;
@@ -93,42 +93,7 @@ public class Hero implements Serializable
     private Equipment[] equiped;
     private Classification role;
     
-    public enum Class
-    {
-        HERETIC("Heretic", "Healer", RACES[REVENANT]),
-        DARKGUARD("Dark Guard", "Tank", RACES[REVENANT]),
-        NECROMANCER("Necromancer","Magic DPS", RACES[REVENANT]),
-        BERSERKER("Berserker","Melee DPS", RACES[REVENANT]),
-        SAGE("Sage","Healer", RACES[HUMAN]),
-        HOLYKNIGHT("Holy Knight","Tank", RACES[HUMAN]),
-        ACOLYTE("Acolyte","Magic DPS", RACES[HUMAN]),
-        CRUSADER("Crusader","Melee DPS", RACES[HUMAN]);
-        
-        private String className;
-        private String role;
-        private String race;
-        
-        private Class(String strClass, String strRole, String strRace)
-        {
-            className = strClass;
-            role = strRole;
-            race = strRace;
-        }
-        public String getName()
-        {
-            return className;
-        }
-        public String getRole()
-        {
-            return role;
-        }
-        public String getRace()
-        {
-            return race;
-        }
-    }
-    
-    public Hero(String hName,String hBio, String sex, Classification hClass) {
+    public CharacterSheet(String hName,String hBio, String sex, Classification hClass) {
         level = 1;
         setXPToLevel(100);
         setLocation(new Point(20,20));
@@ -148,7 +113,9 @@ public class Hero implements Serializable
         setSex(sex);
         setHeroClass(hClass);
         
-        hitPoints = new Statistic(10);
+        health = new Statistic(10);
+        mana = new Statistic(10);
+        mana.setValue(2);
     } 
     
     private void updateStats(Equipment equipment, boolean equip)
@@ -176,6 +143,7 @@ public class Hero implements Serializable
         
         setCombatValues(); 
     }
+    
     private void setCombatValues()
     {
         double melee = (getStrength() * (getStrength() * LARGE_STAT_MODIFIER)) + (getDexterity() * (getDexterity() * SMALL_STAT_MODIFIER));
@@ -316,7 +284,7 @@ public class Hero implements Serializable
         role = hClass;
         setRace(role.getRace());
     }
-    public Classification getHeroClass()
+    public Classification getClassification()
     {
         return role;
     }
@@ -427,33 +395,13 @@ public class Hero implements Serializable
     }
     
     public Statistic getHealth() {
-    	return hitPoints;
+    	return health;
     }
+    
+	public Statistic getMana() {
+		return mana;
+	}
    
-    public int getMP()
-    {
-        return mp;
-    }
-    public void setMP(int heroMP)
-    {
-        mp = heroMP;
-    }
-    public int getMaxHP()
-    {
-        return maxHP;
-    }
-    public void setMaxHP(int heroMax)
-    {
-        maxHP = heroMax;
-    }
-    public int getMaxMP()
-    {
-        return maxMP;
-    }
-    public void setMaxMP(int heroMax)
-    {
-        maxMP = heroMax;
-    }
     public Point getLocation()
     {
         return location;
@@ -588,10 +536,10 @@ public class Hero implements Serializable
         buffer.append("Level: " + getLevel() + "\n");
         buffer.append(getRace() + "\n");
         buffer.append(getSex() + "\n");
-        buffer.append( getHeroClass() + "\n");
+        buffer.append( getClassification() + "\n");
         buffer.append("Bio: " + format(getBio()) + "\n\n");
         buffer.append("HP: " + getHealth().getValue() + "/" + getHealth().getMax() +"\n");
-        buffer.append("MP: " + getMP() + "/" + getMaxMP() +"\n\n");
+        buffer.append("MP: " + getMana().getMax() + "/" + getMana().getValue() +"\n\n");
         buffer.append("Strength: " + getStrength() + "\n");
         buffer.append("Dexterity: " + getDexterity() + "\n");
         buffer.append("Intelligence: " + getIntelligence() + "\n");
@@ -627,12 +575,12 @@ public class Hero implements Serializable
             Chapter chapter = new Chapter(title, 1);
             chapter.setNumberDepth(0);
 
-            Paragraph subTitle = new Paragraph("Level " + getLevel() + " " + getRace() + " " + getSex() + " " + getHeroClass(), FontFactory.getFont(FontFactory.HELVETICA, 16, Font.BOLD, new Color(255, 0, 0)));
+            Paragraph subTitle = new Paragraph("Level " + getLevel() + " " + getRace() + " " + getSex() + " " + getClassification(), FontFactory.getFont(FontFactory.HELVETICA, 16, Font.BOLD, new Color(255, 0, 0)));
             Section section = chapter.addSection(subTitle);
 
             Paragraph content = new Paragraph("Biography: " + getBio() + "\n"
                                                 + "HP: " + getHealth().getValue() + "/" + getHealth().getMax() + "\n"
-                                                + "MP: " + getMP() + "/" + getMaxMP() + "\n"
+                                                + "MP: " + getMana().getMax() + "/" + getMana().getValue() + "\n"
                                                 + "Strength: " + getStrength() + "\n"
                                                 + "Dexterity: " + getDexterity() + "\n"
                                                 + "Intelligence: " + getIntelligence() + "\n"

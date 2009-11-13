@@ -6,13 +6,16 @@ import static org.easymock.EasyMock.matches;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
 
+import java.awt.Image;
+
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aether.model.Hero;
+import com.aether.model.CharacterSheet;
 import com.aether.model.character.CharacterLocator;
 import com.aether.model.character.Classification;
+import com.aether.present.CharacterTypeImage;
 
 public class TestInGamePresenter {
 	private InGameView view;
@@ -47,9 +50,11 @@ public class TestInGamePresenter {
     @Test
     public void testEnterActiveAndExitActiveState() throws Exception {
         view.activate();
-		Hero hero = new Hero("Joe", "other", "male", Classification.Acolyte);
+		CharacterSheet hero = new CharacterSheet("Joe", "other", "male", Classification.Crusader);
 		EasyMock.expect(characterLocator.getPlayer()).andReturn(hero);
 		view.setHealth(10, 10);
+		view.setMana(10, 2);
+		view.setImage((Image)EasyMock.anyObject());
         view.deactivate();
 
         replay(view, stateTransition, characterLocator);

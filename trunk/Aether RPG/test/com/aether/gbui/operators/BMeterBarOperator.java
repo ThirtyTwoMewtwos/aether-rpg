@@ -30,4 +30,13 @@ public class BMeterBarOperator extends BComponentOperator {
 		return BComponentOperatorUtil.callInBuiThread(callable).intValue();
 	}
 
+	public Object getMaximum() {
+		Callable<Integer> callable = new Callable<Integer>() {
+			public Integer call() throws Exception {
+				int percentage = meterBar.getMaximum();
+				return new Integer(percentage);
+			}
+		};
+		return BComponentOperatorUtil.callInBuiThread(callable).intValue();
+	}
 }

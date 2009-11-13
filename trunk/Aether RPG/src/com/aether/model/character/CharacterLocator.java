@@ -1,11 +1,11 @@
 package com.aether.model.character;
 
-import com.aether.model.Hero;
+import com.aether.model.CharacterSheet;
 
 public interface CharacterLocator {
 
-	void setPlayer(Hero anyObject);
+	void setPlayer(CharacterSheet anyObject);
 
-	Hero getPlayer();
+	CharacterSheet getPlayer();
 
 }

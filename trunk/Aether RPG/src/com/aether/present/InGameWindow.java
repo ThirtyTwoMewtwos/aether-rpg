@@ -1,5 +1,7 @@
 package com.aether.present;
 
+import java.awt.Image;
+
 import com.aether.gbui.BDraggableChatWindow;
 import com.aether.gbui.BMeterBar;
 import com.aether.present.state.InGamePresenter;
@@ -8,9 +10,13 @@ import com.jme.input.KeyInput;
 import com.jme.system.DisplaySystem;
 import com.jmex.bui.BChatComponent;
 import com.jmex.bui.BChatWindow;
+import com.jmex.bui.BImage;
+import com.jmex.bui.BLabel;
 import com.jmex.bui.BWindow;
 import com.jmex.bui.BuiSystem;
 import com.jmex.bui.headlessWindows.BDraggableWindow;
+import com.jmex.bui.icon.BlankIcon;
+import com.jmex.bui.icon.ImageIcon;
 import com.jmex.bui.layout.AbsoluteLayout;
 import com.jmex.bui.listener.ChatListener;
 import com.jmex.bui.util.Rectangle;
@@ -20,8 +26,11 @@ public class InGameWindow extends BaseWindow implements InGameView {
 	private static final String CHAT_WINDOW = "chat.window";
 	private static final String STATS_WINDOW = "stats.window";
 	private static final String OPTIONS_MENU_KEY_BINDING = "options.menu";
+	
 	private InGamePresenter presenter;
 	private BMeterBar healthMeter;
+	private BMeterBar manaMeter;
+	private BLabel characterIcon;
 
 	public InGameWindow() {
 		super("Game View");
@@ -48,15 +57,19 @@ public class InGameWindow extends BaseWindow implements InGameView {
 	}
 
 	private void initStatistics(BWindow window) {
+		characterIcon = new BLabel(new BlankIcon(24, 24), "");
+		characterIcon.setName(STATS_SYMBOL_ID);
+		window.add(characterIcon, new Rectangle(3, window.getHeight() - 65, 24, window.getHeight() - 4));
+		
 		healthMeter = new BMeterBar(STATS_HEALTH_ID);
 		healthMeter.setStyleClass(UILookAndFeel.STATISTICS_HEALTH);
 		healthMeter.setTooltipStyleClass(UILookAndFeel.STATISTICS_TOOLTIP_TEXT);
-		window.add(healthMeter, new Rectangle(0, 0, 10, window.getHeight() - 20));
+		window.add(healthMeter, new Rectangle(0, 0, 10, window.getHeight() - 30));
 		
-		BMeterBar manaPointsMeter = new BMeterBar("statistics components");
-		manaPointsMeter.setStyleClass(UILookAndFeel.STATISTICS_MANA_POINTS);
-		manaPointsMeter.setTooltipStyleClass(UILookAndFeel.STATISTICS_TOOLTIP_TEXT);
-		window.add(manaPointsMeter, new Rectangle(20, 0, 10, window.getHeight() - 20));
+		manaMeter = new BMeterBar(STATS_MANA_ID);
+		manaMeter.setStyleClass(UILookAndFeel.STATISTICS_MANA_POINTS);
+		manaMeter.setTooltipStyleClass(UILookAndFeel.STATISTICS_TOOLTIP_TEXT);
+		window.add(manaMeter, new Rectangle(20, 0, 10, window.getHeight() - 30));
 	}
 
 	private BChatWindow initChatWindow() {
@@ -100,5 +113,17 @@ public class InGameWindow extends BaseWindow implements InGameView {
 	public void setHealth(int maximum, int current) {
 		healthMeter.setMaximum(maximum);
 		healthMeter.setValue(current);
+	}
+	
+	@Override
+	public void setMana(int maximum, int current) {
+		manaMeter.setMaximum(maximum);
+		manaMeter.setValue(current);
+	}
+	
+	@Override
+	public void setImage(Image image) {
+		ImageIcon icon = new ImageIcon(new BImage(image));
+		characterIcon.setIcon(icon);
 	}
 }

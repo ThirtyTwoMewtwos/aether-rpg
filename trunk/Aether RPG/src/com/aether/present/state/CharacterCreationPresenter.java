@@ -1,6 +1,6 @@
 package com.aether.present.state;
 
-import com.aether.model.Hero;
+import com.aether.model.CharacterSheet;
 import com.aether.model.character.CharacterLocator;
 import com.aether.model.character.Classification;
 import com.aether.model.character.Race;
@@ -65,7 +65,7 @@ public class CharacterCreationPresenter implements ActiveState {
     }
 
     public void finish() {
-    	characterManager.setPlayer(new Hero(name, "", "", classification));
+    	characterManager.setPlayer(new CharacterSheet(name, "", "", classification));
         state.transition(this, GAME_WINDOW_TRANSITION);
     }
 

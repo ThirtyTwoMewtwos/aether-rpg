@@ -11,7 +11,7 @@ import static org.easymock.EasyMock.verify;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aether.model.Hero;
+import com.aether.model.CharacterSheet;
 import com.aether.model.character.CharacterLocator;
 import com.aether.model.character.Classification;
 import com.aether.model.character.Race;
@@ -35,7 +35,7 @@ public class TestCharacterCreationPresenter {
     	view = createNiceMock(CharacterCreationView.class);
     	view.setPresenter((CharacterCreationPresenter)anyObject());
         view.setClasses(Classification.getAvailableFor(Race.HUMAN));
-        characterManager.setPlayer((Hero)anyObject());
+        characterManager.setPlayer((CharacterSheet)anyObject());
         stateTransition.transition((ActiveState)anyObject(), matches(CharacterCreationPresenter.GAME_WINDOW_TRANSITION));
 
         replay(view, stateTransition, characterManager);

@@ -16,7 +16,7 @@ public class TestStatistic {
 	}
 	
 	@Test
-	public void test_Create_a_new_statistic() throws Exception {
+	public void test_Create_a_new_statistic_sets_max_and_value_to_same_value() throws Exception {
 		assertEquals(10, statistic.getMax());
 		assertEquals(10, statistic.getValue());
 	}
@@ -24,6 +24,6 @@ public class TestStatistic {
 	@Test
 	public void test_Retrieve_value_as_percentage() throws Exception {
 		statistic.setValue(8);
-		assertEquals(80, statistic.asPercentage());
+		assertEquals(8, statistic.getValue());
 	}
 }

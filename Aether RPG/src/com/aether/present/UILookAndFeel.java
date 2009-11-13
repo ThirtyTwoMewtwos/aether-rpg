@@ -5,6 +5,7 @@ import static com.aether.present.css.BssWriter.StyleType.*;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.net.URL;
 
 import com.aether.present.css.BssBackgroundMode;
 import com.aether.present.css.BssColor;
@@ -31,6 +32,7 @@ public class UILookAndFeel {
 	
 	private static final int BUTTON_FONT_SIZE = 24;
 	private static final String FONT_FAMILY = "Helvetica";
+	public static final String DUMMY_24X24 = System.getProperty("user.dir") + "\\images\\logo.jpg";
 
 	private BssColor fadedBlack = new BssColor("00000088");
 	private BssWriter writer = new BssWriter();
@@ -61,12 +63,12 @@ public class UILookAndFeel {
 		writer.createStyle(STATISTICS_HEALTH)
 				.setBackground(BssColor.black)
 				.setColor(BssColor.red)
-				.setBorder(1, BssColor.white);
+				.setBorder(1, BssColor.GRAY);
 		
 		writer.createStyle(STATISTICS_MANA_POINTS)
 				.setBackground(BssColor.black)
 				.setColor(BssColor.blue)
-				.setBorder(1, BssColor.white);
+				.setBorder(1, BssColor.GRAY);
 	}
 
 	private void setupInGameChatBox() {

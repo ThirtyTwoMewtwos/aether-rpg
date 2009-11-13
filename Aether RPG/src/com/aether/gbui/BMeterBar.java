@@ -13,7 +13,7 @@ public class BMeterBar extends BComponent {
 
 	public BMeterBar(String name) {
 		super(name);
-		setTooltipText("(10/10)");
+		updateTooltipText();
 		setTooltipRelativeToMouse(true);
 	}
 
@@ -22,8 +22,8 @@ public class BMeterBar extends BComponent {
 		super.renderComponent(renderer);
 		ColorRGBA color = getColor();
 		
-		if (value != 0) {
-			float height = getHeight() * (maximum / value);
+		if (maximum != 0) {
+			float height = ((float)getHeight()) * ((float)value / (float)maximum);
 			GL11.glColor4f(color.r, color.g, color.b, color.a);
 			GL11.glBegin(GL11.GL_QUADS);
 			GL11.glVertex2f(0, 0);
@@ -47,10 +47,21 @@ public class BMeterBar extends BComponent {
 
 	public void setMaximum(int maximum) {
 		this.maximum = maximum;
+		updateTooltipText();
+	}
+
+	private void updateTooltipText() {
+		String text = String.format("(%s/%s)", getValue(), getMaximum());
+		setTooltipText(text);
+	}
+	
+	public int getMaximum() {
+		return maximum;
 	}
 
 	public void setValue(int value) {
 		this.value = value;
+		updateTooltipText();
 	}
 
 	public int getValue() {

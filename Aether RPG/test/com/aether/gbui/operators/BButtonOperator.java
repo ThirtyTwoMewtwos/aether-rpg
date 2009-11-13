@@ -3,17 +3,17 @@ package com.aether.gbui.operators;
 import java.awt.AWTException;
 import java.util.concurrent.Callable;
 
-import com.aether.gbui.LabeledOperatorSearcher;
 import com.jmex.bui.BButton;
 import com.jmex.bui.BComponent;
 import com.jmex.bui.BWindow;
 import com.jmex.bui.event.MouseEvent;
 
-public class BButtonOperator extends BComponentOperator {
+public class BButtonOperator extends BLabelOperator {
 	private BButton button;
 
 	public BButtonOperator(final BWindow window, final String label) throws AWTException {
-		button = (BButton)BComponentOperatorUtil.findWidget(window, new LabeledOperatorSearcher(BButton.class, label));
+		super(window, label);
+		button = (BButton)super.getComponent();
 	}
 
 	public void click() {
@@ -40,4 +40,5 @@ public class BButtonOperator extends BComponentOperator {
 		}
 		return toString + button.getText();
 	}
+
 }

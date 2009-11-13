@@ -17,7 +17,7 @@ public class BKeyboard {
 	public void typeKey(int keycode) {
 		bot.keyPress(keycode);
 		try {
-			Thread.sleep(50);
+			Thread.sleep(30);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

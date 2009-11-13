@@ -6,7 +6,7 @@ import com.jmex.bui.BComponent;
 
 public abstract class BComponentOperator {
 	
-	public abstract BComponent getComponent();
+	protected abstract BComponent getComponent();
 	
 	public boolean isEnabled() {
 		Callable<Boolean> callable = new Callable<Boolean>() {
@@ -44,5 +44,14 @@ public abstract class BComponentOperator {
 			}
 		};
 		BComponentOperatorUtil.callInBuiThread(callable);
+	}
+	
+	public String getTooltip() {
+		Callable<String> callable = new Callable<String>() {
+			public String call() throws Exception {
+				return getComponent().getTooltipText();
+			}
+		};
+		return BComponentOperatorUtil.callInBuiThread(callable);
 	}
 }

@@ -50,7 +50,7 @@ public class InGameWindow extends BaseWindow implements InGameView {
 		AbsoluteLayout layout = new AbsoluteLayout();
 		BWindow window = new BDraggableWindow(BuiSystem.getStyle(), layout);
 		window.setName(STATS_ID);
-		window.setSize(40, 100);
+		window.setSize(35, 100);
 		window.setLocation(10, 350);
 		addWindow(STATS_WINDOW, window);
 		return window;
@@ -59,7 +59,7 @@ public class InGameWindow extends BaseWindow implements InGameView {
 	private void initStatistics(BWindow window) {
 		characterIcon = new BLabel(new BlankIcon(24, 24), "");
 		characterIcon.setName(STATS_SYMBOL_ID);
-		window.add(characterIcon, new Rectangle(3, window.getHeight() - 65, 24, window.getHeight() - 4));
+		window.add(characterIcon, new Rectangle(0, window.getHeight() - 65, 24, window.getHeight() - 4));
 		
 		healthMeter = new BMeterBar(STATS_HEALTH_ID);
 		healthMeter.setStyleClass(UILookAndFeel.STATISTICS_HEALTH);
@@ -69,7 +69,7 @@ public class InGameWindow extends BaseWindow implements InGameView {
 		manaMeter = new BMeterBar(STATS_MANA_ID);
 		manaMeter.setStyleClass(UILookAndFeel.STATISTICS_MANA_POINTS);
 		manaMeter.setTooltipStyleClass(UILookAndFeel.STATISTICS_TOOLTIP_TEXT);
-		window.add(manaMeter, new Rectangle(20, 0, 10, window.getHeight() - 30));
+		window.add(manaMeter, new Rectangle(14, 0, 10, window.getHeight() - 30));
 	}
 
 	private BChatWindow initChatWindow() {

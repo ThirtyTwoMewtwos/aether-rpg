@@ -36,7 +36,7 @@ public class Main {
 	
 	public static void main(String[] args) throws IOException {
 		game = new StandardGame("Aether RPG");
-		game.setBackgroundColor(ColorRGBA.red);
+		game.setBackgroundColor(ColorRGBA.darkGray);
 		game.start();
 
 		MouseInput.get().setCursorVisible(true);

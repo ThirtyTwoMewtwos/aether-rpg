@@ -94,12 +94,12 @@ public class UILookAndFeel {
 		writer.createStyle(button)
 				.setFont(FONT_FAMILY, BssFontStyle.BOLD, BUTTON_FONT_SIZE)
 				.setColor(BssColor.WHITE)
-				.setBackground("images/button_up.png", BssBackgroundMode.FRAMEXY, 4, 4, 4, 4);
+				.setBackground("images/button_up.png", BssBackgroundMode.FRAMEXY);
 
 		writer.createStyle(button, hover)
 				.setFont(FONT_FAMILY, BssFontStyle.BOLD, BUTTON_FONT_SIZE)
 				.setTextEffect(BssTextEffect.OUTLINE)
-				.setBackground("images/button_up.png", BssBackgroundMode.FRAMEXY, 4, 4, 4, 4)
+				.setBackground("images/button_up.png", BssBackgroundMode.FRAMEXY)
 				.setEffectColor(new BssColor(new Color(255, 0, 0, 50)));
 		
 		makeDisabledButton(button);
@@ -125,13 +125,13 @@ public class UILookAndFeel {
     			.setFont(FONT_FAMILY, BssFontStyle.BOLD, 16)
     			.setPadding(8)
     			.setColor(BssColor.WHITE)
-    			.setBackground("images/combobox_up.png", BssBackgroundMode.FRAMEX);
+    			.setBackground("images/combobox_up.png", BssBackgroundMode.SCALEXY);
     	
     	writer.createStyle(combobox, disabled)
 				.setFont(FONT_FAMILY, BssFontStyle.PLAIN, 16)
 				.setPadding(8)
 				.setColor(BssColor.DARK_GRAY)
-				.setBackground("images/button_disabled.png", BssBackgroundMode.FRAMEXY);
+				.setBackground("images/button_disabled.png", BssBackgroundMode.SCALEXY);
     }
 
 	private BssStyleClass makeDisabledButton(StyleType widget) throws IOException {

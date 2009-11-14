@@ -1,6 +1,7 @@
 package com.aether.present;
 
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 
@@ -28,8 +29,6 @@ public class CharacterTypeImage {
 		String property = System.getProperty("user.dir");
 		String path = property.replace('\\', '/');
 		String pathname = path + "/images/" + type.getName().toLowerCase() + ".png";
-		System.out.println(pathname);
 		return pathname;
 	}
-
 }

@@ -96,7 +96,7 @@ public class InGameWindow extends BaseWindow implements InGameView {
 
 	private void bindKeysToView() {
 		registerBinding(OPTIONS_MENU_KEY_BINDING, KeyInput.KEY_F12);
-		registerBinding(PERSONA_VIEW_KEY_BINDING, KeyInput.KEY_J);
+		registerBinding(PERSONA_VIEW_KEY_BINDING, KeyInput.KEY_P);
 	}
 
 	@Override

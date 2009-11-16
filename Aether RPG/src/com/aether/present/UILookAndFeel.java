@@ -30,9 +30,11 @@ public class UILookAndFeel {
 	public static final String STATISTICS_MANA_POINTS = "statistics_manapoints";
 	public static final String STATISTICS_TOOLTIP_TEXT = "tooltip_text";
 	
+	public static final String PERSONA_STATISTICS = "persona_statistics";
+	public static final String PERSONA_STATISTICS_VALUES = "persona_statistics_values";
+	
 	private static final int BUTTON_FONT_SIZE = 24;
 	private static final String FONT_FAMILY = "Helvetica";
-	public static final String DUMMY_24X24 = System.getProperty("user.dir") + "\\images\\logo.jpg";
 
 	private BssColor fadedBlack = new BssColor("00000088");
 	private BssWriter writer = new BssWriter();
@@ -69,6 +71,18 @@ public class UILookAndFeel {
 				.setBackground(BssColor.black)
 				.setColor(BssColor.blue)
 				.setBorder(1, BssColor.GRAY);
+		
+		writer.createStyle(PERSONA_STATISTICS)
+				.clearBackground()
+				.setTextAlign(BssTextAlign.LEFT)
+				.setFont(FONT_FAMILY, BssFontStyle.BOLD, 12)
+				.setColor(BssColor.WHITE);
+		
+		writer.createStyle(PERSONA_STATISTICS_VALUES)
+				.clearBackground()
+				.setTextAlign(BssTextAlign.CENTER)
+				.setFont(FONT_FAMILY, BssFontStyle.BOLD, 12)
+				.setColor(BssColor.WHITE);
 	}
 
 	private void setupInGameChatBox() {
@@ -116,7 +130,7 @@ public class UILookAndFeel {
     private void setupTextField() {
         writer.createStyle(textfield)
         		.setFont(FONT_FAMILY, BssFontStyle.PLAIN, 16)
-        		.setBackground("images/textfield.png", BssBackgroundMode.FRAMEXY)
+        		.setBackground("images/textfield.png", BssBackgroundMode.SCALEX)
         		.setColor(BssColor.BLACK);
     }
     
@@ -126,6 +140,11 @@ public class UILookAndFeel {
     			.setPadding(8)
     			.setColor(BssColor.WHITE)
     			.setBackground("images/combobox_up.png", BssBackgroundMode.SCALEXY);
+    	
+    	writer.createStyle(combobox, hover)
+		.setFont(FONT_FAMILY, BssFontStyle.BOLD, 16)
+		.setPadding(8)
+		.setBackground("images/combobox_up.png", BssBackgroundMode.SCALEXY);
     	
     	writer.createStyle(combobox, disabled)
 				.setFont(FONT_FAMILY, BssFontStyle.PLAIN, 16)

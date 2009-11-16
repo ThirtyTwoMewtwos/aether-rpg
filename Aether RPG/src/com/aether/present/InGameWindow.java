@@ -26,6 +26,7 @@ public class InGameWindow extends BaseWindow implements InGameView {
 	private static final String CHAT_WINDOW = "chat.window";
 	private static final String STATS_WINDOW = "stats.window";
 	private static final String OPTIONS_MENU_KEY_BINDING = "options.menu";
+	private static final String PERSONA_VIEW_KEY_BINDING = "persona.view";
 	
 	private InGamePresenter presenter;
 	private BMeterBar healthMeter;
@@ -34,7 +35,6 @@ public class InGameWindow extends BaseWindow implements InGameView {
 
 	public InGameWindow() {
 		super("Game View");
-		DisplaySystem.getDisplaySystem();
 		bindKeysToView();
 
 		BWindow statsWindow = initStatsWindow(); 
@@ -50,7 +50,7 @@ public class InGameWindow extends BaseWindow implements InGameView {
 		AbsoluteLayout layout = new AbsoluteLayout();
 		BWindow window = new BDraggableWindow(BuiSystem.getStyle(), layout);
 		window.setName(STATS_ID);
-		window.setSize(35, 100);
+		window.setSize(34, 100);
 		window.setLocation(10, 350);
 		addWindow(STATS_WINDOW, window);
 		return window;
@@ -59,12 +59,12 @@ public class InGameWindow extends BaseWindow implements InGameView {
 	private void initStatistics(BWindow window) {
 		characterIcon = new BLabel(new BlankIcon(24, 24), "");
 		characterIcon.setName(STATS_SYMBOL_ID);
-		window.add(characterIcon, new Rectangle(0, window.getHeight() - 65, 24, window.getHeight() - 4));
+		window.add(characterIcon, new Rectangle(0, window.getHeight() - 28, 24, 24));
 		
 		healthMeter = new BMeterBar(STATS_HEALTH_ID);
 		healthMeter.setStyleClass(UILookAndFeel.STATISTICS_HEALTH);
 		healthMeter.setTooltipStyleClass(UILookAndFeel.STATISTICS_TOOLTIP_TEXT);
-		window.add(healthMeter, new Rectangle(0, 0, 10, window.getHeight() - 30));
+		window.add(healthMeter, new Rectangle(1, 0, 10, window.getHeight() - 30));
 		
 		manaMeter = new BMeterBar(STATS_MANA_ID);
 		manaMeter.setStyleClass(UILookAndFeel.STATISTICS_MANA_POINTS);
@@ -96,12 +96,15 @@ public class InGameWindow extends BaseWindow implements InGameView {
 
 	private void bindKeysToView() {
 		registerBinding(OPTIONS_MENU_KEY_BINDING, KeyInput.KEY_F12);
+		registerBinding(PERSONA_VIEW_KEY_BINDING, KeyInput.KEY_J);
 	}
 
 	@Override
 	protected void handleBinding(String name) {
 		if (OPTIONS_MENU_KEY_BINDING.equals(name)) {
 			presenter.optionsMenu();
+		} else if (PERSONA_VIEW_KEY_BINDING.equals(name)) {
+			presenter.togglePersona();
 		}
 	}
 

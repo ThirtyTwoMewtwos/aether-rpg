@@ -1,24 +1,26 @@
 package com.aether.present.state;
 
-import java.net.MalformedURLException;
-
 import com.aether.model.CharacterSheet;
 import com.aether.model.character.CharacterLocator;
 import com.aether.model.character.Statistic;
 import com.aether.present.CharacterTypeImage;
+import com.aether.present.hud.HUDViewLocator;
+import com.aether.present.hud.HUDViewLocator.View;
 
 public class InGamePresenter implements ActiveState {
-
 	public static final String OPTIONS_MENU_TRANSITION = "options.menu";
 	private final StateTransition stateTransition;
 	private final InGameView view;
-	private CharacterLocator characterLocator;
+	private final CharacterLocator characterLocator;
+	private HUDViewLocator hudLocator;
 
-	public InGamePresenter(InGameView view, StateTransition stateTransition, CharacterLocator characterLocator) {
+	public InGamePresenter(InGameView view, StateTransition stateTransition, CharacterLocator characterLocator, HUDViewLocator hudLocator) {
 		this.view = view;
 		this.stateTransition = stateTransition;
-		view.setPresenter(this);
 		this.characterLocator = characterLocator;
+		this.hudLocator = hudLocator;
+
+		view.setPresenter(this);
 	}
 
 	public void optionsMenu() {
@@ -28,6 +30,7 @@ public class InGamePresenter implements ActiveState {
 	@Override
 	public void enter() {
 		view.activate();
+		hudLocator.activate();
 		CharacterSheet player = characterLocator.getPlayer();
 		
 		Statistic health = player.getHealth();
@@ -42,5 +45,10 @@ public class InGamePresenter implements ActiveState {
 	@Override
 	public void exit() {
 		view.deactivate();
+		hudLocator.deactivate();
+	}
+
+	public void togglePersona() {
+		hudLocator.toggleViewVisibility(View.PERSONA);
 	}
 }

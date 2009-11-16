@@ -3,6 +3,8 @@ package com.aether.gbui;
 import java.awt.AWTException;
 import java.awt.Robot;
 
+import com.aether.gbui.operators.BComponentOperatorUtil;
+
 public class BKeyboard {
 	private Robot bot;
 	
@@ -15,12 +17,11 @@ public class BKeyboard {
 	 * @param keycode
 	 */
 	public void typeKey(int keycode) {
+		BComponentOperatorUtil.delayForUpdate();
 		bot.keyPress(keycode);
-		try {
-			Thread.sleep(30);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		BComponentOperatorUtil.delayForUpdate();
+		BComponentOperatorUtil.delayForUpdate();
 		bot.keyRelease(keycode);
+		BComponentOperatorUtil.delayForUpdate();
 	}
 }

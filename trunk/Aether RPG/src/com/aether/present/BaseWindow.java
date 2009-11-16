@@ -21,8 +21,8 @@ public abstract class BaseWindow extends BasicGameState{
 
 	public BaseWindow(String name) {
 		super(name);
-		keyBindings = new ArrayList<String>();
 		windows = new Hashtable<Object, BWindow>();
+		keyBindings = new ArrayList<String>();
 	}
     
     protected void addWindow(Object named, BWindow window) {
@@ -40,10 +40,10 @@ public abstract class BaseWindow extends BasicGameState{
 		getRootNode().attachChild(BuiSystem.getRootNode());
 		getRootNode().updateRenderState();
 
-		addWindow();
+		addWindows();
 	}
 
-	private void addWindow() {
+	private void addWindows() {
 		GameTaskQueueManager.getManager().update(new Callable<Object>() {
 			public Object call() throws Exception {
 				for (BWindow each : windows.values()) {
@@ -57,9 +57,8 @@ public abstract class BaseWindow extends BasicGameState{
 	public void deactivate() {
 		super.setActive(false);
 
-		getRootNode().detachChild(BuiSystem.getRootNode());
-
 		removeWindow();
+		getRootNode().detachChild(BuiSystem.getRootNode());
 	}
 
 	private void removeWindow() {
@@ -88,10 +87,14 @@ public abstract class BaseWindow extends BasicGameState{
 	
 	private void checkForKeyPress() {
 		for (String each : keyBindings) {
-			if (KeyBindingManager.getKeyBindingManager().isValidCommand(each, true)) {
+			if (isKeyPressed(each)) {
 				handleBinding(each);
 			}
 		}
+	}
+
+	private boolean isKeyPressed(String each) {
+		return KeyBindingManager.getKeyBindingManager().isValidCommand(each, false);
 	}
 	
 	/**

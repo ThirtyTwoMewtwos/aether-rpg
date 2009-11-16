@@ -6,17 +6,8 @@ import org.gap.jseed.ServiceStore;
 
 import com.aether.model.character.CharacterLocator;
 import com.aether.model.character.PCLocator;
-import com.aether.present.state.ActiveState;
-import com.aether.present.state.CharacterCreationPresenter;
-import com.aether.present.state.CharacterCreationView;
-import com.aether.present.state.FinishGameService;
-import com.aether.present.state.GameStateTransition;
-import com.aether.present.state.InGamePresenter;
-import com.aether.present.state.InGameView;
-import com.aether.present.state.MainMenuPresenter;
-import com.aether.present.state.MainMenuView;
-import com.aether.present.state.ShutdownService;
-import com.aether.present.state.StateTransition;
+import com.aether.present.hud.HUDLoader;
+import com.aether.present.state.*;
 import com.jme.app.AbstractGame;
 import com.jme.input.MouseInput;
 import com.jme.renderer.ColorRGBA;
@@ -45,7 +36,7 @@ public class Main {
 		loadServices(game, store);
 
 		new UILookAndFeel().loadBaseStyleSheet();
-		bindGameState(store);
+		bindGameViewStates(store);
 	}
 
 	private static void loadServices(StandardGame game, ServiceStore store) {
@@ -55,7 +46,9 @@ public class Main {
 		store.bind(CharacterLocator.class, PCLocator.class);
 	}
 
-	private static void bindGameState(ServiceStore store) {
+	private static void bindGameViewStates(ServiceStore store) {
+		HUDLoader.initialize(store);
+		
 		store.bind(MainMenuView.class, MainMenuWindow.class);
 		store.bind(MainMenuPresenter.class, MainMenuPresenter.class);
 		store.bind(CharacterCreationView.class, CharacterCreationWindow.class);

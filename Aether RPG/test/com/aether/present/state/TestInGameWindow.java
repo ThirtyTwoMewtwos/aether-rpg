@@ -35,9 +35,9 @@ public class TestInGameWindow {
 	}
 	
 	@Test
-	public void test_F12_navigates_to_options_menu() throws Exception {
+	public void test_Esc_navigates_to_options_menu() throws Exception {
 		BComponentOperatorUtil.windowWithId(InGameView.CHAT_ID);
-		new BKeyboard().typeKey(KeyEvent.VK_F12);
+		new BKeyboard().typeKey(KeyEvent.VK_ESCAPE);
 		BComponentOperatorUtil.windowWithId(MainMenuView.ID);
 	}
 	

@@ -29,15 +29,15 @@ import java.util.List;/*
  * 
  */
 public enum Classification {
-    Berserker("Berserker", "Melee DPS", Race.REVENANT),
-    Dark_Guard("Dark Guard", "Tank", Race.REVENANT),
-    Heretic("Heretic", "Healer", Race.REVENANT),
-    Necromancer("Necromancer", "Magic DPS", Race.REVENANT),
+    Berserker("Berserker", "Melee DPS", Race.Revenant),
+    Dark_Guard("Dark Guard", "Tank", Race.Revenant),
+    Heretic("Heretic", "Healer", Race.Revenant),
+    Necromancer("Necromancer", "Magic DPS", Race.Revenant),
 
-    Acolyte("Acolyte", "Magic DPS", Race.HUMAN),
-    Crusader("Crusader", "Melee DPS", Race.HUMAN),
-    Holy_Knight("Holy Knight", "Tank", Race.HUMAN),
-    Sage("Sage", "Healer", Race.HUMAN);
+    Acolyte("Acolyte", "Magic DPS", Race.Human),
+    Crusader("Crusader", "Melee DPS", Race.Human),
+    Holy_Knight("Holy Knight", "Tank", Race.Human),
+    Sage("Sage", "Healer", Race.Human);
 
     private String className;
     private String role;

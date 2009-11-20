@@ -28,6 +28,6 @@ package com.aether.model.character;
  *
  */
 public enum Race {
-    HUMAN,
-    REVENANT
+    Human,
+    Revenant
 }

@@ -40,7 +40,7 @@ public class TestCreateCharacterWindow {
 		createCharacterPage.setName("Joe the Invinceable");
 		Assert.assertFalse(finishButton.isEnabled());
 		assertFalse(classSelection.isEnabled());
-		createCharacterPage.selectRace(Race.HUMAN);
+		createCharacterPage.selectRace(Race.Human);
 		assertTrue(classSelection.isEnabled());
 		classSelection.select(Classification.Crusader);
 		assertTrue(finishButton.isEnabled());
@@ -52,7 +52,7 @@ public class TestCreateCharacterWindow {
 	@Test
 	public void test_Classification_field_unavailable_until_a_race_is_selected() throws Exception {
 		assertFalse(classSelection.isEnabled());
-		createCharacterPage.selectRace(Race.HUMAN);
+		createCharacterPage.selectRace(Race.Human);
 		assertTrue(classSelection.isEnabled());
 		createCharacterPage.clearRace();
 		assertFalse(classSelection.isEnabled());

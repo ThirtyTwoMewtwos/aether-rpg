@@ -68,7 +68,7 @@ public class CreateCharacterPage {
 
 	public void loadDummyData() {
 		setName("John Grisham");
-		selectRace(Race.HUMAN);
+		selectRace(Race.Human);
 		selectClass(Classification.Crusader);		
 	}
 

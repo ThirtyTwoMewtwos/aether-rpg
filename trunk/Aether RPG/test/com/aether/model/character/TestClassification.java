@@ -38,7 +38,7 @@ import org.junit.Test;
 public class TestClassification {
     @Test
     public void testAllClassificationsForHuman() {
-        List<Classification> classifications = getAvailableFor(Race.HUMAN);
+        List<Classification> classifications = getAvailableFor(Race.Human);
         assertEquals(4, classifications.size());
         assertEquals(Classification.Acolyte, classifications.get(0));
         assertEquals(Classification.Crusader, classifications.get(1));

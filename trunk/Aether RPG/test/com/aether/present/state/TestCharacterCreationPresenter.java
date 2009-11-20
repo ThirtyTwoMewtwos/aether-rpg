@@ -34,14 +34,14 @@ public class TestCharacterCreationPresenter {
     public void testCharacterCreation() throws Exception {
     	view = createNiceMock(CharacterCreationView.class);
     	view.setPresenter((CharacterCreationPresenter)anyObject());
-        view.setClasses(Classification.getAvailableFor(Race.HUMAN));
+        view.setClasses(Classification.getAvailableFor(Race.Human));
         characterManager.setPlayer((CharacterSheet)anyObject());
         stateTransition.transition((ActiveState)anyObject(), matches(CharacterCreationPresenter.GAME_WINDOW_TRANSITION));
 
         replay(view, stateTransition, characterManager);
         CharacterCreationPresenter presenter = new CharacterCreationPresenter(view, stateTransition, characterManager);
         presenter.setName("Billy the Kid");
-        presenter.setRace(Race.HUMAN);
+        presenter.setRace(Race.Human);
         presenter.setClassification(Classification.Crusader);
         presenter.setName(""); // not a valid name, disable save
         presenter.setName("Super boy"); // valid name, enable save
@@ -73,14 +73,14 @@ public class TestCharacterCreationPresenter {
     
     @Test
     public void testRacialSelectionState() throws Exception {
-    	view.setClasses(Classification.getAvailableFor(Race.HUMAN));
+    	view.setClasses(Classification.getAvailableFor(Race.Human));
     	view.disableSave();
     	view.clearClassifications();
     	view.disableSave();
     	 
         replay(view, stateTransition);
         CharacterCreationPresenter presenter = new CharacterCreationPresenter(view, stateTransition, characterManager);
-        presenter.setRace(Race.HUMAN);
+        presenter.setRace(Race.Human);
         presenter.setRace(null);
         verify(view, stateTransition);
     }

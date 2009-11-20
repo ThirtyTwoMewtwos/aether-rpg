@@ -79,7 +79,7 @@ public class CharacterCreationWindow extends BaseWindow implements CharacterCrea
 	protected void handleBinding(String name) {
 		if (HIDDEN_CREATE_CHARACTER.equals(name)) {
 			presenter.setName("Joe the berzerker");
-			presenter.setRace(Race.HUMAN);
+			presenter.setRace(Race.Human);
 			presenter.setClassification(Classification.Acolyte);
 			presenter.finish();
 		}

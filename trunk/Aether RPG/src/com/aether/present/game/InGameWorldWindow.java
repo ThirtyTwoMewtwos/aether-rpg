@@ -1,0 +1,332 @@
+package com.aether.present.game;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Callable;
+
+import javax.swing.ImageIcon;
+
+import jmetest.flagrushtut.Lesson3;
+
+import org.lex.input.mouse.MouseBindingManager;
+
+import com.jme.bounding.BoundingBox;
+import com.jme.image.Image;
+import com.jme.image.Texture;
+import com.jme.image.Texture.ApplyMode;
+import com.jme.image.Texture.CombinerFunctionRGB;
+import com.jme.image.Texture.CombinerOperandRGB;
+import com.jme.image.Texture.CombinerScale;
+import com.jme.image.Texture.CombinerSource;
+import com.jme.input.ChaseCamera;
+import com.jme.input.KeyBindingManager;
+import com.jme.input.KeyInput;
+import com.jme.input.controls.binding.MouseButtonBinding;
+import com.jme.input.thirdperson.ThirdPersonMouseLook;
+import com.jme.light.DirectionalLight;
+import com.jme.light.PointLight;
+import com.jme.math.FastMath;
+import com.jme.math.Quaternion;
+import com.jme.math.Vector3f;
+import com.jme.renderer.Camera;
+import com.jme.renderer.ColorRGBA;
+import com.jme.renderer.Renderer;
+import com.jme.scene.Controller;
+import com.jme.scene.Node;
+import com.jme.scene.Skybox;
+import com.jme.scene.Spatial;
+import com.jme.scene.Text;
+import com.jme.scene.Skybox.Face;
+import com.jme.scene.Spatial.CullHint;
+import com.jme.scene.Spatial.LightCombineMode;
+import com.jme.scene.Spatial.TextureCombineMode;
+import com.jme.scene.shape.Box;
+import com.jme.scene.shape.Quad;
+import com.jme.scene.state.BlendState;
+import com.jme.scene.state.CullState;
+import com.jme.scene.state.FogState;
+import com.jme.scene.state.LightState;
+import com.jme.scene.state.TextureState;
+import com.jme.scene.state.ZBufferState;
+import com.jme.scene.state.FogState.DensityFunction;
+import com.jme.system.DisplaySystem;
+import com.jme.util.GameTaskQueue;
+import com.jme.util.GameTaskQueueManager;
+import com.jme.util.TextureManager;
+import com.jme.util.Timer;
+import com.jmex.game.state.BasicGameState;
+import com.jmex.game.state.GameStateManager;
+import com.jmex.terrain.TerrainPage;
+import com.jmex.terrain.util.FaultFractalHeightMap;
+import com.jmex.terrain.util.ProceduralTextureGenerator;
+
+public class InGameWorldWindow extends BasicGameState {
+	private static Node player;
+	private Node _statNode;
+	private TerrainPage _terrain;
+	private LightState _lightState;
+	private Spatial _runner;
+	private KeyBindingManager _keyboard;
+
+	private String cmdToggleFilters = "toggleFilters";
+	private String cmdNextCursor = "nextCursor";
+	private String cmdChangeLocation = "changeLocation";
+	private String cmdFollowObject = "followObject";
+	private String cmdFollowObjectRotation = "followObjectRotation";
+	private String cmdFollowObjectAligned = "followObjectAligned";
+	private String cmdToggleRunnerMove = "toggleRunnerMove";
+	private String cmdToggleHeightOffset = "toggleHeightOffset";
+	private String cmdToggleHandler = "toggleHandler";
+	private String cmdFlyToOrigin = "flyToOrigin";
+	private String cmdPause = "pause";
+	private MouseBindingManager binding;
+	private String mbLeftClick;
+	private boolean _isPaused;
+	private Camera _cam;
+	private ChaseCamera chaser;
+	private Timer timer;
+	private MyInputHandler inputHandler;
+
+	public InGameWorldWindow(Camera camera) {
+		super("InGame: mainState");
+		_cam = camera;
+		DisplaySystem displaySystem = DisplaySystem.getDisplaySystem();
+		_cam.setFrustumPerspective(
+				60.0f, 
+				(float) displaySystem.getWidth() / (float) displaySystem.getHeight(),
+				1, 
+				1500);
+		_cam.setParallelProjection(false);
+		_cam.update();
+
+		/**
+		 * Create a ZBuffer to display pixels closest to the camera above
+		 * farther ones.
+		 */
+		ZBufferState buf = displaySystem.getRenderer()
+				.createZBufferState();
+		buf.setEnabled(true);
+		buf.setFunction(ZBufferState.TestFunction.LessThanOrEqualTo);
+		rootNode.setRenderState(buf);
+
+		/** Set up a basic, default light. */
+		PointLight light = new PointLight();
+		light.setDiffuse(new ColorRGBA(0.75f, 0.75f, 0.75f, 0.75f));
+		light.setAmbient(new ColorRGBA(0.5f, 0.5f, 0.5f, 1.0f));
+		light.setLocation(new Vector3f(100, 100, 100));
+		light.setEnabled(true);
+
+		/** Attach the light to a lightState and the lightState to rootNode. */
+		_lightState = displaySystem.getRenderer()
+				.createLightState();
+		_lightState.setEnabled(true);
+		_lightState.attach(light);
+		rootNode.setRenderState(_lightState);
+		timer = Timer.getTimer();
+		setupStats();
+
+		GameTaskQueueManager.getManager().getQueue(GameTaskQueue.UPDATE)
+				.enqueue(new Callable<Object>() {
+					public Object call() throws Exception {
+						setupTerrain();
+						initSkybox();
+						buildPlayer();
+						buildChaseCamera();
+						
+						rootNode.updateRenderState();
+						inputHandler = new MyInputHandler(player);
+
+						return null;
+					}
+				});
+
+		GameStateManager.getInstance().attachChild(this);
+	}
+
+	private void initSkybox() {
+		Skybox skybox = getSkybox("images/sky/dg_north.png",
+				"images/sky/dg_south.png", "images/sky/dg_east.png",
+				"images/sky/dg_west.png", "images/sky/dg_up.png",
+				"images/sky/dg_down.png");
+		rootNode.attachChild(skybox);
+	}
+	
+	private void buildPlayer() {
+		// box stand in
+		Box b = new Box("box", new Vector3f(), 0.35f, 0.25f, 0.5f);
+		b.setModelBound(new BoundingBox());
+		b.updateModelBound();
+
+		player = new Node("Player Node");
+		player.setLocalTranslation(new Vector3f(100, 0, 100));
+		getRootNode().attachChild(player);
+		player.attachChild(b);
+		player.updateWorldBound();
+	}
+	
+	private void buildChaseCamera() {
+		Vector3f targetOffset = new Vector3f();
+		targetOffset.y = ((BoundingBox) player.getWorldBound()).yExtent * 1f;
+		Map<String, Object> props = new HashMap<String, Object>();
+		props.put(ThirdPersonMouseLook.PROP_MAXROLLOUT, "10");
+		props.put(ThirdPersonMouseLook.PROP_MINROLLOUT, "2");
+		props.put(ChaseCamera.PROP_TARGETOFFSET, targetOffset);
+		props.put(ThirdPersonMouseLook.PROP_MAXASCENT, "" + 40 * FastMath.DEG_TO_RAD);
+		props.put(ChaseCamera.PROP_INITIALSPHERECOORDS, new Vector3f(5, 0, 20 * FastMath.DEG_TO_RAD));
+		props.put(ChaseCamera.PROP_TARGETOFFSET, targetOffset);
+		chaser = new ChaseCamera(_cam, (Spatial) player, props);
+		chaser.setMaxDistance(8);
+		chaser.setMinDistance(7);
+		chaser.setLooking(true);
+		chaser.setStayBehindTarget(true);
+	}
+
+	private Skybox getSkybox(String... textures) {
+		Skybox sb = new Skybox("skybox", 500, 500, 500);
+		for (Face eachFace : Skybox.Face.values()) {
+			for (String eachTexture : textures) {
+				if (eachTexture.contains(eachFace.name().toLowerCase())) {
+					System.out.println(eachFace + ":" + eachTexture);
+					Texture loadTexture = TextureManager.loadTexture(
+							eachTexture,
+							Texture.MinificationFilter.BilinearNearestMipMap,
+							Texture.MagnificationFilter.Bilinear,
+							Image.Format.GuessNoCompression, 1, true);
+					sb.setTexture(eachFace, loadTexture);
+				}
+			}
+		}
+		return sb;
+	}
+
+	private void setupStats() {
+		_statNode = new Node("Stats node");
+		_statNode.setCullHint(Spatial.CullHint.Never);
+		_statNode.setRenderQueueMode(Renderer.QUEUE_ORTHO);
+		rootNode.attachChild(_statNode);
+
+		_statNode.updateGeometricState(0.0f, true);
+		_statNode.updateRenderState();
+	}
+
+	public void setupTerrain() {
+		final Node terrainNode = new Node();
+		rootNode.attachChild(terrainNode);
+
+		// this piece is pretty much copied from the jme terrain test
+		FaultFractalHeightMap heightMap = new FaultFractalHeightMap(257, 32, 0,
+				255, 0.75f);
+		Vector3f terrainScale = new Vector3f(10, 1, 10);
+		heightMap.setHeightScale(0.001f);
+		_terrain = new TerrainPage("Terrain", 33, heightMap.getSize(),
+				terrainScale, heightMap.getHeightMap());
+
+		_terrain.setDetailTexture(1, 16);
+		terrainNode.attachChild(_terrain);
+
+		ProceduralTextureGenerator pt = new ProceduralTextureGenerator(
+				heightMap);
+		pt.addTexture(new ImageIcon(Lesson3.class.getClassLoader().getResource(
+				"jmetest/data/texture/grassb.png")), -128, 0, 128);
+		pt.addTexture(new ImageIcon(Lesson3.class.getClassLoader().getResource(
+				"jmetest/data/texture/dirt.jpg")), 0, 128, 255);
+		pt.addTexture(new ImageIcon(Lesson3.class.getClassLoader().getResource(
+				"jmetest/data/texture/highest.jpg")), 128, 255, 384);
+		pt.createTexture(512);
+
+		TextureState ts = DisplaySystem.getDisplaySystem().getRenderer()
+				.createTextureState();
+		ts.setEnabled(true);
+		Texture t1 = TextureManager.loadTexture(pt.getImageIcon().getImage(),
+				Texture.MinificationFilter.Trilinear,
+				Texture.MagnificationFilter.Bilinear, true);
+		ts.setTexture(t1, 0);
+
+		Texture t2 = TextureManager.loadTexture(InGameWorldWindow.class
+				.getClassLoader()
+				.getResource("jmetest/data/texture/Detail.jpg"),
+				Texture.MinificationFilter.Trilinear,
+				Texture.MagnificationFilter.Bilinear);
+
+		ts.setTexture(t2, 1);
+		t2.setWrap(Texture.WrapMode.Repeat);
+
+		t1.setApply(ApplyMode.Combine);
+		t1.setCombineFuncRGB(CombinerFunctionRGB.Modulate);
+		t1.setCombineSrc0RGB(CombinerSource.CurrentTexture);
+		t1.setCombineOp0RGB(CombinerOperandRGB.SourceColor);
+		t1.setCombineSrc1RGB(CombinerSource.PrimaryColor);
+		t1.setCombineOp1RGB(CombinerOperandRGB.SourceColor);
+		t1.setCombineScaleRGB(CombinerScale.One);
+
+		t2.setApply(ApplyMode.Combine);
+		t2.setCombineFuncRGB(CombinerFunctionRGB.AddSigned);
+		t2.setCombineSrc0RGB(CombinerSource.CurrentTexture);
+		t2.setCombineOp0RGB(CombinerOperandRGB.SourceColor);
+		t2.setCombineSrc1RGB(CombinerSource.Previous);
+		t2.setCombineOp1RGB(CombinerOperandRGB.SourceColor);
+		t2.setCombineScaleRGB(CombinerScale.One);
+		terrainNode.setRenderState(ts);
+
+		FogState fs = DisplaySystem.getDisplaySystem().getRenderer()
+				.createFogState();
+		fs.setDensity(0.0015f);
+		fs.setEnabled(true);
+		fs.setColor(new ColorRGBA(0.5f, 0.55f, 0.5f, 0.5f));
+		fs.setDensityFunction(DensityFunction.Exponential);
+		fs.setQuality(FogState.Quality.PerVertex);
+		terrainNode.setRenderState(fs);
+
+		terrainNode.lock();
+		terrainNode.lockBranch();
+
+		CullState cs = DisplaySystem.getDisplaySystem().getRenderer()
+				.createCullState();
+		cs.setCullFace(CullState.Face.Back);
+		cs.setEnabled(true);
+		terrainNode.setRenderState(cs);
+
+		_lightState.detachAll();
+
+		DirectionalLight dl = new DirectionalLight();
+		dl.setDiffuse(new ColorRGBA(1.0f, 1.0f, 1.0f, 1.0f));
+		dl.setDirection(new Vector3f(1, -0.5f, 1));
+		dl.setEnabled(true);
+		_lightState.attach(dl);
+
+		DirectionalLight dr = new DirectionalLight();
+		dr.setEnabled(true);
+		dr.setDiffuse(new ColorRGBA(1.0f, 1.0f, 1.0f, 1.0f));
+		dr.setAmbient(new ColorRGBA(0.5f, 0.5f, 0.5f, 1.0f));
+		dr.setDirection(new Vector3f(0.5f, -0.5f, 0).normalizeLocal());
+		_lightState.attach(dr);
+	}
+
+
+	@Override
+	public void update(float tpf) {
+		if (!_isPaused) {
+			super.update(tpf);
+
+			float characterMinHeight = _terrain.getHeight(player
+					.getLocalTranslation())
+					+ ((BoundingBox) player.getWorldBound()).yExtent;
+			if (!Float.isInfinite(characterMinHeight)
+					&& !Float.isNaN(characterMinHeight)) {
+				player.getLocalTranslation().y = characterMinHeight;
+			}
+			
+			timer.update();
+	        float interpolation = timer.getTimePerFrame();
+	        inputHandler.update(interpolation);
+	        chaser.update(interpolation);
+		}
+	}
+
+	@Override
+	public void render(float tpf) {
+		super.render(tpf);
+
+		DisplaySystem.getDisplaySystem().getRenderer().draw(_statNode);
+	}
+}

@@ -1,8 +1,5 @@
-package com.aether.present.css;
+package com.aether.gbui.bss;
 
-import org.gap.jseed.contract.Contract;
-
-import com.jmex.bui.property.FontProperty;
 
 public class BssStyleClass {
 	private static final int TOP = 0;
@@ -15,11 +12,8 @@ public class BssStyleClass {
 
 	private Integer[] padding = {3, 5, null, null};
 	private BssColor color = BssColor.RED;
-	private BssBackground background = new BssBackground(BssColor.BLUE);
-	private BssTextAlign textAlign = BssTextAlign.CENTER;
-	private BssVerticalAlign verticalAlign = BssVerticalAlign.CENTER;
-	private BssTextEffect textEffect = BssTextEffect.NONE;
-	private FontProperty font = new FontProperty();
+	private BssBackground background = new BssColoredBackground(BssColor.BLUE);
+	private BssText text = new BssText();
 	private int borderThickness = 0;
 	private BssColor effectColor = BssColor.RED;
 	private BssColor borderColor;
@@ -27,9 +21,7 @@ public class BssStyleClass {
 	/*package*/ BssStyleClass(String name, BssWriter cssWriter) {
 		this.name = name;
 		this.cssWriter = cssWriter;
-		font.family = "Dialog";
-		font.style = BssFontStyle.BOLD.toString();
-		font.size = 12;
+		text = new BssText();
 	}
 
 	public BssWriter end() {
@@ -42,7 +34,7 @@ public class BssStyleClass {
 	}
 
 	public BssStyleClass setBackground(BssColor newBackground) {
-		this.background.setColor(newBackground);
+		background = new BssColoredBackground(newBackground);
 		return this;
 	}
 
@@ -54,31 +46,27 @@ public class BssStyleClass {
 	 * @return
 	 */
 	public BssStyleClass setBackground(String fileLocation, BssBackgroundMode mode, int...insets) {
-		this.background.setImage(fileLocation, mode, insets);
+		background = new BssImageBackground(fileLocation, mode, insets);
 		return this;
 	}
 
 	public BssStyleClass setTextAlign(BssTextAlign newTextAlign) {
-		textAlign = newTextAlign;
+		text.setTextAlign(newTextAlign);
 		return this;
 	}
 	
 	public BssStyleClass setVerticalAlign(BssVerticalAlign newVerticalAlign) {
-		verticalAlign = newVerticalAlign;
+		text.setVerticalAlign(newVerticalAlign);
 		return this;
 	}
 
 	public BssStyleClass setTextEffect(BssTextEffect newTextEffect) {
-		textEffect = newTextEffect;
+		text.setTextEffect(newTextEffect);
 		return this;
 	}
 	
 	public BssStyleClass setFont(String family, BssFontStyle style, int size) {
-		Contract.argumentNotNull(family, "Family font must be specified");
-		Contract.argumentNotNull(style, "Style font must be specified");
-		font.family = family;
-		font.style = style.toString();
-		font.size = size;
+		text.setFont(family, style, size);
 		return this;
 	}
 	
@@ -100,6 +88,7 @@ public class BssStyleClass {
 		padding[RIGHT] = right;
 		padding[BOTTOM] = bottom;
 		padding[LEFT] = left;
+		
 		return this;
 	}
 
@@ -110,7 +99,7 @@ public class BssStyleClass {
 	}
 
 	public BssStyleClass clearBackground() {
-		background.clearBackground();
+		background = new BssClearBackground();
 		return this;
 	}
 
@@ -121,21 +110,13 @@ public class BssStyleClass {
 	
 	public String writeBss() {
 		return name + " {\n" + 
-				writeFont() + 
 				writePaddingAction() +
 			   	writeAction("color", color) +
 			   	background.writeBss() + 
-			   	writeAction("text-align", textAlign) + 
-			   	writeAction("vertical-align", verticalAlign) +
-			   	writeAction("text-effect", textEffect) +
+			   	text.writeBss() +
 			   	writeAction("effect-color", effectColor) +
 			   	writeBorderAction() + 
 			   "}";
-	}
-
-
-	private String writeFont() {
-		return String.format("\tfont: \"%s\" %s %s;\n", font.family, font.style, font.size);
 	}
 
 	private String writePaddingAction() {

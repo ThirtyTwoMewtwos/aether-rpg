@@ -1,9 +1,16 @@
-package com.aether.present.css;
+package com.aether.gbui.bss;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.aether.gbui.bss.BssBackgroundMode;
+import com.aether.gbui.bss.BssColor;
+import com.aether.gbui.bss.BssFontStyle;
+import com.aether.gbui.bss.BssStyleClass;
+import com.aether.gbui.bss.BssTextAlign;
+import com.aether.gbui.bss.BssTextEffect;
 
 
 public class TestBssStyleClass {

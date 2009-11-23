@@ -1,4 +1,4 @@
-package com.aether.present.css;
+package com.aether.gbui.bss;
 
 public enum BssVerticalAlign {
 	TOP, 

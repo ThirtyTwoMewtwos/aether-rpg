@@ -1,5 +1,6 @@
 package com.aether.jme2;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,27 +36,15 @@ import com.jmex.terrain.TerrainBlock;
 import com.jmex.terrain.util.MidPointHeightMap;
 import com.jmex.terrain.util.ProceduralTextureGenerator;
 
-/**
- * TestStandardGame is meant to be an example replacement of
- * jmetest.base.TestSimpleGame using the StandardGame implementation instead of
- * SimpleGame.
- * 
- * @author Matthew D. Hicks
- */
 public class TestStandardGame {
 	private static Node player;
 	private static TerrainBlock tb;
 	private static ChaseCamera chaser;
 	private static Timer timer;
+	private static MyInputHandler inputHandler;
+	
 	public static void main(String[] args) throws Exception {
-		PropertiesGameSettings settings = new PropertiesGameSettings(
-				"game.properties");
-		if (!settings.load()) {
-			if (!GameSettingsPanel.prompt(settings, "Settings for you")) {
-				return;
-			}
-			settings.save();
-		}
+		PropertiesGameSettings settings = loadSettings();
 		StandardGame game = new StandardGame("TestGame", GameType.GRAPHICAL, settings);
 		game.start();
 		timer = Timer.getTimer();
@@ -68,16 +57,27 @@ public class TestStandardGame {
 		setupTerrain(gameState);
 		buildPlayer(gameState);
 		buildChaseCamera(game);
-		
-		ForceFieldFence fence = new ForceFieldFence("the fence");
-		final MyInputHandler inputHandler = new MyInputHandler(player);
-		gameState.getRootNode().attachChild(fence);
+		buildForceField(gameState);
+		buildCullState(gameState);
+		buildUpdateNode(gameState);
 
-		CullState cs = DisplaySystem.getDisplaySystem().getRenderer()
-				.createCullState();
-		cs.setCullFace(Face.Back);
-		gameState.getRootNode().setRenderState(cs);
-		
+		gameState.getRootNode().updateRenderState();
+	}
+
+	private static PropertiesGameSettings loadSettings()
+			throws InterruptedException, IOException {
+		PropertiesGameSettings settings = new PropertiesGameSettings(
+				"game.properties");
+		if (!settings.load()) {
+			if (!GameSettingsPanel.prompt(settings, "Settings for you")) {
+				return settings;
+			}
+			settings.save();
+		}
+		return settings;
+	}
+
+	private static void buildUpdateNode(BasicGameState gameState) {
 		gameState.getRootNode().attachChild(new Node() {
 			private static final long serialVersionUID = 1L;
 
@@ -98,8 +98,19 @@ public class TestStandardGame {
 		        chaser.update(interpolation);
 			}
 		});
+	}
 
-		gameState.getRootNode().updateRenderState();
+	private static void buildCullState(BasicGameState gameState) {
+		CullState cs = DisplaySystem.getDisplaySystem().getRenderer()
+				.createCullState();
+		cs.setCullFace(Face.Back);
+		gameState.getRootNode().setRenderState(cs);
+	}
+
+	private static void buildForceField(BasicGameState gameState) {
+		ForceFieldFence fence = new ForceFieldFence("the fence");
+		inputHandler = new MyInputHandler(player);
+		gameState.getRootNode().attachChild(fence);
 	}
 
 	private static void buildChaseCamera(StandardGame game) {

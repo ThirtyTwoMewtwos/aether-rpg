@@ -1,10 +1,12 @@
-package com.aether.present.css;
+package com.aether.gbui.bss;
 
 import static org.junit.Assert.*;
 
 import java.awt.Color;
 
 import org.junit.Test;
+
+import com.aether.gbui.bss.BssColor;
 
 
 public class TestBssColor {

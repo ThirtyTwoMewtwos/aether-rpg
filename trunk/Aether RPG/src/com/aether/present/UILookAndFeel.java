@@ -1,20 +1,20 @@
 package com.aether.present;
 
-import static com.aether.present.css.BssWriter.StyleState.*;
-import static com.aether.present.css.BssWriter.StyleType.*;
+import static com.aether.gbui.bss.BssWriter.StyleState.*;
+import static com.aether.gbui.bss.BssWriter.StyleType.*;
 
 import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 
-import com.aether.present.css.BssBackgroundMode;
-import com.aether.present.css.BssColor;
-import com.aether.present.css.BssFontStyle;
-import com.aether.present.css.BssStyleClass;
-import com.aether.present.css.BssTextAlign;
-import com.aether.present.css.BssTextEffect;
-import com.aether.present.css.BssWriter;
-import com.aether.present.css.BssWriter.StyleType;
+import com.aether.gbui.bss.BssBackgroundMode;
+import com.aether.gbui.bss.BssColor;
+import com.aether.gbui.bss.BssFontStyle;
+import com.aether.gbui.bss.BssStyleClass;
+import com.aether.gbui.bss.BssTextAlign;
+import com.aether.gbui.bss.BssTextEffect;
+import com.aether.gbui.bss.BssWriter;
+import com.aether.gbui.bss.BssWriter.StyleType;
 import com.jme.input.InputHandler;
 import com.jme.util.Timer;
 import com.jmex.bui.BStyleSheet;

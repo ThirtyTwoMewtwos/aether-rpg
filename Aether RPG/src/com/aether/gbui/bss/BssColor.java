@@ -1,4 +1,4 @@
-package com.aether.present.css;
+package com.aether.gbui.bss;
 
 import java.awt.Color;
 
@@ -129,18 +129,20 @@ public class BssColor {
 	
 	public BssColor(Color color) {
         String tmpColor;
-        String red = Integer.toHexString(color.getRed());
-		String green = Integer.toHexString(color.getGreen());
-		String blue = Integer.toHexString(color.getBlue());
-        tmpColor = "#" + getHexValue(red) + getHexValue(green) + getHexValue(blue);
+        
+        tmpColor = "#" + asHexString(color.getRed()) + asHexString(color.getGreen()) + asHexString(color.getBlue());
         if (color.getAlpha() != 255) {
-			String alpha = Integer.toHexString(color.getAlpha());
-			tmpColor += getHexValue(alpha);
+			tmpColor += asHexString(color.getAlpha());
 		}
         hashColor = tmpColor;
     }
+	
+	private String asHexString(int color) {
+		String hexString = Integer.toHexString(color);
+		return fixHexValue(hexString);
+	}
 
-	private String getHexValue(String hex) {
+	private String fixHexValue(String hex) {
 		return (hex.length() == 2? hex: "0" + hex).toUpperCase();
 	}
 

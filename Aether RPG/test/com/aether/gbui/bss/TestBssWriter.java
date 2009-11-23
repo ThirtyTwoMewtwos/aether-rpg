@@ -1,10 +1,10 @@
-package com.aether.present.css;
+package com.aether.gbui.bss;
 
-import static com.aether.present.css.BssWriter.StyleState.disabled;
-import static com.aether.present.css.BssWriter.StyleState.down;
-import static com.aether.present.css.BssWriter.StyleState.hover;
-import static com.aether.present.css.BssWriter.StyleState.selected;
-import static com.aether.present.css.BssWriter.StyleType.button;
+import static com.aether.gbui.bss.BssWriter.StyleState.disabled;
+import static com.aether.gbui.bss.BssWriter.StyleState.down;
+import static com.aether.gbui.bss.BssWriter.StyleState.hover;
+import static com.aether.gbui.bss.BssWriter.StyleState.selected;
+import static com.aether.gbui.bss.BssWriter.StyleType.button;
 import static org.junit.Assert.assertEquals;
 
 import java.io.Reader;
@@ -12,6 +12,8 @@ import java.io.Reader;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.aether.gbui.bss.BssStyleClass;
+import com.aether.gbui.bss.BssWriter;
 import com.util.StringUtil;
 
 public class TestBssWriter {
@@ -23,10 +25,10 @@ public class TestBssWriter {
 	public void setUp() {
 		bssWriter = new BssWriter();
 		
-		defaultBody = "\tfont: \"Dialog\" bold 12;\n" + 
-						"\tpadding: 3 5;\n" +
+		defaultBody =	"\tpadding: 3 5;\n" +
 						"\tcolor: #FF0000;\n" +
 						"\tbackground: solid #0000FF;\n" +
+						"\tfont: \"Dialog\" bold 12;\n" + 
 						"\ttext-align: center;\n" + 
 						"\tvertical-align: center;\n" + 
 						"\ttext-effect: none;\n" + 

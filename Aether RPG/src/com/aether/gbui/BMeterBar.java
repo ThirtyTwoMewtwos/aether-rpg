@@ -23,15 +23,19 @@ public class BMeterBar extends BComponent {
 		ColorRGBA color = getColor();
 		
 		if (maximum != 0) {
-			float height = ((float)getHeight()) * ((float)value / (float)maximum);
-			GL11.glColor4f(color.r, color.g, color.b, color.a);
-			GL11.glBegin(GL11.GL_QUADS);
-			GL11.glVertex2f(0, 0);
-			GL11.glVertex2f(getWidth(), 0);
-			GL11.glVertex2f(getWidth(), height);
-			GL11.glVertex2f(0, height);
-			GL11.glEnd();
+			drawMeter(color);
 		}
+	}
+
+	private void drawMeter(ColorRGBA color) {
+		float height = ((float)getHeight()) * ((float)value / (float)maximum);
+		GL11.glColor4f(color.r, color.g, color.b, color.a);
+		GL11.glBegin(GL11.GL_QUADS);
+		GL11.glVertex2f(0, 0);
+		GL11.glVertex2f(getWidth(), 0);
+		GL11.glVertex2f(getWidth(), height);
+		GL11.glVertex2f(0, height);
+		GL11.glEnd();
 	}
 
 	@Override

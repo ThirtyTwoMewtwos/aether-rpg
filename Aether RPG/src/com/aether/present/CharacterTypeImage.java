@@ -1,7 +1,6 @@
 package com.aether.present;
 
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 

@@ -8,8 +8,6 @@ import javax.swing.ImageIcon;
 
 import jmetest.flagrushtut.Lesson3;
 
-import org.lex.input.mouse.MouseBindingManager;
-
 import com.jme.bounding.BoundingBox;
 import com.jme.image.Image;
 import com.jme.image.Texture;
@@ -19,30 +17,19 @@ import com.jme.image.Texture.CombinerOperandRGB;
 import com.jme.image.Texture.CombinerScale;
 import com.jme.image.Texture.CombinerSource;
 import com.jme.input.ChaseCamera;
-import com.jme.input.KeyBindingManager;
-import com.jme.input.KeyInput;
-import com.jme.input.controls.binding.MouseButtonBinding;
 import com.jme.input.thirdperson.ThirdPersonMouseLook;
 import com.jme.light.DirectionalLight;
 import com.jme.light.PointLight;
 import com.jme.math.FastMath;
-import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jme.renderer.Camera;
 import com.jme.renderer.ColorRGBA;
 import com.jme.renderer.Renderer;
-import com.jme.scene.Controller;
 import com.jme.scene.Node;
 import com.jme.scene.Skybox;
 import com.jme.scene.Spatial;
-import com.jme.scene.Text;
 import com.jme.scene.Skybox.Face;
-import com.jme.scene.Spatial.CullHint;
-import com.jme.scene.Spatial.LightCombineMode;
-import com.jme.scene.Spatial.TextureCombineMode;
 import com.jme.scene.shape.Box;
-import com.jme.scene.shape.Quad;
-import com.jme.scene.state.BlendState;
 import com.jme.scene.state.CullState;
 import com.jme.scene.state.FogState;
 import com.jme.scene.state.LightState;
@@ -62,30 +49,18 @@ import com.jmex.terrain.util.ProceduralTextureGenerator;
 
 public class InGameWorldWindow extends BasicGameState {
 	private static Node player;
-	private Node _statNode;
-	private TerrainPage _terrain;
+	private Node startNode;
+	private TerrainPage terrain;
 	private LightState _lightState;
-	private Spatial _runner;
-	private KeyBindingManager _keyboard;
 
-	private String cmdToggleFilters = "toggleFilters";
-	private String cmdNextCursor = "nextCursor";
-	private String cmdChangeLocation = "changeLocation";
-	private String cmdFollowObject = "followObject";
-	private String cmdFollowObjectRotation = "followObjectRotation";
-	private String cmdFollowObjectAligned = "followObjectAligned";
-	private String cmdToggleRunnerMove = "toggleRunnerMove";
-	private String cmdToggleHeightOffset = "toggleHeightOffset";
-	private String cmdToggleHandler = "toggleHandler";
-	private String cmdFlyToOrigin = "flyToOrigin";
-	private String cmdPause = "pause";
-	private MouseBindingManager binding;
-	private String mbLeftClick;
 	private boolean _isPaused;
 	private Camera _cam;
 	private ChaseCamera chaser;
 	private Timer timer;
 	private MyInputHandler inputHandler;
+	private Skybox skybox;
+	private ProceduralTextureGenerator proceduralTextureGenerator;
+	private TextureState textureState;
 
 	public InGameWorldWindow(Camera camera) {
 		super("InGame: mainState");
@@ -144,11 +119,28 @@ public class InGameWorldWindow extends BasicGameState {
 	}
 
 	private void initSkybox() {
-		Skybox skybox = getSkybox("images/sky/dg_north.png",
-				"images/sky/dg_south.png", "images/sky/dg_east.png",
-				"images/sky/dg_west.png", "images/sky/dg_up.png",
-				"images/sky/dg_down.png");
-		rootNode.attachChild(skybox);
+//		Skybox skybox = getSkybox("images/sky/dg_north.png",
+//				"images/sky/dg_south.png", "images/sky/dg_east.png",
+//				"images/sky/dg_west.png", "images/sky/dg_up.png",
+//				"images/sky/dg_down.png");
+//		rootNode.attachChild(skybox);
+	}
+
+	private Skybox getSkybox(String... textures) {
+		skybox = new Skybox("skybox", 500, 500, 500);
+		for (Face eachFace : Skybox.Face.values()) {
+			for (String eachTexture : textures) {
+				if (eachTexture.contains(eachFace.name().toLowerCase())) {
+					Texture loadTexture = TextureManager.loadTexture(
+							eachTexture,
+							Texture.MinificationFilter.BilinearNearestMipMap,
+							Texture.MagnificationFilter.Bilinear,
+							Image.Format.GuessNoCompression, 1, true);
+					skybox.setTexture(eachFace, loadTexture);
+				}
+			}
+		}
+		return skybox;
 	}
 	
 	private void buildPlayer() {
@@ -178,35 +170,19 @@ public class InGameWorldWindow extends BasicGameState {
 		chaser.setMaxDistance(8);
 		chaser.setMinDistance(7);
 		chaser.setLooking(true);
+		chaser.setEnableSpring(false);
+		chaser.setEnabledOfAttachedHandlers(false);
 		chaser.setStayBehindTarget(true);
 	}
 
-	private Skybox getSkybox(String... textures) {
-		Skybox sb = new Skybox("skybox", 500, 500, 500);
-		for (Face eachFace : Skybox.Face.values()) {
-			for (String eachTexture : textures) {
-				if (eachTexture.contains(eachFace.name().toLowerCase())) {
-					System.out.println(eachFace + ":" + eachTexture);
-					Texture loadTexture = TextureManager.loadTexture(
-							eachTexture,
-							Texture.MinificationFilter.BilinearNearestMipMap,
-							Texture.MagnificationFilter.Bilinear,
-							Image.Format.GuessNoCompression, 1, true);
-					sb.setTexture(eachFace, loadTexture);
-				}
-			}
-		}
-		return sb;
-	}
-
 	private void setupStats() {
-		_statNode = new Node("Stats node");
-		_statNode.setCullHint(Spatial.CullHint.Never);
-		_statNode.setRenderQueueMode(Renderer.QUEUE_ORTHO);
-		rootNode.attachChild(_statNode);
+		startNode = new Node("Stats node");
+		startNode.setCullHint(Spatial.CullHint.Never);
+		startNode.setRenderQueueMode(Renderer.QUEUE_ORTHO);
+		rootNode.attachChild(startNode);
 
-		_statNode.updateGeometricState(0.0f, true);
-		_statNode.updateRenderState();
+		startNode.updateGeometricState(0.0f, true);
+		startNode.updateRenderState();
 	}
 
 	public void setupTerrain() {
@@ -218,55 +194,55 @@ public class InGameWorldWindow extends BasicGameState {
 				255, 0.75f);
 		Vector3f terrainScale = new Vector3f(10, 1, 10);
 		heightMap.setHeightScale(0.001f);
-		_terrain = new TerrainPage("Terrain", 33, heightMap.getSize(),
+		terrain = new TerrainPage("Terrain", 33, heightMap.getSize(),
 				terrainScale, heightMap.getHeightMap());
 
-		_terrain.setDetailTexture(1, 16);
-		terrainNode.attachChild(_terrain);
+		terrain.setDetailTexture(1, 16);
+		terrainNode.attachChild(terrain);
 
-		ProceduralTextureGenerator pt = new ProceduralTextureGenerator(
+		proceduralTextureGenerator = new ProceduralTextureGenerator(
 				heightMap);
-		pt.addTexture(new ImageIcon(Lesson3.class.getClassLoader().getResource(
+		proceduralTextureGenerator.addTexture(new ImageIcon(Lesson3.class.getClassLoader().getResource(
 				"jmetest/data/texture/grassb.png")), -128, 0, 128);
-		pt.addTexture(new ImageIcon(Lesson3.class.getClassLoader().getResource(
+		proceduralTextureGenerator.addTexture(new ImageIcon(Lesson3.class.getClassLoader().getResource(
 				"jmetest/data/texture/dirt.jpg")), 0, 128, 255);
-		pt.addTexture(new ImageIcon(Lesson3.class.getClassLoader().getResource(
+		proceduralTextureGenerator.addTexture(new ImageIcon(Lesson3.class.getClassLoader().getResource(
 				"jmetest/data/texture/highest.jpg")), 128, 255, 384);
-		pt.createTexture(512);
+		proceduralTextureGenerator.createTexture(512);
 
-		TextureState ts = DisplaySystem.getDisplaySystem().getRenderer()
+		textureState = DisplaySystem.getDisplaySystem().getRenderer()
 				.createTextureState();
-		ts.setEnabled(true);
-		Texture t1 = TextureManager.loadTexture(pt.getImageIcon().getImage(),
+		textureState.setEnabled(true);
+		Texture texture1 = TextureManager.loadTexture(proceduralTextureGenerator.getImageIcon().getImage(),
 				Texture.MinificationFilter.Trilinear,
 				Texture.MagnificationFilter.Bilinear, true);
-		ts.setTexture(t1, 0);
-
-		Texture t2 = TextureManager.loadTexture(InGameWorldWindow.class
+		textureState.setTexture(texture1, 0);
+		
+		Texture texture2 = TextureManager.loadTexture(InGameWorldWindow.class
 				.getClassLoader()
 				.getResource("jmetest/data/texture/Detail.jpg"),
 				Texture.MinificationFilter.Trilinear,
 				Texture.MagnificationFilter.Bilinear);
 
-		ts.setTexture(t2, 1);
-		t2.setWrap(Texture.WrapMode.Repeat);
+		textureState.setTexture(texture2, 1);
+		texture2.setWrap(Texture.WrapMode.Repeat);
 
-		t1.setApply(ApplyMode.Combine);
-		t1.setCombineFuncRGB(CombinerFunctionRGB.Modulate);
-		t1.setCombineSrc0RGB(CombinerSource.CurrentTexture);
-		t1.setCombineOp0RGB(CombinerOperandRGB.SourceColor);
-		t1.setCombineSrc1RGB(CombinerSource.PrimaryColor);
-		t1.setCombineOp1RGB(CombinerOperandRGB.SourceColor);
-		t1.setCombineScaleRGB(CombinerScale.One);
+		texture1.setApply(ApplyMode.Combine);
+		texture1.setCombineFuncRGB(CombinerFunctionRGB.Modulate);
+		texture1.setCombineSrc0RGB(CombinerSource.CurrentTexture);
+		texture1.setCombineOp0RGB(CombinerOperandRGB.SourceColor);
+		texture1.setCombineSrc1RGB(CombinerSource.PrimaryColor);
+		texture1.setCombineOp1RGB(CombinerOperandRGB.SourceColor);
+		texture1.setCombineScaleRGB(CombinerScale.One);
 
-		t2.setApply(ApplyMode.Combine);
-		t2.setCombineFuncRGB(CombinerFunctionRGB.AddSigned);
-		t2.setCombineSrc0RGB(CombinerSource.CurrentTexture);
-		t2.setCombineOp0RGB(CombinerOperandRGB.SourceColor);
-		t2.setCombineSrc1RGB(CombinerSource.Previous);
-		t2.setCombineOp1RGB(CombinerOperandRGB.SourceColor);
-		t2.setCombineScaleRGB(CombinerScale.One);
-		terrainNode.setRenderState(ts);
+		texture2.setApply(ApplyMode.Combine);
+		texture2.setCombineFuncRGB(CombinerFunctionRGB.AddSigned);
+		texture2.setCombineSrc0RGB(CombinerSource.CurrentTexture);
+		texture2.setCombineOp0RGB(CombinerOperandRGB.SourceColor);
+		texture2.setCombineSrc1RGB(CombinerSource.Previous);
+		texture2.setCombineOp1RGB(CombinerOperandRGB.SourceColor);
+		texture2.setCombineScaleRGB(CombinerScale.One);
+		terrainNode.setRenderState(textureState);
 
 		FogState fs = DisplaySystem.getDisplaySystem().getRenderer()
 				.createFogState();
@@ -308,7 +284,7 @@ public class InGameWorldWindow extends BasicGameState {
 		if (!_isPaused) {
 			super.update(tpf);
 
-			float characterMinHeight = _terrain.getHeight(player
+			float characterMinHeight = terrain.getHeight(player
 					.getLocalTranslation())
 					+ ((BoundingBox) player.getWorldBound()).yExtent;
 			if (!Float.isInfinite(characterMinHeight)
@@ -327,6 +303,13 @@ public class InGameWorldWindow extends BasicGameState {
 	public void render(float tpf) {
 		super.render(tpf);
 
-		DisplaySystem.getDisplaySystem().getRenderer().draw(_statNode);
+		DisplaySystem.getDisplaySystem().getRenderer().draw(startNode);
+	}
+	
+	@Override
+	public void cleanup() {
+		super.cleanup();
+		textureState.clearTextures();
+		proceduralTextureGenerator.clearTextures();
 	}
 }

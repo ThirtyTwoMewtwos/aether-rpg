@@ -1,4 +1,4 @@
-package com.aether.present.state;
+package com.aether.present;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -15,6 +15,8 @@ import com.aether.gbui.operators.BComponentOperatorUtil;
 import com.aether.gbui.operators.BLabelOperator;
 import com.aether.gbui.operators.BMeterBarOperator;
 import com.aether.present.Main;
+import com.aether.present.state.InGameView;
+import com.aether.present.state.MainMenuView;
 import com.jmex.bui.BWindow;
 import com.jmex.bui.icon.BlankIcon;
 

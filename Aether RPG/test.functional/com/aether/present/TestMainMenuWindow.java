@@ -1,4 +1,4 @@
-package com.aether.present.state;
+package com.aether.present;
 
 import static org.junit.Assert.assertFalse;
 
@@ -9,6 +9,7 @@ import org.junit.Test;
 import com.aether.gbui.Condition;
 import com.aether.gbui.operators.BComponentOperatorUtil;
 import com.aether.present.Main;
+import com.aether.present.state.CharacterCreationView;
 import com.jmex.game.StandardGame;
 
 public class TestMainMenuWindow {

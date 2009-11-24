@@ -2,32 +2,21 @@ package com.aether.present;
 
 import java.awt.Image;
 import java.io.File;
-import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
 import com.aether.model.character.Classification;
+import com.util.FileUtil;
 
 public class CharacterTypeImage {
 	public static Image getImage(Classification type) {
-		String pathname = createPathToImage(type);
+		String fileName = type.getName().toLowerCase() + ".png";
 		try {
-			return loadBufferedImage(pathname);
+			File imageFile = FileUtil.getImageResource(fileName);
+			return ImageIO.read(imageFile);
 		} catch (Exception e) {
-			String message = String.format("Unable to image for type [%s], searching for file [%s].", type.getName(), pathname);
+			String message = String.format("Unable to find image for type [%s], searching for file [%s].", type.getName(), fileName);
 			throw new RuntimeException(message, e);
 		}
-	}
-
-	private static Image loadBufferedImage(String pathname)	throws IOException {
-		File file = new File(pathname);
-		return ImageIO.read(file);
-	}
-
-	private static String createPathToImage(Classification type) {
-		String property = System.getProperty("user.dir");
-		String path = property.replace('\\', '/');
-		String pathname = path + "/images/" + type.getName().toLowerCase() + ".png";
-		return pathname;
 	}
 }

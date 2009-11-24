@@ -1,4 +1,4 @@
-package com.aether.present.state;
+package com.aether.present;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -14,6 +14,8 @@ import com.aether.gbui.operators.BComponentOperatorUtil;
 import com.aether.model.character.Classification;
 import com.aether.model.character.Race;
 import com.aether.present.Main;
+import com.aether.present.state.InGameView;
+import com.aether.present.state.MainMenuView;
 
 public class TestCreateCharacterWindow {
 	private CreateCharacterPage createCharacterPage;

@@ -1,4 +1,4 @@
-package com.aether.present.state;
+package com.aether.present;
 
 import com.aether.gbui.NameOperatorSearch;
 import com.aether.gbui.operators.BButtonOperator;
@@ -7,6 +7,7 @@ import com.aether.gbui.operators.BComponentOperatorUtil;
 import com.aether.gbui.operators.BTextFieldOperator;
 import com.aether.model.character.Classification;
 import com.aether.model.character.Race;
+import com.aether.present.state.CharacterCreationView;
 import com.jmex.bui.BWindow;
 
 public class CreateCharacterPage {

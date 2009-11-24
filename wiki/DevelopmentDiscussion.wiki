@@ -17,3 +17,4 @@ Here we can keep an ongoing dialog for development, back stories, and planning.
   * jME to provide the base UI game support.
   * jME Physics to provide the world physics.
   * jSeed provides the Dependency Injection framework.
+  * iText provides pdf support and other export capabilities.

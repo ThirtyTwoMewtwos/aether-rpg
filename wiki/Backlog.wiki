@@ -9,6 +9,43 @@ This process can change as time goes on.
 
 == Backlog ==
 
-  * Paint world map
-  * Paint character (PC)
-  * Keys can be used to navigate the character
+  * Paint world map - _complete_
+  * Paint character (PC) - _complete_
+  * Keys can be used to navigate the character - _complete_
+
+  * Create or use open source 3D character model -
+  * Complete view windows -
+  * Complete user UI -
+
+  * Code review of curves (xp, stats, etc.) -
+
+  * Skill creation tool -
+  * Create unique skill sets for individual classes -
+  
+  * Equipment creation tool -
+  * Create a set of equipment (testing purposes) -
+
+  * Over arching story -
+  * Quest creation tool -
+  * Create introduction quests -
+
+  * NPC class -
+  * NPC creation tool -
+  * Link NPCs to Quests -
+
+  * Item (Generic non-equipable) creation tool -
+
+  * Develop enemy class -
+  * Develop enemy creation tool -
+
+  * Develop battle system -
+
+  * World Terrain creation -
+  * Structures (Buildings and such) creation -
+  * Important world object creation -
+
+  * Implement system to generate havest nodes -
+  * Implement system to generate enemies -
+
+  * Implement networking framestructure (small scale) -
+  * Implement newtorking framestructure (large scale) -

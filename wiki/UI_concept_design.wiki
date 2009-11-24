@@ -16,14 +16,14 @@
 
  * Window Buttons.  These are clickable buttons that produce various windows to aid users.  The available buttons (explaned in the windows section in more detail) will be:  Options, Persona, Skills/Abilities, Inventory, Equipment, Map, Guild, Social, Quests.  These buttons will be toggle buttons and textured with only an icon.  These windows might have successor windows.  Each of the 9 parent windows will have a keyboard shortcut's:
   * options = esc
-  * persona = p
-  * skills = k
-  * inventory = i
-  * equipment = c
-  * map = m
-  * guild = g
-  * social = o
-  * quests = j
+  * (P)ersona = p
+  * S(k)ills = k
+  * (I)nventory = i
+  * Equipment = c
+  * (M)ap = m
+  * G(u)ild = u
+  * S(o)cial = o
+  * Quest (J)ournal = j
 
  * Mini-map.  Spherical radius of player using standard colored dots to represent a top-down view of immediate surroundings.
 

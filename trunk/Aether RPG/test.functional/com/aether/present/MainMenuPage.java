@@ -1,7 +1,8 @@
-package com.aether.present.state;
+package com.aether.present;
 
 import com.aether.gbui.operators.BButtonOperator;
 import com.aether.gbui.operators.BComponentOperatorUtil;
+import com.aether.present.state.MainMenuView;
 import com.jmex.bui.BWindow;
 
 public class MainMenuPage {

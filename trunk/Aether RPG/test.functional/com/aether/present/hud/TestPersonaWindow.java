@@ -15,9 +15,10 @@ import com.aether.gbui.BKeyboard;
 import com.aether.gbui.NameOperatorSearch;
 import com.aether.gbui.operators.BComponentOperatorUtil;
 import com.aether.gbui.operators.BLabelOperator;
+import com.aether.present.CreateCharacterPage;
 import com.aether.present.Main;
-import com.aether.present.state.CreateCharacterPage;
-import com.aether.present.state.MainMenuPage;
+import com.aether.present.MainMenuPage;
+import com.aether.present.hud.PersonaView;
 import com.jmex.bui.BWindow;
 
 public class TestPersonaWindow {

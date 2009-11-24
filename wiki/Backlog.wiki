@@ -14,10 +14,10 @@ This process can change as time goes on.
   * Keys can be used to navigate the character - _complete_
 
   * Create or use open source 3D character model - _Captain.queezy_
-  * Complete view windows -
+  * Complete view windows - _im.a.hypocrite_
   * Complete user UI -
 
-  * Code review of curves (xp, stats, etc.) -
+  * Code review of curves (xp, stats, etc.) - _im.a.hypocrite_
 
   * Skill creation tool -
   * Create unique skill sets for individual classes -

@@ -13,7 +13,7 @@ This process can change as time goes on.
   * Paint character (PC) - _complete_
   * Keys can be used to navigate the character - _complete_
 
-  * Create or use open source 3D character model -
+  * Create or use open source 3D character model - _Captain.queezy_
   * Complete view windows -
   * Complete user UI -
 

@@ -1,7 +1,7 @@
 package com.aether.model;
 
 /*
- * Hero.java
+ * CharacterSheet.java
  * 
  * Copyright (c) 2008, Tyler Hoersch
  * All rights reserved.
@@ -586,7 +586,6 @@ public class CharacterSheet implements Serializable {
                                                 + "Intelligence: " + getIntelligence() + "\n"
                                                 + "Toughness: " + getToughness() + "\n"
                                                 + "Wisdom: " + getWisdom() + "\n"
-                                                + "Strength: " + getStrength() + "\n"
                                                 + "Defense: " + getDefense() + "\n"
                                                 + "Melee Attack: " + getMeleeAttack() + "\n"
                                                 + "Ranged Attck: " + getRangedAttack() + "\n"

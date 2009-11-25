@@ -134,7 +134,7 @@ public class InGameWorldWindow extends BasicGameState {
 	private void initSkybox() {
 		Skybox skybox = getSkybox(Face.North, Face.South, Face.East, Face.West,
 				Face.Up, Face.Down);
-		rootNode.attachChild(skybox);
+		rootNode.attachChild(skybox); 
 	}
 
 	private Skybox getSkybox(Face... facings) {
@@ -150,7 +150,7 @@ public class InGameWorldWindow extends BasicGameState {
 			skybox.setTexture(each, loadTexture);
 		}
 		return skybox;
-	}
+    }
 
 	private void buildPlayer() {
 		Box b = new Box("box", new Vector3f(), 0.35f, 0.25f, 0.5f);

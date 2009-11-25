@@ -46,7 +46,7 @@ public class MainMenuWindow extends BaseWindow implements MainMenuView {
 		int stepPosY = (int)(BUTTON_HEIGHT * 1.5f);
 		int posX = (mainWindow.getWidth() - BUTTON_WIDTH) / 2;
 		
-		BLabel titleLabel = new BLabel("Welcome to Æther");
+		BLabel titleLabel = new BLabel("Welcome to AEther");
 		titleLabel.setPreferredSize(BUTTON_WIDTH + 80, BUTTON_HEIGHT);
 		mainWindow.add(titleLabel, new Point(posX - 40, startPosY - stepPosY * counter++));
 		mainWindow.center();		

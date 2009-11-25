@@ -1,0 +1,20 @@
+#summary How should the game play.
+
+= Introduction =
+
+This page is for fleshing out the game experience, much in the same way of getting the user manual for a roleplaying game, the concepts here should translate a user's manual into an online game experience.  As we develop we should try to incorporate the ideas we discover here.
+
+= Details =
+
+==Character's and Character development==
+Characters get experience by interacting with the world and performing tasks.  Although, experience is traditionally provided by killing, it is not the only nor the most rewarding of receiving experience.  
+
+Tasks that have many milestones before reaching a goal provide the most experience as it shows the effort given to be accomplished.  Experience is given to those which are challenged and not so much to those that easily perform a task.  This means that:
+ * Experience is given based on the players current level of experience.
+ * The players skill set to accomplish the task
+ * Repetitive use of skills to accomplish a task
+  * The one skill guy will be better with the one skill if it is the only one used
+  * Thus, the skills used are those that are improved
+
+==Experience==
+Experience is used to increase skills, stats, and improve other non-material elements of the player.  Experience can then be transfered into a statistic such as strength to improve the characters strength, to improve the players bow skill, or to learn new spells if the player is capable.

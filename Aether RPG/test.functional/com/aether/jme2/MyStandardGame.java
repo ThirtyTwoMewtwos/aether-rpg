@@ -36,7 +36,7 @@ import com.jmex.terrain.TerrainBlock;
 import com.jmex.terrain.util.MidPointHeightMap;
 import com.jmex.terrain.util.ProceduralTextureGenerator;
 
-public class TestStandardGame {
+public class MyStandardGame {
 	private static Node player;
 	private static TerrainBlock tb;
 	private static ChaseCamera chaser;

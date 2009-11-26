@@ -5,40 +5,25 @@
 	<!-- Global directory settings -->
 	<property name="src.dir" value="src" />
 	<property name="test.dir" value="test" />
+	<property name="functional.test.dir" value="test.functional" />
 	<property name="lib.dir" value="lib" />
 	<property name="build.dir" value="build" />
 	<property name="classes.dir" value="${build.dir}/classes" />
 	<property name="jar.dir" value="${build.dir}/jar" />
 	<property name="main.class" value="com.aether.present.Main" />
+	<property name="report.dir"  value="${build.dir}/junitreport"/>
 
 	<!-- Global Libraries -->
 	<path id="classpath">
 		<fileset dir="${lib.dir}" includes="**/*.jar" />
-		<pathelement path="${class}" />
 	</path>
 
 	<target name="init">
-		<delete quiet="true" dir="${classes.dir}" />
+		<delete dir="${classes.dir}" />
 		<mkdir dir="${classes.dir}" />
-	</target>
+		<mkdir dir="${test.classes.dir}"/>
+		<mkdir dir="${functional.test.classes.dir}"/>
 
-	<target name="compile" depends="init">
-		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" />
-		<javac srcdir="${test.dir}" destdir="${classes.dir}" classpathref="classpath" />
-	</target>
-
-	<target name="jar" depends="compile">
-		<mkdir dir="${jar.dir}" />
-		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
-			<manifest>
-				<attribute name="Main-Class" value="${main.class}" />
-			</manifest>
-		</jar>
-	</target>
-
-	<target name="run" depends="jar">
-		<echo>Running Aether RPG</echo>
-		<!-- taken from jme2 build.xml -->
 		<condition property="jogl.arch.suffix" value="amd64">
 			<os arch="amd64" />
 		</condition>
@@ -57,6 +42,28 @@
 				<file name="swt/windows" />
 			</filelist>
 		</pathconvert>
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" />
+		<javac srcdir="${test.dir}" destdir="${classes.dir}" classpathref="classpath" />
+		<javac srcdir="${functional.test.dir}" destdir="${classes.dir}" classpathref="classpath" />
+	</target>
+
+	<target name="jar" depends="compile">
+		<mkdir dir="${jar.dir}" />
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${main.class}" />
+			</manifest>
+		</jar>
+		<path id="application" location="${jar.dir}/${ant.project.name}.jar" />
+	</target>
+
+	<target name="run" depends="jar">
+		<echo>Running Aether RPG</echo>
+		<!-- taken from jme2 build.xml -->
+
 		<java classname="${main.class}" fork="true">
 			<jvmarg value="-Djava.library.path=${native.libpath}" />
 			<classpath>
@@ -64,5 +71,47 @@
 				<path location="${jar.dir}/${ant.project.name}.jar" />
 			</classpath>
 		</java>
+	</target>
+
+	<target name="test" depends="jar">
+		<mkdir dir="${report.dir}" />
+		<junit printsummary="true">
+			<classpath>
+				<path refid="classpath" />
+				<path refid="application" />
+			</classpath>
+
+			<formatter type="xml" />
+
+			<batchtest fork="yes"  todir="${report.dir}">
+				<fileset dir="${test.dir}" includes="**/Test*.java" />
+			</batchtest>
+		</junit>
+	</target>
+	
+	<target name="functional test" depends="jar">
+		<mkdir dir="${report.dir}" />
+		<junit printsummary="true">
+			<jvmarg value="-Djava.library.path=${native.libpath}" />
+			<classpath>
+				<path refid="classpath" />
+				<path refid="application" />
+			</classpath>
+
+			<formatter type="xml" />
+
+			<batchtest fork="yes"  todir="${report.dir}">
+				<fileset dir="${functional.test.dir}" includes="**/Test*.java" />
+			</batchtest>
+		</junit>
+	</target>
+	
+	<target name="all tests" depends="test, functional test" />
+
+	<target name="junitreport">
+		<junitreport todir="${report.dir}">
+			<fileset dir="${report.dir}" includes="TEST-*.xml" />
+			<report todir="${report.dir}" />
+		</junitreport>
 	</target>
 </project>

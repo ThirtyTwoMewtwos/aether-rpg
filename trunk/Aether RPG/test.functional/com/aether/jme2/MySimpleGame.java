@@ -5,10 +5,10 @@ import com.jme.bounding.BoundingSphere;
 import com.jme.math.Vector3f;
 import com.jme.scene.shape.Box;
 
-public class TestSimpleGame extends SimpleGame {
+public class MySimpleGame extends SimpleGame {
 
  public static void main(String[] args) {
-   TestSimpleGame app = new TestSimpleGame();
+   MySimpleGame app = new MySimpleGame();
    app.start();
  }
 

@@ -34,6 +34,9 @@ import java.util.*;
 
 public class Enemy 
 {
+    private long enemy_id;
+    private String enemy_type;
+
     private final int RESPAWN_TIMER = 1 * 60 * 1000;
     private int hp, mp, maxHP, maxMP;
     private int strength, dexterity, toughness, intelligence, wisdom, defense;
@@ -44,7 +47,7 @@ public class Enemy
     private Point location;
     private Timer timer;
     
-    public Enemy(String name,int enHP,int enMP, int str, int dex, int tough, int intel, int wis, int def, int lvl, int xpWorth, Point loc)
+    public Enemy(String name,int enHP,int enMP, int str, int dex, int tough, int intel, int wis, int def, int lvl, int xpWorth, Point loc,long enemyId,String type)
     {
         setName(name);
         setMaxHP(enHP);
@@ -60,6 +63,8 @@ public class Enemy
         setLevel(lvl);
         setExpWorth(xpWorth);
         setLocation(loc);
+        setEnemyID(enemyId);
+        setEnemyType(type);
     }
     public Enemy(Enemy en)
     {
@@ -275,5 +280,21 @@ public class Enemy
     public void setLevel(int lvl)
     {
         level = lvl;
+    }
+    public long getEnemyID()
+    {
+        return enemy_id;
+    }
+    private void setEnemyID(long id)
+    {
+        enemy_id = id;
+    }
+    public String getEnemyType()
+    {
+        return enemy_type;
+    }
+    private void setEnemyType(String t)
+    {
+        enemy_type = t;
     }
 }

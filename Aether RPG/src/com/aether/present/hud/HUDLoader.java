@@ -14,12 +14,16 @@ public class HUDLoader {
 	private static void bindViews(ServiceStore store) {
 		store.bind(PersonaView.class, new PersonaWindow());
 		store.bind(PersonaPresenter.class, PersonaPresenter.class);
+
+        store.bind(QuestJournalView.class, new QuestJournalWindow());
+		store.bind(QuestJournalPresenter.class, QuestJournalPresenter.class);
 	}
 
 	private static void bindHUDLocator(ServiceStore store) {
 		InGameHUDWindowLocator service = new InGameHUDWindowLocator();
 
 		service.bind(View.PERSONA, store.get(PersonaPresenter.class));
+        service.bind(View.QUESTJOURNAl, store.get(QuestJournalPresenter.class));
 		
 		store.bind(HUDViewLocator.class, service);
 	}

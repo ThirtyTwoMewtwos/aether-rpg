@@ -55,14 +55,14 @@ class PersonaWindow implements PersonaView {
 	private void initStatistics(BWindow window) {
 
         name = createStat(window,"Luccin","",340);
-        classification = createStat(window,"Dark Gard","",325);
-        race = createStat(window,"Revenant","",310);
+        classification = createStat(window,"Acolyte","",325);
+        race = createStat(window,"Human","",310);
         sex = createStat(window,"Male","",295);
-        hp = createStat(window, "100", HP_STATISTIC, 280);
-        mp = createStat(window, "100", MP_STATISTIC, 265);
+        hp = createStat(window, "100/100", HP_STATISTIC, 280);
+        mp = createStat(window, "100/100", MP_STATISTIC, 265);
         level = createStat(window, "1", LEVEL_STATISTIC, 250);
         exp = createStat(window, "0", EXP_STATISTIC, 235);
-        nextlevel = createStat(window, "300", NEXTLEVEL_STATISTIC, 220);
+        nextlevel = createStat(window, "350", NEXTLEVEL_STATISTIC, 220);
 
 		strength = createStat(window, "9", STRENGTH_STATISTIC, 205);
 		dexterity = createStat(window, "9", DEXTERITY_STATISTIC, 190);
@@ -144,12 +144,12 @@ class PersonaWindow implements PersonaView {
     }
 
     @Override
-    public void setHP(int value){
+    public void setHP(String value){
         hp.setText("" + value);
     }
 
     @Override
-    public void setMP(int value){
+    public void setMP(String value){
         mp.setText("" + value);
     }
 

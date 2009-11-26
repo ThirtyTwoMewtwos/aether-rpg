@@ -33,6 +33,23 @@ public class PersonaPresenter implements ViewPresenter {
 		isActive = !isActive;
 		if (isActive) {
 			CharacterSheet player = locator.getPlayer();
+            view.setName(player.getName());
+            view.setBlock(player.getBlockChance());
+            view.setClassification(player.getClassification().getName());
+            view.setCrit(player.getCritChance());
+            view.setDefense(player.getDefense());
+            view.setDispell(player.getDispelChance());
+            view.setDodge(player.getDodgeChance());
+            view.setExp(player.getXP());
+            view.setNextLevel(player.getXPToLevel());
+            view.setHP(player.getHealth().getValue() + "/" + player.getHealth().getMax());
+            view.setMP(player.getMana().getValue() + "/" + player.getMana().getMax());
+            view.setMagic(player.getMagicIntuative());
+            view.setMelee(player.getMeleeAttack());
+            view.setLevel(player.getLevel());
+            view.setRange(player.getRangedAttack());
+            view.setRace(player.getRace().name());
+            view.setToughness(player.getToughness());
 			view.setStrength(player.getStrength());
 			view.setDexterity(player.getDexterity());
 			view.setInteligence(player.getIntelligence());

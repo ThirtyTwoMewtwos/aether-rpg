@@ -51,4 +51,7 @@ public class InGamePresenter implements ActiveState {
 	public void togglePersona() {
 		hudLocator.toggleViewVisibility(View.PERSONA);
 	}
+    public void toggleQuestJournal(){
+        hudLocator.toggleViewVisibility(View.QUESTJOURNAl);
+    }
 }

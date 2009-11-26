@@ -188,6 +188,10 @@ public class CharacterSheet implements Serializable {
             updateStats(equipment, true);
         }
     }
+    public Vector getQuestLog()
+    {
+        return questLog;
+    }
     public void addQuest(Quest quest)
     {
         if(quest.getLevelRequirement() <= getLevel())
@@ -299,7 +303,7 @@ public class CharacterSheet implements Serializable {
     }
     public double getCritChance()
     {
-        return critChance;
+        return statRound(critChance);
     }
     public void setCritChance(double crit)
     {
@@ -307,7 +311,7 @@ public class CharacterSheet implements Serializable {
     }
     public double getDodgeChance()
     {
-        return dodgeChance;
+        return statRound(dodgeChance);
     }
     public void setDodgeChance(double dodge)
     {
@@ -315,7 +319,7 @@ public class CharacterSheet implements Serializable {
     }
     public double getMeleeAttack()
     {
-        return meleeAttack;
+        return statRound(meleeAttack);
     }
     public void setMeleeAttack(double melee)
     {
@@ -323,7 +327,7 @@ public class CharacterSheet implements Serializable {
     }
     public double getRangedAttack()
     {
-        return rangedAttack;
+        return statRound(rangedAttack);
     }
     public void setRangedAttack(double ranged)
     {
@@ -331,7 +335,7 @@ public class CharacterSheet implements Serializable {
     }
     public double getMagicIntuative()
     {
-        return magicIntuative;
+        return statRound(magicIntuative);
     }
     public void setMagicIntuative(double magic)
     {
@@ -339,7 +343,7 @@ public class CharacterSheet implements Serializable {
     }
     public double getBlockChance()
     {
-        return blockChance;
+        return statRound(blockChance);
     }
     public void setBlockChance(double block)
     {
@@ -347,7 +351,7 @@ public class CharacterSheet implements Serializable {
     }
     public double getDispelChance()
     {
-        return dispelChance;
+        return statRound(dispelChance);
     }
     public void setDispelChance(double dispel)
     {
@@ -527,6 +531,12 @@ public class CharacterSheet implements Serializable {
 
         return formatted;
     }
+
+    double statRound(double d) {
+        	java.text.DecimalFormat twoDForm = new java.text.DecimalFormat("#.##");
+		return Double.valueOf(twoDForm.format(d));
+    }
+
     @Override
     public String toString()
     {

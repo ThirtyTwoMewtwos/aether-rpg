@@ -48,6 +48,7 @@ public class InGameWindow extends BaseWindow implements InGameView {
 	private static final String STATS_WINDOW = "stats.window";
 	private static final String OPTIONS_MENU_KEY_BINDING = "options.menu";
 	private static final String PERSONA_VIEW_KEY_BINDING = "persona.view";
+    private static final String JOURNAL_VIEW_KEY_BINDING = "journal.view";
 	
 	private InGamePresenter presenter;
 	private BMeterBar healthMeter;
@@ -128,6 +129,7 @@ public class InGameWindow extends BaseWindow implements InGameView {
 	private void bindKeysToView() {
 		registerBinding(OPTIONS_MENU_KEY_BINDING, KeyInput.KEY_ESCAPE);
 		registerBinding(PERSONA_VIEW_KEY_BINDING, KeyInput.KEY_P);
+        registerBinding(JOURNAL_VIEW_KEY_BINDING, KeyInput.KEY_J);
 	}
 
 	@Override
@@ -136,6 +138,8 @@ public class InGameWindow extends BaseWindow implements InGameView {
 			presenter.optionsMenu();
 		} else if (PERSONA_VIEW_KEY_BINDING.equals(name)) {
 			presenter.togglePersona();
+		}else if (JOURNAL_VIEW_KEY_BINDING.equals(name)) {
+			presenter.toggleQuestJournal();
 		}
 	}
 

@@ -45,9 +45,9 @@ public interface PersonaView {
 
     void setNextLevel(int i);
 
-    void setHP(int i);
+    void setHP(String s);
 
-    void setMP(int i);
+    void setMP(String s);
 
     void setToughness(int i);
 

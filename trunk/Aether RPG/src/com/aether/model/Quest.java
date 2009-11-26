@@ -33,6 +33,7 @@ public abstract class Quest
 {
     private String name, description;
     private int levelRequirement;
+    private boolean complete;
     
     public String getName()
     {
@@ -58,4 +59,14 @@ public abstract class Quest
     {
         levelRequirement = req;
     }
+
+    public boolean isComplete()
+    {
+        return complete;
+    }
+    protected void completeStatus(boolean completed)
+    {
+        complete = completed;
+    }
+
 }

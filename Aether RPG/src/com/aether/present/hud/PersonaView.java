@@ -24,7 +24,6 @@ public interface PersonaView {
     public static final String CRITICAL_STATISTIC = "CRIT";
     public static final String DODGE_STATISTIC = "DODGE";
 
-
 	void setPresenter(PersonaPresenter anyObject);
 
 	void activate();
@@ -41,7 +40,7 @@ public interface PersonaView {
     
     void setLevel(int i);
 
-    void setExp(int i);
+    void setXP(int i);
 
     void setNextLevel(int i);
 

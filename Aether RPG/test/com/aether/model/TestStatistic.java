@@ -22,8 +22,14 @@ public class TestStatistic {
 	}
 	
 	@Test
-	public void test_Retrieve_value_as_percentage() throws Exception {
+	public void test_Retrieve_value() throws Exception {
 		statistic.setValue(8);
 		assertEquals(8, statistic.getValue());
+	}
+	
+	@Test
+	public void test_Able_to_show_view_friendly_value() throws Exception {
+		statistic.setValue(7);
+		assertEquals("7/10", statistic.toViewString());
 	}
 }

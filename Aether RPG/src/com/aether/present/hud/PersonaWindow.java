@@ -159,7 +159,7 @@ class PersonaWindow implements PersonaView {
     }
 
     @Override
-    public void setExp(int value){
+    public void setXP(int value){
         exp.setText("" + value);
     }
 

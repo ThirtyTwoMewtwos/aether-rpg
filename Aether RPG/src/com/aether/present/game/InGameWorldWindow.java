@@ -11,7 +11,6 @@ import javax.swing.ImageIcon;
 import jmetest.flagrushtut.Lesson3;
 
 import com.jme.bounding.BoundingBox;
-import com.jme.image.Image;
 import com.jme.image.Texture;
 import com.jme.image.Texture.ApplyMode;
 import com.jme.image.Texture.CombinerFunctionRGB;
@@ -38,7 +37,6 @@ import com.jme.scene.state.LightState;
 import com.jme.scene.state.TextureState;
 import com.jme.scene.state.ZBufferState;
 import com.jme.scene.state.FogState.DensityFunction;
-import com.jme.scene.state.RenderState.StateType;
 import com.jme.system.DisplaySystem;
 import com.jme.util.GameTaskQueue;
 import com.jme.util.GameTaskQueueManager;

@@ -31,4 +31,8 @@ public class Statistic {
 			this.value = newValue;
 		}
 	}
+
+	public String toViewString() {
+		return value + "/" + maximum;
+	}
 }

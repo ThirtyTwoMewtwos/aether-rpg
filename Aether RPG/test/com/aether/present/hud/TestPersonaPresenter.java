@@ -7,6 +7,7 @@ import org.junit.Test;
 import com.aether.model.CharacterSheet;
 import com.aether.model.character.CharacterLocator;
 import com.aether.model.character.Classification;
+import com.aether.model.character.Statistic;
 
 
 public class TestPersonaPresenter {
@@ -32,8 +33,25 @@ public class TestPersonaPresenter {
 	public void test_Toggle_view_shows_character_sheet_data() throws Exception {
 		CharacterSheet characterSheet = new CharacterSheet("Joe the big guy", "something cool", "male", Classification.Acolyte);
 		EasyMock.expect(locator.getPlayer()).andReturn(characterSheet);
-		view.setStrength(10);
-		view.setDexterity(10);
+		view.setName("Joe the big guy");
+		view.setBlock(characterSheet.getBlockChance());
+		view.setClassification(characterSheet.getClassification().getName());
+		view.setCrit(characterSheet.getCritChance());
+		view.setDefense(characterSheet.getDefense());
+		view.setDispell(characterSheet.getDispelChance());
+		view.setDodge(characterSheet.getDodgeChance());
+		view.setXP(characterSheet.getXP());
+		view.setNextLevel(characterSheet.getXPToLevel());
+		view.setHP(characterSheet.getHealth().toViewString());
+		view.setMP(characterSheet.getMana().toViewString());
+		view.setMagic(characterSheet.getMagicIntuative());
+		view.setMelee(characterSheet.getMeleeAttack());
+		view.setLevel(characterSheet.getLevel());
+		view.setRange(characterSheet.getRangedAttack());
+		view.setRace(characterSheet.getRace().name());
+		view.setToughness(characterSheet.getToughness());
+		view.setStrength(characterSheet.getStrength());
+		view.setDexterity(characterSheet.getDexterity());
 		view.setInteligence(10);
 		view.setWisdom(10);
 		view.setVisible(true);

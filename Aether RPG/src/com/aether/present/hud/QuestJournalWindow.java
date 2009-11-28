@@ -1,20 +1,24 @@
 package com.aether.present.hud;
 
-import java.util.concurrent.Callable;
 import java.util.Vector;
+import java.util.concurrent.Callable;
 
-import com.aether.present.UILookAndFeel;
-import com.aether.model.Quest;
 import com.aether.model.KillQuest;
+import com.aether.model.Quest;
 import com.jme.util.GameTaskQueueManager;
-import com.jmex.bui.*;
+import com.jmex.bui.BButton;
+import com.jmex.bui.BLabel;
+import com.jmex.bui.BList;
+import com.jmex.bui.BScrollPane;
+import com.jmex.bui.BTextArea;
+import com.jmex.bui.BWindow;
+import com.jmex.bui.BuiSystem;
 import com.jmex.bui.headlessWindows.BDraggableWindow;
 import com.jmex.bui.layout.AbsoluteLayout;
 import com.jmex.bui.util.Rectangle;
 
-class QuestJournalWindow implements QuestJournalView 
-{
-    private Vector<Quest> qpointers = new Vector(30);
+class QuestJournalWindow implements QuestJournalView {
+    private Vector<Quest> qpointers = new Vector<Quest>(30);
 
    	private BWindow window;
 
@@ -39,6 +43,7 @@ class QuestJournalWindow implements QuestJournalView
         
         // Testing purposes only
         Quest peskyBadgers = new KillQuest("Damn Badgers!","I hate those pesky badgers, kill me ten of them!",1,10,"Badgers");
+
         addQuest(peskyBadgers);
 	}
 
@@ -81,7 +86,10 @@ class QuestJournalWindow implements QuestJournalView
         window.add(share,new Rectangle(10,20,40,55));
         window.add(abandon,new Rectangle(170, 20, 40, 55));
 	}
-
+	
+    // TODO We should get any model related stuff unnassociated with the window/view, and make 
+    // the presenter know about the model, and feed information to the view as simple strings
+    // this will make it easier to separate the UI from the model.
 	public void addQuest(Quest quest)
     {
         String logFormat = quest.getName() + "-             [" + quest.getLevelRequirement() + "]";
@@ -145,6 +153,7 @@ class QuestJournalWindow implements QuestJournalView
 		});
 	}
 
+	// Instead of passing in quests, can we pass in data to be displayed?
     @Override
     public void setQuests(Vector quests)
     {

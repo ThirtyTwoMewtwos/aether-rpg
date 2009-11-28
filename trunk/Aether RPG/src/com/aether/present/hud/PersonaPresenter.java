@@ -4,6 +4,7 @@ import org.gap.jseed.injection.annotation.Singleton;
 
 import com.aether.model.CharacterSheet;
 import com.aether.model.character.CharacterLocator;
+import com.aether.model.character.Statistic;
 
 @Singleton
 public class PersonaPresenter implements ViewPresenter {
@@ -28,6 +29,9 @@ public class PersonaPresenter implements ViewPresenter {
 		view.deactivate();
 	}
 
+	// TODO there is something wrong here.  character sheet is turning into 
+	// a giant bag of attributes, that we extract data from and push around.
+	// we should see what we can do to help this out.
 	@Override
 	public void toggleVisibility() {
 		isActive = !isActive;
@@ -40,10 +44,10 @@ public class PersonaPresenter implements ViewPresenter {
             view.setDefense(player.getDefense());
             view.setDispell(player.getDispelChance());
             view.setDodge(player.getDodgeChance());
-            view.setExp(player.getXP());
+            view.setXP(player.getXP());
             view.setNextLevel(player.getXPToLevel());
-            view.setHP(player.getHealth().getValue() + "/" + player.getHealth().getMax());
-            view.setMP(player.getMana().getValue() + "/" + player.getMana().getMax());
+            view.setHP(player.getHealth().toViewString());
+            view.setMP(player.getMana().toViewString());
             view.setMagic(player.getMagicIntuative());
             view.setMelee(player.getMeleeAttack());
             view.setLevel(player.getLevel());
@@ -57,5 +61,4 @@ public class PersonaPresenter implements ViewPresenter {
 		}
 		view.setVisible(isActive);
 	}
-
 }

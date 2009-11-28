@@ -19,7 +19,7 @@
 	</path>
 
 	<target name="init">
-		<delete dir="${classes.dir}" />
+		<delete dir="${build.dir}" />
 		<mkdir dir="${classes.dir}" />
 		<mkdir dir="${test.classes.dir}"/>
 		<mkdir dir="${functional.test.classes.dir}"/>
@@ -83,7 +83,7 @@
 
 			<formatter type="xml" />
 
-			<batchtest fork="yes"  todir="${report.dir}">
+			<batchtest fork="yes" haltonerror="true" haltonfailure="true" todir="${report.dir}">
 				<fileset dir="${test.dir}" includes="**/Test*.java" />
 			</batchtest>
 		</junit>
@@ -91,7 +91,7 @@
 	
 	<target name="functional test" depends="jar">
 		<mkdir dir="${report.dir}" />
-		<junit printsummary="true">
+		<junit printsummary="true" >
 			<jvmarg value="-Djava.library.path=${native.libpath}" />
 			<classpath>
 				<path refid="classpath" />
@@ -100,7 +100,7 @@
 
 			<formatter type="xml" />
 
-			<batchtest fork="yes"  todir="${report.dir}">
+			<batchtest fork="yes" haltonerror="true" haltonfailure="true" todir="${report.dir}">
 				<fileset dir="${functional.test.dir}" includes="**/Test*.java" />
 			</batchtest>
 		</junit>

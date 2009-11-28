@@ -40,10 +40,14 @@ import com.aether.model.character.Statistic;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
 
+// TODO Character sheet seems to be the central hub for all things player related.  
+// we should try to break away the character sheet to it's logical elements for
+// maintainability.  Quests as a service locator, xp as a separate module, attributes
+// into it's own manager.  This would help the CharacterSheet to be more focused
+// and make it into a more maintainable implementation of a container as opposed
+// to the full implementation.  character sheets, in rpg's are always broken up
+// into it's separate containers/divisions.
 public class CharacterSheet implements Serializable {
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public final static int MOVE_MODIFIER = 2;
@@ -98,7 +102,6 @@ public class CharacterSheet implements Serializable {
         setXPToLevel(100);
         setLocation(new Point(20,20));
 
-
         setStrength(10);
         setDexterity(10);
         setToughness(10);
@@ -146,20 +149,15 @@ public class CharacterSheet implements Serializable {
     
     private void setCombatValues()
     {
-        double melee = (getStrength() * (getStrength() * LARGE_STAT_MODIFIER)) + (getDexterity() * (getDexterity() * SMALL_STAT_MODIFIER));
-        double magic = (getIntelligence() * (getIntelligence() * LARGE_STAT_MODIFIER)) + (getWisdom() * (getWisdom() * SMALL_STAT_MODIFIER));
-        double ranged = (getDexterity() * (getDexterity() * LARGE_STAT_MODIFIER)) + (getStrength() * (getStrength() * SMALL_STAT_MODIFIER));
-        double crit = (getDexterity() * (getDexterity() * LARGE_STAT_MODIFIER)) + (getStrength() * SMALL_STAT_MODIFIER);
+        meleeAttack = (getStrength() * (getStrength() * LARGE_STAT_MODIFIER)) + (getDexterity() * (getDexterity() * SMALL_STAT_MODIFIER));
+        magicIntuative = (getIntelligence() * (getIntelligence() * LARGE_STAT_MODIFIER)) + (getWisdom() * (getWisdom() * SMALL_STAT_MODIFIER));
+        rangedAttack = (getDexterity() * (getDexterity() * LARGE_STAT_MODIFIER)) + (getStrength() * (getStrength() * SMALL_STAT_MODIFIER));
+        critChance = (getDexterity() * (getDexterity() * LARGE_STAT_MODIFIER)) + (getStrength() * SMALL_STAT_MODIFIER);
         double dodge = (getToughness() * (getToughness() * LARGE_STAT_MODIFIER)) - (getDexterity()* (getDexterity() * SMALL_STAT_MODIFIER)) + (getStrength() * (getStrength() * SMALL_STAT_MODIFIER));
-        double block = (getDexterity() * (getDexterity() * LARGE_STAT_MODIFIER)) - (getToughness()* (getToughness() * SMALL_STAT_MODIFIER)) + (getStrength() * (getStrength() * SMALL_STAT_MODIFIER));
+        blockChance = (getDexterity() * (getDexterity() * LARGE_STAT_MODIFIER)) - (getToughness()* (getToughness() * SMALL_STAT_MODIFIER)) + (getStrength() * (getStrength() * SMALL_STAT_MODIFIER));
         double dispel = (((getWisdom() + getIntelligence()) * LARGE_STAT_MODIFIER) * getWisdom()) - (getDexterity() * SMALL_STAT_MODIFIER) - (getStrength() * SMALL_STAT_MODIFIER);
 
-        setMeleeAttack(melee);
-        setMagicIntuative(magic);
-        setRangedAttack(ranged);
-        setCritChance(crit);
         setDodgeChance(dodge);
-        setBlockChance(block);
         setDispelChance(dispel);
     }
     public void unequip(int index)
@@ -301,16 +299,10 @@ public class CharacterSheet implements Serializable {
     {
         defense = def;
     }
-    public double getCritChance()
-    {
+    public double getCritChance() {
         return statRound(critChance);
     }
-    public void setCritChance(double crit)
-    {
-        critChance = crit;
-    }
-    public double getDodgeChance()
-    {
+    public double getDodgeChance() {
         return statRound(dodgeChance);
     }
     public void setDodgeChance(double dodge)
@@ -321,36 +313,19 @@ public class CharacterSheet implements Serializable {
     {
         return statRound(meleeAttack);
     }
-    public void setMeleeAttack(double melee)
-    {
-        meleeAttack = melee;
-    }
     public double getRangedAttack()
     {
         return statRound(rangedAttack);
-    }
-    public void setRangedAttack(double ranged)
-    {
-        rangedAttack = ranged;
     }
     public double getMagicIntuative()
     {
         return statRound(magicIntuative);
     }
-    public void setMagicIntuative(double magic)
-    {
-        magicIntuative = magic;
-    }
-    public double getBlockChance()
-    {
+    public double getBlockChance() {
         return statRound(blockChance);
     }
-    public void setBlockChance(double block)
-    {
-        blockChance = block;
-    }
-    public double getDispelChance()
-    {
+
+    public double getDispelChance() {
         return statRound(dispelChance);
     }
     public void setDispelChance(double dispel)
@@ -466,13 +441,13 @@ public class CharacterSheet implements Serializable {
         setIntelligence(getIntelligence() + ATTRIBUTE_MODIFER);
         setWisdom(getWisdom() + ATTRIBUTE_MODIFER);
         
-        setMeleeAttack(getMeleeAttack() + ATTACK_MODIFER);
-        setRangedAttack(getRangedAttack() + ATTACK_MODIFER);
-        setMagicIntuative(getMagicIntuative() + ATTACK_MODIFER);
+        meleeAttack = getMeleeAttack() + ATTACK_MODIFER;
+        rangedAttack = getRangedAttack() + ATTACK_MODIFER;
+        magicIntuative = getMagicIntuative() + ATTACK_MODIFER;
         
-        setBlockChance(getBlockChance() + CHANCE_MODIFER);
+        blockChance = (getBlockChance() + CHANCE_MODIFER);
         setDispelChance(getDispelChance() + CHANCE_MODIFER);
-        setCritChance(getCritChance() + CHANCE_MODIFER);
+        critChance = (getCritChance() + CHANCE_MODIFER);
         setDodgeChance(getDodgeChance() + CHANCE_MODIFER);
         
         setXPToLevel((int)(getXPToLevel() + EXPIERENCE_MODIFER));
@@ -533,7 +508,7 @@ public class CharacterSheet implements Serializable {
     }
 
     double statRound(double d) {
-        	java.text.DecimalFormat twoDForm = new java.text.DecimalFormat("#.##");
+        java.text.DecimalFormat twoDForm = new java.text.DecimalFormat("#.##");
 		return Double.valueOf(twoDForm.format(d));
     }
 

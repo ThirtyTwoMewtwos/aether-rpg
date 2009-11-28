@@ -16,6 +16,7 @@ import com.aether.gbui.NameOperatorSearch;
 import com.aether.gbui.operators.BComponentOperatorUtil;
 import com.aether.gbui.operators.BLabelOperator;
 import com.aether.present.CreateCharacterPage;
+import com.aether.present.InGamePage;
 import com.aether.present.Main;
 import com.aether.present.MainMenuPage;
 import com.aether.present.hud.PersonaView;
@@ -30,9 +31,9 @@ public class TestPersonaWindow {
 		Main.startGame();
 		CreateCharacterPage newCampain = new MainMenuPage().clickNewCampain();
 		newCampain.loadDummyData();
-		newCampain.clickFinish();
+		InGamePage gamePage = newCampain.clickFinish();
 		
-		personaWindow = BComponentOperatorUtil.windowWithId(PersonaView.PERSONA_ID);
+		personaWindow = gamePage.getPersonaWindow();
 	}
 	
 	@Test

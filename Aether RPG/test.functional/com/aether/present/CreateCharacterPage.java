@@ -32,8 +32,9 @@ public class CreateCharacterPage {
 		return backButton;
 	}
 
-	public void clickFinish() throws Exception {
+	public InGamePage clickFinish() throws Exception {
 		getFinishButton().click();
+		return new InGamePage();
 	}
 
 	public void setName(String name) {

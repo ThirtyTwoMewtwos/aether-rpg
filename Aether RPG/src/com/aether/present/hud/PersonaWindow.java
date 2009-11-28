@@ -4,6 +4,8 @@ import java.util.concurrent.Callable;
 
 import com.aether.present.UILookAndFeel;
 import com.jme.util.GameTaskQueueManager;
+import com.jmex.bui.BComponent;
+import com.jmex.bui.BContainer;
 import com.jmex.bui.BLabel;
 import com.jmex.bui.BWindow;
 import com.jmex.bui.BuiSystem;
@@ -14,8 +16,7 @@ import com.jmex.bui.util.Rectangle;
 class PersonaWindow implements PersonaView {
 	private BWindow window;
     private BLabel name;
-    private BLabel race;
-    private BLabel sex;
+    private BLabel raceAndSex;
     private BLabel classification;
 
     private BLabel hp;
@@ -39,25 +40,47 @@ class PersonaWindow implements PersonaView {
 	
 	public PersonaWindow() {
 		window = initWindow();
+		initCharacterHeading(window);
 		initStatistics(window);
 	}
-	
+
 	private BWindow initWindow() {
 		AbsoluteLayout layout = new AbsoluteLayout();
 		BWindow result = new BDraggableWindow(BuiSystem.getStyle(), layout);
 		result.setName(PERSONA_ID);
-		result.setSize(150, 380);
+		result.setSize(350, 380);
 		result.center();
 		result.setVisible(false);
 		return result;
 	}
+
+	private void initCharacterHeading(BWindow window) {
+		AbsoluteLayout layout = new AbsoluteLayout();
+		BContainer headerPanel = new BContainer();
+		headerPanel.setLayoutManager(layout);
+		window.add(headerPanel, new Rectangle(0, 318, 340, 54));
+		headerPanel.setStyleClass(UILookAndFeel.PERSONA_HEADER_PANEL);
+		
+		name = createHeader(headerPanel, NAME_FIELD, 0, 17, 300);
+		classification = createHeader(headerPanel,CLASS_FIELD, 0, 0, 150);
+		raceAndSex = createHeader(headerPanel, RACE_SEX_FIELD, 150, 0, 100);
+	}
+	
+	private BLabel createHeader(BContainer window, String header, int x, int y, int width) {
+		BLabel stat = new BLabel(header);
+		stat.setStyleClass(UILookAndFeel.PERSONA_STATISTICS);
+		int statNameWidth = header.length() * 12;
+		window.add(stat, new Rectangle(x, y, statNameWidth, 35));
+
+		BLabel statValue = new BLabel("dummy value");
+		statValue.setStyleClass(UILookAndFeel.PERSONA_HEADER_VALUES);
+		statValue.setName(NAME_FIELD);
+		window.add(statValue, new Rectangle(x + (int)(statNameWidth * 0.75), y, width, 35));
+		
+		return statValue;
+	}
 	
 	private void initStatistics(BWindow window) {
-
-        name = createStat(window,"Luccin","",340);
-        classification = createStat(window,"Acolyte","",325);
-        race = createStat(window,"Human","",310);
-        sex = createStat(window,"Male","",295);
         hp = createStat(window, "100/100", HP_STATISTIC, 280);
         mp = createStat(window, "100/100", MP_STATISTIC, 265);
         level = createStat(window, "1", LEVEL_STATISTIC, 250);
@@ -209,8 +232,8 @@ class PersonaWindow implements PersonaView {
     }
 
     @Override
-    public void setRace(String value){
-        race.setText("" + value);
+    public void setRaceAndSex(String value){
+        raceAndSex.setText("" + value);
     }
 
     @Override
@@ -220,7 +243,6 @@ class PersonaWindow implements PersonaView {
 
     @Override
     public void setSex(String value){
-        sex.setText("" + value);
     }
 
 	@Override

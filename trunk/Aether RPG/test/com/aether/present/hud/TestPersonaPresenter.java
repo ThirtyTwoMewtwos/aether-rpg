@@ -48,7 +48,7 @@ public class TestPersonaPresenter {
 		view.setMelee(characterSheet.getMeleeAttack());
 		view.setLevel(characterSheet.getLevel());
 		view.setRange(characterSheet.getRangedAttack());
-		view.setRace(characterSheet.getRace().name());
+		view.setRaceAndSex(characterSheet.getRace().name() + "/" + characterSheet.getSex());
 		view.setToughness(characterSheet.getToughness());
 		view.setStrength(characterSheet.getStrength());
 		view.setDexterity(characterSheet.getDexterity());

@@ -3,7 +3,12 @@ package com.aether.present.hud;
 public interface PersonaView {
 	public static final String PERSONA_ID = "hud.persona.view";
     
-    public static final String LEVEL_STATISTIC = "LEVEL";
+
+	public static final String NAME_FIELD = "Name";
+	public static final String CLASS_FIELD = "Class";
+	public static final String RACE_SEX_FIELD = "Race/Sex";
+
+	public static final String LEVEL_STATISTIC = "LEVEL";
     public static final String EXP_STATISTIC = "EXP";
     public static final String NEXTLEVEL_STATISTIC = "NEXT";
     public static final String HP_STATISTIC = "HP";
@@ -32,7 +37,7 @@ public interface PersonaView {
 
     void setName(String n);
 
-    void setRace(String r);
+    void setRaceAndSex(String r);
 
     void setClassification(String c);
 

@@ -52,7 +52,7 @@ public class PersonaPresenter implements ViewPresenter {
             view.setMelee(player.getMeleeAttack());
             view.setLevel(player.getLevel());
             view.setRange(player.getRangedAttack());
-            view.setRace(player.getRace().name());
+            view.setRaceAndSex(player.getRace().name() + "/" + player.getSex());
             view.setToughness(player.getToughness());
 			view.setStrength(player.getStrength());
 			view.setDexterity(player.getDexterity());

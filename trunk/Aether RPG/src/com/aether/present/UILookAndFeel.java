@@ -1,11 +1,16 @@
 package com.aether.present;
 
-import static com.aether.gbui.bss.BssWriter.StyleState.*;
-import static com.aether.gbui.bss.BssWriter.StyleType.*;
+import static com.aether.gbui.bss.BssWriter.StyleState.disabled;
+import static com.aether.gbui.bss.BssWriter.StyleState.hover;
+import static com.aether.gbui.bss.BssWriter.StyleType.button;
+import static com.aether.gbui.bss.BssWriter.StyleType.combobox;
+import static com.aether.gbui.bss.BssWriter.StyleType.label;
+import static com.aether.gbui.bss.BssWriter.StyleType.menuitem;
+import static com.aether.gbui.bss.BssWriter.StyleType.textfield;
+import static com.aether.gbui.bss.BssWriter.StyleType.window;
 
 import java.awt.Color;
 import java.io.IOException;
-import java.net.URL;
 
 import com.aether.gbui.bss.BssBackgroundMode;
 import com.aether.gbui.bss.BssColor;
@@ -32,6 +37,8 @@ public class UILookAndFeel {
 	
 	public static final String PERSONA_STATISTICS = "persona_statistics";
 	public static final String PERSONA_STATISTICS_VALUES = "persona_statistics_values";
+	public static final String PERSONA_HEADER_VALUES = "persona_header_values";
+	public static final String PERSONA_HEADER_PANEL = "persona_header_panel";
 	
 	private static final int BUTTON_FONT_SIZE = 24;
 	private static final String FONT_FAMILY = "Helvetica";
@@ -83,6 +90,15 @@ public class UILookAndFeel {
 				.setTextAlign(BssTextAlign.CENTER)
 				.setFont(FONT_FAMILY, BssFontStyle.BOLD, 12)
 				.setColor(BssColor.WHITE);
+		
+		writer.createStyle(PERSONA_HEADER_VALUES)
+				.clearBackground()
+				.setTextAlign(BssTextAlign.LEFT)
+				.setFont(FONT_FAMILY, BssFontStyle.BOLD, 12)
+				.setColor(BssColor.LIGHT_GRAY);
+		
+		writer.createStyle(PERSONA_HEADER_PANEL)
+				.setBackground("images/button_up.png", BssBackgroundMode.FRAMEXY);
 	}
 
 	private void setupInGameChatBox() {

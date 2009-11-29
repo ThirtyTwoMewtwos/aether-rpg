@@ -39,6 +39,7 @@ public class UILookAndFeel {
 	public static final String PERSONA_STATISTICS_VALUES = "persona_statistics_values";
 	public static final String PERSONA_HEADER_VALUES = "persona_header_values";
 	public static final String PERSONA_HEADER_PANEL = "persona_header_panel";
+	public static final String PERSONA_ATTRIBUTES_PANEL = "persona_attributes_panel";
 	
 	private static final int BUTTON_FONT_SIZE = 24;
 	private static final String FONT_FAMILY = "Helvetica";
@@ -99,6 +100,10 @@ public class UILookAndFeel {
 		
 		writer.createStyle(PERSONA_HEADER_PANEL)
 				.setBackground("images/button_up.png", BssBackgroundMode.FRAMEXY);
+		
+		writer.createStyle(PERSONA_ATTRIBUTES_PANEL)
+				.clearBackground()
+				.setBorder(2, BssColor.DARK_GRAY);
 	}
 
 	private void setupInGameChatBox() {

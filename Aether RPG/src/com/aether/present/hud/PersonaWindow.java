@@ -3,9 +3,11 @@ package com.aether.present.hud;
 import java.util.concurrent.Callable;
 
 import com.aether.present.UILookAndFeel;
+import com.aether.present.hud.persona.AttributesPanel;
+import com.aether.present.hud.persona.CombatPanel;
+import com.aether.present.hud.persona.ExperiencePanel;
+import com.aether.present.hud.persona.HeaderPanel;
 import com.jme.util.GameTaskQueueManager;
-import com.jmex.bui.BComponent;
-import com.jmex.bui.BContainer;
 import com.jmex.bui.BLabel;
 import com.jmex.bui.BWindow;
 import com.jmex.bui.BuiSystem;
@@ -15,32 +17,30 @@ import com.jmex.bui.util.Rectangle;
 
 class PersonaWindow implements PersonaView {
 	private BWindow window;
-    private BLabel name;
-    private BLabel raceAndSex;
-    private BLabel classification;
 
-    private BLabel hp;
-    private BLabel mp;
     private BLabel level;
     private BLabel exp;
     private BLabel nextlevel;
-	private BLabel strength;
-	private BLabel dexterity;
-	private BLabel intelligence;
-	private BLabel wisdom;
-    private BLabel toughness;
-    private BLabel defense;
-    private BLabel melee;
-    private BLabel range;
-    private BLabel magic;
-    private BLabel dispell;
-    private BLabel block;
-    private BLabel dodge;
-    private BLabel crit;
+    
+	private HeaderPanel headerPanel;
+	private AttributesPanel attributesPanel;
+
+	private CombatPanel combatPanel;
+
+	private ExperiencePanel xpPanel;
 	
 	public PersonaWindow() {
 		window = initWindow();
-		initCharacterHeading(window);
+		headerPanel = new HeaderPanel();
+		attributesPanel = new AttributesPanel();
+		combatPanel = new CombatPanel();
+		xpPanel = new ExperiencePanel();
+		
+		window.add(headerPanel, 	new Rectangle(0, 318, 270, 54));
+		window.add(attributesPanel, new Rectangle(0, 120, 130, 120));
+		window.add(combatPanel, 	new Rectangle(135, 120, 130, 185));
+		window.add(xpPanel,         new Rectangle(0, 80, 270, 40));
+		
 		initStatistics(window);
 	}
 
@@ -48,59 +48,16 @@ class PersonaWindow implements PersonaView {
 		AbsoluteLayout layout = new AbsoluteLayout();
 		BWindow result = new BDraggableWindow(BuiSystem.getStyle(), layout);
 		result.setName(PERSONA_ID);
-		result.setSize(350, 380);
+		result.setSize(280, 380);
 		result.center();
 		result.setVisible(false);
 		return result;
 	}
-
-	private void initCharacterHeading(BWindow window) {
-		AbsoluteLayout layout = new AbsoluteLayout();
-		BContainer headerPanel = new BContainer();
-		headerPanel.setLayoutManager(layout);
-		window.add(headerPanel, new Rectangle(0, 318, 340, 54));
-		headerPanel.setStyleClass(UILookAndFeel.PERSONA_HEADER_PANEL);
-		
-		name = createHeader(headerPanel, NAME_FIELD, 0, 17, 300);
-		classification = createHeader(headerPanel,CLASS_FIELD, 0, 0, 150);
-		raceAndSex = createHeader(headerPanel, RACE_SEX_FIELD, 150, 0, 100);
-	}
-	
-	private BLabel createHeader(BContainer window, String header, int x, int y, int width) {
-		BLabel stat = new BLabel(header);
-		stat.setStyleClass(UILookAndFeel.PERSONA_STATISTICS);
-		int statNameWidth = header.length() * 12;
-		window.add(stat, new Rectangle(x, y, statNameWidth, 35));
-
-		BLabel statValue = new BLabel("dummy value");
-		statValue.setStyleClass(UILookAndFeel.PERSONA_HEADER_VALUES);
-		statValue.setName(NAME_FIELD);
-		window.add(statValue, new Rectangle(x + (int)(statNameWidth * 0.75), y, width, 35));
-		
-		return statValue;
-	}
 	
 	private void initStatistics(BWindow window) {
-        hp = createStat(window, "100/100", HP_STATISTIC, 280);
-        mp = createStat(window, "100/100", MP_STATISTIC, 265);
-        level = createStat(window, "1", LEVEL_STATISTIC, 250);
-        exp = createStat(window, "0", EXP_STATISTIC, 235);
-        nextlevel = createStat(window, "350", NEXTLEVEL_STATISTIC, 220);
-
-		strength = createStat(window, "9", STRENGTH_STATISTIC, 205);
-		dexterity = createStat(window, "9", DEXTERITY_STATISTIC, 190);
-		intelligence = createStat(window, "9", INTELLIGENCE_STATISTIC, 175);
-		wisdom = createStat(window, "9", WISDOM_STATISTIC, 160);
-        toughness = createStat(window,"9",TOUGHNESS_STATISTIC, 145);
-
-        defense = createStat(window,"15",DEFENSE_STATISTIC,130);
-        melee = createStat(window,"9.7",MELEE_STATISTIC,115);
-        range = createStat(window,"9.7",RANGE_STATISTIC,100);
-        magic = createStat(window,"9.7",MAGIC_STATISTIC,85);
-        dispell = createStat(window,"9.7",DISPELL_STATISTIC,70);
-        dodge = createStat(window,"9.7",DODGE_STATISTIC,55);
-        crit = createStat(window,"9.7", CRITICAL_STATISTIC,40);
-        block = createStat(window,"9.7",BLOCK_STATISTIC,25);
+        level = createStat(window, "1", LEVEL_STATISTIC, 10);
+        exp = createStat(window, "0", EXP_STATISTIC, 10);
+        nextlevel = createStat(window, "350", NEXTLEVEL_STATISTIC, 10);
 	}
 
 	private BLabel createStat(BWindow window, String value, String statName, int y) {
@@ -138,42 +95,37 @@ class PersonaWindow implements PersonaView {
 
 	@Override
 	public void setStrength(int value) {
-		strength.setText("" + value);
+		attributesPanel.setStrength("" + value);
 	}
 
 	@Override
 	public void setDexterity(int value) {
-		dexterity.setText("" + value);
+		attributesPanel.setDexterity("" + value);
 	}
 
 	@Override
 	public void setInteligence(int value) {
-		intelligence.setText("" + value);
+		attributesPanel.setInteligence("" + value);
 	}
 
 	@Override
 	public void setWisdom(int value) {
-		wisdom.setText("" + value);
+		attributesPanel.setWisdom("" + value);
 	}
 
     @Override
     public void setToughness(int value){
-        toughness.setText("" + value);
-    }
-
-    @Override
-    public void setDefense(int value){
-        defense.setText("" + value);
+    	attributesPanel.setToughness("" + value);
     }
 
     @Override
     public void setHP(String value){
-        hp.setText("" + value);
+        attributesPanel.setHealth("" + value);
     }
 
     @Override
     public void setMP(String value){
-        mp.setText("" + value);
+        attributesPanel.setMana("" + value);
     }
 
     @Override
@@ -193,56 +145,57 @@ class PersonaWindow implements PersonaView {
 
     @Override
     public void setMelee(double value){
-        melee.setText("" + value);
+        combatPanel.setMelee("" + value);
     }
 
     @Override
     public void setRange(double value){
-        range.setText("" + value);
+        combatPanel.setRange("" + value);
     }
 
     @Override
     public void setMagic(double value){
-        magic.setText("" + value);
+        combatPanel.setMagic("" + value);
     }
 
     @Override
     public void setDispell(double value){
-        dispell.setText("" + value);
+        combatPanel.setDispell("" + value);
     }
 
     @Override
-    public void setBlock(double value){
-        block.setText("" + value);
+    public void setBlock(double newBlock){
+    	combatPanel.setBlock("" + newBlock);
     }
 
     @Override
     public void setDodge(double value){
-        dodge.setText("" + value);
+        combatPanel.setDodge("" + value);
     }
 
     @Override
-    public void setCrit(double value){
-        crit.setText("" + value);
+    public void setCritical(double value){
+        combatPanel.setCritical("" + value);
+    }
+    
+    @Override
+    public void setDefense(int value){
+        combatPanel.setDefense("" + value);
     }
 
     @Override
-    public void setName(String vlaue){
-        name.setText("" + vlaue);
+    public void setName(String newName){
+        headerPanel.setName(newName);
     }
 
     @Override
-    public void setRaceAndSex(String value){
-        raceAndSex.setText("" + value);
+    public void setRaceAndSex(String newRaceAndSex){
+        headerPanel.setRaceAndSex(newRaceAndSex);
     }
 
     @Override
-    public void setClassification(String value){
-        classification.setText("" + value);
-    }
-
-    @Override
-    public void setSex(String value){
+    public void setClassification(String newClass){
+        headerPanel.setClassification(newClass);
     }
 
 	@Override

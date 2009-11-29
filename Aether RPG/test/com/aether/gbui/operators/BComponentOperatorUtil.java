@@ -8,6 +8,7 @@ import com.aether.gbui.ComponentSearch;
 import com.aether.gbui.Condition;
 import com.jme.util.GameTaskQueueManager;
 import com.jmex.bui.BComponent;
+import com.jmex.bui.BContainer;
 import com.jmex.bui.BWindow;
 import com.jmex.bui.BuiSystem;
 
@@ -56,14 +57,21 @@ public class BComponentOperatorUtil {
 		throw new IllegalStateException("Unable to find 'widget': " + searcher);
 	}
 
-	private static BComponent searchForWidget(BWindow window, ComponentSearch searcher) {
-		for (int i = 0; i < window.getComponentCount(); i++) {
-			BComponent component = window.getComponent(i);
+	private static BComponent searchForWidget(BContainer container, ComponentSearch searcher) {
+		for (int i = 0; i < container.getComponentCount(); i++) {
+			BComponent component = container.getComponent(i);
 			if (!component.isShowing()) {
 				continue;
 			}
 			if (searcher.isMatch(component)) {
 				return component;
+			}
+			if (component instanceof BContainer) {
+				System.out.println(component.getName());
+				BComponent found = searchForWidget((BContainer)component, searcher);
+				if (found != null) {
+					return found;
+				}
 			}
 		}
 		return null;

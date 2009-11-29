@@ -1,7 +1,6 @@
 package com.aether.present;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 
 import org.gap.jseed.ServiceStore;
 
@@ -24,13 +23,9 @@ import com.jme.app.AbstractGame;
 import com.jme.input.MouseInput;
 import com.jme.renderer.Camera;
 import com.jme.renderer.ColorRGBA;
-import com.jme.util.Debug;
-import com.jme.util.TextureManager;
-import com.jme.util.geom.BufferUtils;
 import com.jmex.game.StandardGame;
 
 public class Main {
-
 	private static StandardGame game;
 
 	public static void startGame() {

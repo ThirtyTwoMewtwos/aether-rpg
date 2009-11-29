@@ -2,8 +2,8 @@ package com.aether.present.hud;
 
 public interface PersonaView {
 	public static final String PERSONA_ID = "hud.persona.view";
+	public static final String PERSONA_HEADER_ID = "persona.header";
     
-
 	public static final String NAME_FIELD = "Name";
 	public static final String CLASS_FIELD = "Class";
 	public static final String RACE_SEX_FIELD = "Race/Sex";
@@ -11,8 +11,8 @@ public interface PersonaView {
 	public static final String LEVEL_STATISTIC = "LEVEL";
     public static final String EXP_STATISTIC = "EXP";
     public static final String NEXTLEVEL_STATISTIC = "NEXT";
-    public static final String HP_STATISTIC = "HP";
-    public static final String MP_STATISTIC = "MP";
+    public static final String HEALTH_STATISTIC = "HP";
+    public static final String MANA_STATISTIC = "MP";
 
 	public static final String STRENGTH_STATISTIC = "STR";
 	public static final String DEXTERITY_STATISTIC = "DEX";
@@ -29,6 +29,8 @@ public interface PersonaView {
     public static final String CRITICAL_STATISTIC = "CRIT";
     public static final String DODGE_STATISTIC = "DODGE";
 
+
+
 	void setPresenter(PersonaPresenter anyObject);
 
 	void activate();
@@ -41,8 +43,6 @@ public interface PersonaView {
 
     void setClassification(String c);
 
-    void setSex(String s);
-    
     void setLevel(int i);
 
     void setXP(int i);
@@ -75,7 +75,7 @@ public interface PersonaView {
 
     void setBlock(double d);
 
-    void setCrit(double d);
+    void setCritical(double d);
 
     void setDodge(double d);
 

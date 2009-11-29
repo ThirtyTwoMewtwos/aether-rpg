@@ -10,9 +10,15 @@ public class BMeterBar extends BComponent {
 	private String tooltipStyleClass;
 	private int maximum;
 	private int value;
+	private final boolean isVertical;
 
 	public BMeterBar(String name) {
+		this(name, true);
+	}
+	
+	public BMeterBar(String name, boolean verticalState) {
 		super(name);
+		this.isVertical = verticalState;
 		updateTooltipText();
 		setTooltipRelativeToMouse(true);
 	}
@@ -28,14 +34,25 @@ public class BMeterBar extends BComponent {
 	}
 
 	private void drawMeter(ColorRGBA color) {
-		float height = ((float)getHeight()) * ((float)value / (float)maximum);
-		GL11.glColor4f(color.r, color.g, color.b, color.a);
-		GL11.glBegin(GL11.GL_QUADS);
-		GL11.glVertex2f(0, 0);
-		GL11.glVertex2f(getWidth(), 0);
-		GL11.glVertex2f(getWidth(), height);
-		GL11.glVertex2f(0, height);
-		GL11.glEnd();
+		if (isVertical) {
+			float height = ((float)getHeight()) * ((float)value / (float)maximum);
+			GL11.glColor4f(color.r, color.g, color.b, color.a);
+			GL11.glBegin(GL11.GL_QUADS);
+			GL11.glVertex2f(0, 0);
+			GL11.glVertex2f(getWidth(), 0);
+			GL11.glVertex2f(getWidth(), height);
+			GL11.glVertex2f(0, height);
+			GL11.glEnd();
+		} else {
+			float width = ((float)getWidth()) * ((float)value / (float)maximum);
+			GL11.glColor4f(color.r, color.g, color.b, color.a);
+			GL11.glBegin(GL11.GL_QUADS);
+			GL11.glVertex2f(0, 0);
+			GL11.glVertex2f(width, 0);
+			GL11.glVertex2f(width, getHeight());
+			GL11.glVertex2f(0, getHeight());
+			GL11.glEnd();
+		}
 	}
 
 	@Override

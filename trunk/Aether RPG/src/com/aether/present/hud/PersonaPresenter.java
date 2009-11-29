@@ -4,7 +4,6 @@ import org.gap.jseed.injection.annotation.Singleton;
 
 import com.aether.model.CharacterSheet;
 import com.aether.model.character.CharacterLocator;
-import com.aether.model.character.Statistic;
 
 @Singleton
 public class PersonaPresenter implements ViewPresenter {
@@ -40,7 +39,7 @@ public class PersonaPresenter implements ViewPresenter {
             view.setName(player.getName());
             view.setBlock(player.getBlockChance());
             view.setClassification(player.getClassification().getName());
-            view.setCrit(player.getCritChance());
+            view.setCritical(player.getCritChance());
             view.setDefense(player.getDefense());
             view.setDispell(player.getDispelChance());
             view.setDodge(player.getDodgeChance());

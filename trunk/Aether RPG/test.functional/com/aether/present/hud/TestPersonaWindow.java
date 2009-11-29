@@ -4,27 +4,21 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.awt.AWTException;
-import java.awt.event.KeyEvent;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aether.gbui.BKeyboard;
 import com.aether.gbui.NameOperatorSearch;
-import com.aether.gbui.operators.BComponentOperatorUtil;
 import com.aether.gbui.operators.BLabelOperator;
 import com.aether.present.CreateCharacterPage;
 import com.aether.present.InGamePage;
 import com.aether.present.Main;
 import com.aether.present.MainMenuPage;
-import com.aether.present.hud.PersonaView;
-import com.jmex.bui.BWindow;
+import com.aether.present.PersonaPage;
 
 public class TestPersonaWindow {
 	
-	private BWindow personaWindow;
+	private PersonaPage persona;
 
 	@Before
 	public void setUp() throws Exception {
@@ -33,36 +27,47 @@ public class TestPersonaWindow {
 		newCampain.loadDummyData();
 		InGamePage gamePage = newCampain.clickFinish();
 		
-		personaWindow = gamePage.getPersonaWindow();
+		persona = gamePage.getPersonaPage();
 	}
 	
 	@Test
 	public void test_Window_is_available() throws Exception {
-		togglePersonaView();
-		assertTrue(personaWindow.isVisible());
-		togglePersonaView();
-		assertFalse(personaWindow.isVisible());
-	}
-
-	private void togglePersonaView() throws AWTException {
-		new BKeyboard().typeKey(KeyEvent.VK_P);
+		assertFalse(persona.getWindow().isVisible());
+		persona.toggleVisibility();
+		assertTrue(persona.getWindow().isVisible());
+		persona.toggleVisibility();
+		assertFalse(persona.getWindow().isVisible());
 	}
 	
 	@Test
 	public void test_Statistics_have_been_set_from_character_sheet() throws Exception {
-		togglePersonaView();
-		BLabelOperator strength = getStatisticLabel(PersonaView.STRENGTH_STATISTIC);
-		assertEquals("10", strength.getText());
-		BLabelOperator dexterity = getStatisticLabel(PersonaView.DEXTERITY_STATISTIC);
-		assertEquals("10", dexterity.getText());
-		BLabelOperator intelligence = getStatisticLabel(PersonaView.INTELLIGENCE_STATISTIC);
-		assertEquals("10", intelligence.getText());
-		BLabelOperator wisdom = getStatisticLabel(PersonaView.WISDOM_STATISTIC);
-		assertEquals("10", wisdom.getText());
+		persona.toggleVisibility();
+		
+		assertLabelText("John Grisham", PersonaView.NAME_FIELD);
+		assertLabelText("Crusader", PersonaView.CLASS_FIELD);
+		assertLabelText("Human/Female", PersonaView.RACE_SEX_FIELD);
+		
+		assertLabelText("10", PersonaView.STRENGTH_STATISTIC);
+		assertLabelText("10", PersonaView.DEXTERITY_STATISTIC);
+		assertLabelText("10", PersonaView.INTELLIGENCE_STATISTIC);
+		assertLabelText("10", PersonaView.WISDOM_STATISTIC);
+		
+		assertLabelText("5.0", PersonaView.BLOCK_STATISTIC);
+		assertLabelText("5.0", PersonaView.DODGE_STATISTIC);
+		assertLabelText("7.0", PersonaView.RANGE_STATISTIC);
+		assertLabelText("7.0", PersonaView.MELEE_STATISTIC);
+		assertLabelText("7.0", PersonaView.MAGIC_STATISTIC);
+		assertLabelText("9.6", PersonaView.DISPELL_STATISTIC);
+		assertLabelText("5.2", PersonaView.CRITICAL_STATISTIC);
+		assertLabelText("100", PersonaView.DEFENSE_STATISTIC);
+		
+		assertLabelText("10/10", PersonaView.HEALTH_STATISTIC);
+		assertLabelText("2/10", PersonaView.MANA_STATISTIC);
 	}
 
-	private BLabelOperator getStatisticLabel(String stat) {
-		return new BLabelOperator(personaWindow, new NameOperatorSearch(stat));
+	private void assertLabelText(String expected, String nameField) {
+		BLabelOperator name = new BLabelOperator(persona.getWindow(), new NameOperatorSearch(nameField));
+		assertEquals(expected, name.getText());
 	}
 
 	@After

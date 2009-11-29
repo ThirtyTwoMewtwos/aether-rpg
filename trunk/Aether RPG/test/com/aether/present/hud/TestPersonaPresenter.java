@@ -36,7 +36,7 @@ public class TestPersonaPresenter {
 		view.setName("Joe the big guy");
 		view.setBlock(characterSheet.getBlockChance());
 		view.setClassification(characterSheet.getClassification().getName());
-		view.setCrit(characterSheet.getCritChance());
+		view.setCritical(characterSheet.getCritChance());
 		view.setDefense(characterSheet.getDefense());
 		view.setDispell(characterSheet.getDispelChance());
 		view.setDodge(characterSheet.getDodgeChance());

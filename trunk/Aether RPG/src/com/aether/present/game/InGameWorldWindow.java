@@ -18,6 +18,8 @@ import com.jme.image.Texture.CombinerOperandRGB;
 import com.jme.image.Texture.CombinerScale;
 import com.jme.image.Texture.CombinerSource;
 import com.jme.input.ChaseCamera;
+import com.jme.input.KeyBindingManager;
+import com.jme.input.KeyInput;
 import com.jme.input.thirdperson.ThirdPersonMouseLook;
 import com.jme.light.DirectionalLight;
 import com.jme.light.PointLight;
@@ -94,6 +96,7 @@ public class InGameWorldWindow extends BasicGameState {
 						return null;
 					}
 				});
+		KeyBindingManager.getKeyBindingManager().add("mouse_trigger", KeyInput.KEY_LCONTROL);
 	}
 
 	private void setupCamera(DisplaySystem displaySystem, Camera theCamera) {
@@ -168,6 +171,7 @@ public class InGameWorldWindow extends BasicGameState {
 		Map<String, Object> props = new HashMap<String, Object>();
 		props.put(ThirdPersonMouseLook.PROP_MAXROLLOUT, "10");
 		props.put(ThirdPersonMouseLook.PROP_MINROLLOUT, "2");
+		props.put(ThirdPersonMouseLook.PROP_ENABLED, "false");
 		props.put(ChaseCamera.PROP_TARGETOFFSET, targetOffset);
 		props.put(ThirdPersonMouseLook.PROP_MAXASCENT, "" + 40
 				* FastMath.DEG_TO_RAD);
@@ -308,6 +312,12 @@ public class InGameWorldWindow extends BasicGameState {
 			timer.update();
 			float interpolation = timer.getTimePerFrame();
 			inputHandler.update(interpolation);
+			if (KeyBindingManager.getKeyBindingManager().isValidCommand("mouse_trigger", true)) {
+				chaser.getMouseLook().setEnabled(true);
+			} else {
+				chaser.getMouseLook().setEnabled(false);
+			}
+			
 			chaser.update(interpolation);
 		}
 	}

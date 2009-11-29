@@ -26,5 +26,5 @@
 	<classpathentry kind="lib" path="lib/gbui.jar" sourcepath="lib/gbui-src.zip"/>
 	<classpathentry kind="lib" path="D:/java/components/jemmy.jar"/>
 	<classpathentry kind="lib" path="lib/jME2.jar" sourcepath="D:/java/Aether RPG/lib/jME2_src.zip"/>
-	<classpathentry kind="output" path="build/classes"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>

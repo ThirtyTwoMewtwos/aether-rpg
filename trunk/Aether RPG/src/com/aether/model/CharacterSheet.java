@@ -107,7 +107,7 @@ public class CharacterSheet implements Serializable {
         setToughness(10);
         setIntelligence(10);
         setWisdom(10);
-        setDefense(100);
+        defense = 100;
         
         setCombatValues();
         
@@ -123,7 +123,6 @@ public class CharacterSheet implements Serializable {
     
     private void updateStats(Equipment equipment, boolean equip)
     {
-        //equip case
         if(equip)
         {
             setStrength(getStrength() + equipment.getStrengthMod());
@@ -131,9 +130,8 @@ public class CharacterSheet implements Serializable {
             setToughness(getToughness() + equipment.getToughnessMod());
             setIntelligence(getIntelligence() + equipment.getIntelligenceMod());
             setWisdom(getWisdom() + equipment.getWisdomMod());
-            setDefense(getDefense() + equipment.getDefenseMod());
+            defense = getDefense() + equipment.getDefenseMod();
         }
-        //unquip case
         else
         {
             setStrength(getStrength() - equipment.getStrengthMod());
@@ -141,7 +139,7 @@ public class CharacterSheet implements Serializable {
             setToughness(getToughness() - equipment.getToughnessMod());
             setIntelligence(getIntelligence() - equipment.getIntelligenceMod());
             setWisdom(getWisdom() - equipment.getWisdomMod());
-            setDefense(getDefense() - equipment.getDefenseMod()); 
+            defense = getDefense() - equipment.getDefenseMod(); 
         }
         
         setCombatValues(); 
@@ -295,10 +293,7 @@ public class CharacterSheet implements Serializable {
     {
         return defense;
     }
-    public void setDefense(int def)
-    {
-        defense = def;
-    }
+    
     public double getCritChance() {
         return statRound(critChance);
     }

@@ -13,8 +13,8 @@ public class InGamePage {
 		chatWindow = BComponentOperatorUtil.windowWithId(InGameView.CHAT_ID);
 	}
 	
-	public BWindow getPersonaWindow() throws Exception {
-		return BComponentOperatorUtil.windowWithId(PersonaView.PERSONA_ID);
+	public PersonaPage getPersonaPage() throws Exception {
+		return new PersonaPage();
 	}
 
 }

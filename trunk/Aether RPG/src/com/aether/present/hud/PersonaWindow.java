@@ -17,16 +17,10 @@ import com.jmex.bui.util.Rectangle;
 
 class PersonaWindow implements PersonaView {
 	private BWindow window;
-
-    private BLabel level;
-    private BLabel exp;
-    private BLabel nextlevel;
     
 	private HeaderPanel headerPanel;
 	private AttributesPanel attributesPanel;
-
 	private CombatPanel combatPanel;
-
 	private ExperiencePanel xpPanel;
 	
 	public PersonaWindow() {
@@ -40,8 +34,6 @@ class PersonaWindow implements PersonaView {
 		window.add(attributesPanel, new Rectangle(0, 120, 130, 120));
 		window.add(combatPanel, 	new Rectangle(135, 120, 130, 185));
 		window.add(xpPanel,         new Rectangle(0, 80, 270, 40));
-		
-		initStatistics(window);
 	}
 
 	private BWindow initWindow() {
@@ -52,12 +44,6 @@ class PersonaWindow implements PersonaView {
 		result.center();
 		result.setVisible(false);
 		return result;
-	}
-	
-	private void initStatistics(BWindow window) {
-        level = createStat(window, "1", LEVEL_STATISTIC, 10);
-        exp = createStat(window, "0", EXP_STATISTIC, 10);
-        nextlevel = createStat(window, "350", NEXTLEVEL_STATISTIC, 10);
 	}
 
 	private BLabel createStat(BWindow window, String value, String statName, int y) {
@@ -130,17 +116,12 @@ class PersonaWindow implements PersonaView {
 
     @Override
     public void setLevel(int value){
-        level.setText("" + value);
+        headerPanel.setLevel("" + value);
     }
 
     @Override
-    public void setXP(int value){
-        exp.setText("" + value);
-    }
-
-    @Override
-    public void setNextLevel(int value){
-        nextlevel.setText("" + value);
+    public void setXP(int currentXP, int xpNeededForNextLevel){
+        xpPanel.setXP(currentXP, xpNeededForNextLevel);
     }
 
     @Override

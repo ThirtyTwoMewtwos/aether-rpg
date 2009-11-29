@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import com.aether.gbui.NameOperatorSearch;
 import com.aether.gbui.operators.BLabelOperator;
+import com.aether.gbui.operators.BMeterBarOperator;
 import com.aether.present.CreateCharacterPage;
 import com.aether.present.InGamePage;
 import com.aether.present.Main;
@@ -46,6 +47,7 @@ public class TestPersonaWindow {
 		assertLabelText("John Grisham", PersonaView.NAME_FIELD);
 		assertLabelText("Crusader", PersonaView.CLASS_FIELD);
 		assertLabelText("Human/Female", PersonaView.RACE_SEX_FIELD);
+		assertLabelText("1", PersonaView.EXPERIENCE_LEVEL);
 		
 		assertLabelText("10", PersonaView.STRENGTH_STATISTIC);
 		assertLabelText("10", PersonaView.DEXTERITY_STATISTIC);
@@ -63,6 +65,9 @@ public class TestPersonaWindow {
 		
 		assertLabelText("10/10", PersonaView.HEALTH_STATISTIC);
 		assertLabelText("2/10", PersonaView.MANA_STATISTIC);
+		BMeterBarOperator experience = new BMeterBarOperator(persona.getWindow(), PersonaView.CURRENT_EXPERIENCE);
+		assertEquals(0, experience.getValue());
+		assertEquals(100, experience.getMaximum());
 	}
 
 	private void assertLabelText(String expected, String nameField) {

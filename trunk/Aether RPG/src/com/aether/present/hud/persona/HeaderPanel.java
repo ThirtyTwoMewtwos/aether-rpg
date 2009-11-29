@@ -11,13 +11,15 @@ public class HeaderPanel extends BContainer {
 	private BLabel name;
 	private BLabel classification;
 	private BLabel raceAndSex;
+	private BLabel level;
 
 	public HeaderPanel() {
 		AbsoluteLayout layout = new AbsoluteLayout();
 		this.setLayoutManager(layout);
 		this.setStyleClass(UILookAndFeel.PERSONA_HEADER_PANEL);
 		
-		name = createHeader(PersonaView.NAME_FIELD, 0, 17, 260);
+		name = createHeader(PersonaView.NAME_FIELD, 0, 17, 200);
+		level = createHeader(PersonaView.EXPERIENCE_LEVEL, 180, 17, 70);
 		classification = createHeader(PersonaView.CLASS_FIELD, 0, 0, 150);
 		raceAndSex = createHeader(PersonaView.RACE_SEX_FIELD, 100, 0, 100);
 	}
@@ -37,14 +39,18 @@ public class HeaderPanel extends BContainer {
 	}
 
 	public void setName(String newName) {
-		this.name.setText(newName);
+		name.setText(newName);
 	}
 
 	public void setClassification(String newClassification) {
-		this.classification.setText(newClassification);
+		classification.setText(newClassification);
 	}
 
 	public void setRaceAndSex(String newRaceAndSex) {
-		this.raceAndSex.setText(newRaceAndSex);
+		raceAndSex.setText(newRaceAndSex);
+	}
+
+	public void setLevel(String newLevel) {
+		level.setText(newLevel);
 	}
 }

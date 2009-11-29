@@ -40,8 +40,7 @@ public class TestPersonaPresenter {
 		view.setDefense(characterSheet.getDefense());
 		view.setDispell(characterSheet.getDispelChance());
 		view.setDodge(characterSheet.getDodgeChance());
-		view.setXP(characterSheet.getXP());
-		view.setNextLevel(characterSheet.getXPToLevel());
+		view.setXP(characterSheet.getXP(), characterSheet.getXPToLevel());
 		view.setHP(characterSheet.getHealth().toViewString());
 		view.setMP(characterSheet.getMana().toViewString());
 		view.setMagic(characterSheet.getMagicIntuative());

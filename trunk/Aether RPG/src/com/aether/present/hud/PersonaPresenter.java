@@ -43,8 +43,7 @@ public class PersonaPresenter implements ViewPresenter {
             view.setDefense(player.getDefense());
             view.setDispell(player.getDispelChance());
             view.setDodge(player.getDodgeChance());
-            view.setXP(player.getXP());
-            view.setNextLevel(player.getXPToLevel());
+            view.setXP(player.getXP(), player.getXPToLevel());
             view.setHP(player.getHealth().toViewString());
             view.setMP(player.getMana().toViewString());
             view.setMagic(player.getMagicIntuative());

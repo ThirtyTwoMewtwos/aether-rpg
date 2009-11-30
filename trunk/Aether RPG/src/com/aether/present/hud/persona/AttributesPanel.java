@@ -29,26 +29,25 @@ public class AttributesPanel extends BContainer {
 	}
 
 	private void createAttributes() {
-		BContainer values = createContainer();
-		values.setStyleClass(UILookAndFeel.PERSONA_ATTRIBUTES_PANEL);
+		BContainer stats = createLabels();
+		BContainer values = createValues();
+
+        add(values, new Rectangle(5, 65, 45, 120));
+        add(stats,  new Rectangle(45, 65, 50, 120));
+	}
+
+	private BContainer createLabels() {
 		BContainer stats = createContainer();
-		
-		strength = createAttributeValue(values, PersonaView.STRENGTH_STATISTIC);
-		dexterity = createAttributeValue(values, PersonaView.DEXTERITY_STATISTIC);
-		intelligence = createAttributeValue(values, PersonaView.INTELLIGENCE_STATISTIC);
-		wisdom = createAttributeValue(values, PersonaView.WISDOM_STATISTIC);
-        toughness = createAttributeValue(values, PersonaView.TOUGHNESS_STATISTIC);
         
         createAttribute(stats, PersonaView.STRENGTH_STATISTIC);
         createAttribute(stats, PersonaView.DEXTERITY_STATISTIC);
         createAttribute(stats, PersonaView.INTELLIGENCE_STATISTIC);
         createAttribute(stats, PersonaView.WISDOM_STATISTIC);
         createAttribute(stats, PersonaView.TOUGHNESS_STATISTIC);
-
-        add(values, new Rectangle(5, 65, 45, 120));
-        add(stats,  new Rectangle(45, 65, 50, 120));
+        
+		return stats;
 	}
-
+	
 	private BContainer createContainer() {
 		BContainer result = new BContainer();
 		VGroupLayout layout = new VGroupLayout();
@@ -64,6 +63,18 @@ public class AttributesPanel extends BContainer {
 		result.setName(statId);
 		container.add(result);
 		return result;
+	}
+
+	private BContainer createValues() {
+		BContainer values = createContainer();
+		values.setStyleClass(UILookAndFeel.PERSONA_ATTRIBUTES_PANEL);
+		
+		strength = createAttributeValue(values, PersonaView.STRENGTH_STATISTIC);
+		dexterity = createAttributeValue(values, PersonaView.DEXTERITY_STATISTIC);
+		intelligence = createAttributeValue(values, PersonaView.INTELLIGENCE_STATISTIC);
+		wisdom = createAttributeValue(values, PersonaView.WISDOM_STATISTIC);
+        toughness = createAttributeValue(values, PersonaView.TOUGHNESS_STATISTIC);
+		return values;
 	}
 	
 	private void createAttribute(BContainer container, String text) {
@@ -104,15 +115,17 @@ public class AttributesPanel extends BContainer {
         toughness.setText(value);
     }
     
-    public void setHealth(String newHealth) {
-    	health.setText(newHealth);
-    	Image image = PersonaImages.getImage(CombatPanelStatistics.Health);
-    	BImageUtils.loadBackgroundImageFor(health, image);
+    public void setHealth(int current, int max) {
+    	setAttribute(health, CombatPanelStatistics.Health, current, max);
     }
-    
-    public void setMana(String newMana) {
-    	mana.setText(newMana);
-    	Image image = PersonaImages.getImage(CombatPanelStatistics.Mana);
-    	BImageUtils.loadBackgroundImageFor(mana, image);
+
+    public void setMana(int current, int max) {
+    	setAttribute(mana, CombatPanelStatistics.Mana, current, max);
+    }
+
+    private void setAttribute(BLabel label, CombatPanelStatistics stat, int current, int max) {
+    	label.setText(current + "/" + max);
+    	Image image = PersonaImages.getImage(stat);
+    	BImageUtils.loadBackgroundImageFor(label, image);
     }
 }

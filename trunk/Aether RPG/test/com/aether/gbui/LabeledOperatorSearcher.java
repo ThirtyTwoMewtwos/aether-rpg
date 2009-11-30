@@ -22,4 +22,8 @@ public class LabeledOperatorSearcher implements ComponentSearch {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return "Labeled " + widgetType.getName() + " " + label;
+	}
 }

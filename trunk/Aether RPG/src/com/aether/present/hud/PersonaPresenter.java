@@ -4,6 +4,7 @@ import org.gap.jseed.injection.annotation.Singleton;
 
 import com.aether.model.CharacterSheet;
 import com.aether.model.character.CharacterLocator;
+import com.aether.model.character.Statistic;
 
 @Singleton
 public class PersonaPresenter implements ViewPresenter {
@@ -17,6 +18,10 @@ public class PersonaPresenter implements ViewPresenter {
 		view.setPresenter(this);
 	}
 
+	public void setBio(String newBio) {
+		locator.getPlayer().setBio(newBio);
+	}
+	
 	@Override
 	public void activate() {
 		view.activate();
@@ -44,8 +49,10 @@ public class PersonaPresenter implements ViewPresenter {
             view.setDispell(player.getDispelChance());
             view.setDodge(player.getDodgeChance());
             view.setXP(player.getXP(), player.getXPToLevel());
-            view.setHP(player.getHealth().toViewString());
-            view.setMP(player.getMana().toViewString());
+            Statistic health = player.getHealth();
+			view.setHealth(health.getValue(), health.getMax());
+            Statistic mana = player.getMana();
+			view.setMana(mana.getValue(), mana.getMax());
             view.setMagic(player.getMagicIntuative());
             view.setMelee(player.getMeleeAttack());
             view.setLevel(player.getLevel());
@@ -56,6 +63,7 @@ public class PersonaPresenter implements ViewPresenter {
 			view.setDexterity(player.getDexterity());
 			view.setInteligence(player.getIntelligence());
 			view.setWisdom(player.getWisdom());
+			view.setBio(player.getBio());
 		}
 		view.setVisible(isActive);
 	}

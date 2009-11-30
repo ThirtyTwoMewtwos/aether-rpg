@@ -25,7 +25,7 @@ public interface PersonaView {
     public static final String DISPELL_STATISTIC ="DISPELL";
     public static final String CRITICAL_STATISTIC = "CRIT";
     public static final String DODGE_STATISTIC = "DODGE";
-    
+    public static final String BIO_FIELD = "BIO";
 	public static final String CURRENT_EXPERIENCE = "CURRENT_XP";
 
 	void setPresenter(PersonaPresenter anyObject);
@@ -40,13 +40,13 @@ public interface PersonaView {
 
     void setClassification(String c);
 
-    void setLevel(int i);
+    void setLevel(int level);
 
     void setXP(int currentXp, int nextLevel);
 
-    void setHP(String s);
+    void setHealth(int value, int max);
 
-    void setMP(String s);
+    void setMana(int value, int max);
 
     void setToughness(int i);
 
@@ -75,4 +75,8 @@ public interface PersonaView {
     void setDodge(double d);
 
     void setDispell(double d);
+
+	void setBio(String bio);
+
+
 }

@@ -20,7 +20,7 @@ public class BKeyboard {
 		BComponentOperatorUtil.delayForUpdate();
 		bot.keyPress(keycode);
 		BComponentOperatorUtil.delayForUpdate();
-		BComponentOperatorUtil.delayForUpdate();
+//		BComponentOperatorUtil.delayForUpdate();
 		bot.keyRelease(keycode);
 		BComponentOperatorUtil.delayForUpdate();
 	}

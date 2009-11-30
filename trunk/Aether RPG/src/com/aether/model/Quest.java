@@ -68,5 +68,7 @@ public abstract class Quest
     {
         complete = completed;
     }
+    abstract public String getStatus();
+
 
 }

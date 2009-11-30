@@ -82,9 +82,7 @@ public class KillQuest extends Quest{
         return enemyType;
     }
 
-   
-    @Override
-    public String toString()
+    public String getStatus()
     {
         String status;
         if(!isComplete())

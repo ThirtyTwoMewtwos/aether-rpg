@@ -1,6 +1,8 @@
 package com.aether.present;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.gap.jseed.ServiceStore;
 
@@ -27,6 +29,8 @@ import com.jmex.game.StandardGame;
 
 public class Main {
 	private static StandardGame game;
+	private static List<ShutdownHook> shutdownHooks = new LinkedList<ShutdownHook>();
+	private static ServiceStore store;
 
 	public static void startGame() {
 		try {
@@ -42,7 +46,7 @@ public class Main {
 		game.start();
 
 		MouseInput.get().setCursorVisible(true);
-		ServiceStore store = new ServiceStore();
+		store = new ServiceStore();
 		
 		store.bind(Camera.class, game.getCamera());
 		
@@ -87,7 +91,14 @@ public class Main {
 
 	public static void shutdown() {
 		game.shutdown();
+		callShutdownHooks();
 		assureGameIsShutdown();
+	}
+
+	private static void callShutdownHooks() {
+		for (ShutdownHook each : shutdownHooks) {
+			each.doShutdown();
+		}
 	}
 
 	public static void assureGameIsShutdown() {
@@ -102,5 +113,13 @@ public class Main {
 
 	public static StandardGame getGame() {
 		return game;
+	}
+	
+	public static ServiceStore getServiceStore() {
+		return store;
+	}
+
+	public static void addShutdownHook(ShutdownHook shutdownHook) {
+		shutdownHooks.add(shutdownHook);
 	}
 }

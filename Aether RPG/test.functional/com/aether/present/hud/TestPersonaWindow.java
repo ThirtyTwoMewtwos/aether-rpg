@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.gap.jseed.ServiceStore;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +12,8 @@ import org.junit.Test;
 import com.aether.gbui.NameOperatorSearch;
 import com.aether.gbui.operators.BLabelOperator;
 import com.aether.gbui.operators.BMeterBarOperator;
+import com.aether.model.CharacterSheet;
+import com.aether.model.character.CharacterLocator;
 import com.aether.present.CreateCharacterPage;
 import com.aether.present.InGamePage;
 import com.aether.present.Main;
@@ -20,10 +23,12 @@ import com.aether.present.PersonaPage;
 public class TestPersonaWindow {
 	
 	private PersonaPage persona;
+	private ServiceStore serviceStore;
 
 	@Before
 	public void setUp() throws Exception {
 		Main.startGame();
+		serviceStore = Main.getServiceStore();
 		CreateCharacterPage newCampain = new MainMenuPage().clickNewCampain();
 		newCampain.loadDummyData();
 		InGamePage gamePage = newCampain.clickFinish();
@@ -34,15 +39,15 @@ public class TestPersonaWindow {
 	@Test
 	public void test_Window_is_available() throws Exception {
 		assertFalse(persona.getWindow().isVisible());
-		persona.toggleVisibility();
+		persona.setVisibility(true);
 		assertTrue(persona.getWindow().isVisible());
-		persona.toggleVisibility();
+		persona.setVisibility(false);
 		assertFalse(persona.getWindow().isVisible());
 	}
 	
 	@Test
 	public void test_Statistics_have_been_set_from_character_sheet() throws Exception {
-		persona.toggleVisibility();
+		persona.setVisibility(true);
 		
 		assertLabelText("John Grisham", PersonaView.NAME_FIELD);
 		assertLabelText("Crusader", PersonaView.CLASS_FIELD);
@@ -73,6 +78,14 @@ public class TestPersonaWindow {
 	private void assertLabelText(String expected, String nameField) {
 		BLabelOperator name = new BLabelOperator(persona.getWindow(), new NameOperatorSearch(nameField));
 		assertEquals(expected, name.getText());
+	}
+	
+	@Test
+	public void test_Changing_bio_sets_character_bio() throws Exception {
+		persona.setVisibility(true);
+		persona.setBio("Some new bio");
+		CharacterSheet player = serviceStore.get(CharacterLocator.class).getPlayer();
+		assertEquals("Some new bio", player.getBio());
 	}
 
 	@After

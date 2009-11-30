@@ -3,6 +3,7 @@ package com.aether.present.hud;
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import com.aether.model.CharacterSheet;
 import com.aether.model.character.CharacterLocator;
@@ -41,8 +42,10 @@ public class TestPersonaPresenter {
 		view.setDispell(characterSheet.getDispelChance());
 		view.setDodge(characterSheet.getDodgeChance());
 		view.setXP(characterSheet.getXP(), characterSheet.getXPToLevel());
-		view.setHP(characterSheet.getHealth().toViewString());
-		view.setMP(characterSheet.getMana().toViewString());
+		Statistic health = characterSheet.getHealth();
+		view.setHealth(health.getValue(), health.getMax());
+		Statistic mana = characterSheet.getMana();
+		view.setMana(mana.getValue(), mana.getMax());
 		view.setMagic(characterSheet.getMagicIntuative());
 		view.setMelee(characterSheet.getMeleeAttack());
 		view.setLevel(characterSheet.getLevel());
@@ -53,6 +56,7 @@ public class TestPersonaPresenter {
 		view.setDexterity(characterSheet.getDexterity());
 		view.setInteligence(10);
 		view.setWisdom(10);
+		view.setBio(characterSheet.getBio());
 		view.setVisible(true);
 		view.setVisible(false);
 		
@@ -72,6 +76,18 @@ public class TestPersonaPresenter {
 		PersonaPresenter presenter = new PersonaPresenter(view, locator);
 		presenter.activate();
 		presenter.deactivate();
+		EasyMock.verify(view, locator);
+	}
+	
+	@Test
+	public void test_Changing_the_bio_is_saved_to_the_character_sheet() throws Exception {
+		CharacterSheet characterSheet = new CharacterSheet("Joe the big guy", "something cool", "male", Classification.Acolyte);
+		EasyMock.expect(locator.getPlayer()).andReturn(characterSheet);
+		
+		EasyMock.replay(view, locator);
+		PersonaPresenter presenter = new PersonaPresenter(view, locator);
+		presenter.setBio("New bio");
+		assertEquals("New bio", characterSheet.getBio());
 		EasyMock.verify(view, locator);
 	}
 }

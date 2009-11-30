@@ -2,13 +2,12 @@ package com.aether.present.hud;
 
 import java.util.concurrent.Callable;
 
-import com.aether.present.UILookAndFeel;
 import com.aether.present.hud.persona.AttributesPanel;
+import com.aether.present.hud.persona.BiograhyPanel;
 import com.aether.present.hud.persona.CombatPanel;
 import com.aether.present.hud.persona.ExperiencePanel;
 import com.aether.present.hud.persona.HeaderPanel;
 import com.jme.util.GameTaskQueueManager;
-import com.jmex.bui.BLabel;
 import com.jmex.bui.BWindow;
 import com.jmex.bui.BuiSystem;
 import com.jmex.bui.headlessWindows.BDraggableWindow;
@@ -22,6 +21,7 @@ class PersonaWindow implements PersonaView {
 	private AttributesPanel attributesPanel;
 	private CombatPanel combatPanel;
 	private ExperiencePanel xpPanel;
+	private BiograhyPanel bioPanel;
 	
 	public PersonaWindow() {
 		window = initWindow();
@@ -29,11 +29,13 @@ class PersonaWindow implements PersonaView {
 		attributesPanel = new AttributesPanel();
 		combatPanel = new CombatPanel();
 		xpPanel = new ExperiencePanel();
+		bioPanel = new BiograhyPanel();
 		
 		window.add(headerPanel, 	new Rectangle(0, 318, 270, 54));
 		window.add(attributesPanel, new Rectangle(0, 120, 130, 120));
 		window.add(combatPanel, 	new Rectangle(135, 120, 130, 185));
 		window.add(xpPanel,         new Rectangle(0, 80, 270, 40));
+		window.add(bioPanel, 		new Rectangle(0, 0, 270, 65));
 	}
 
 	private BWindow initWindow() {
@@ -44,19 +46,6 @@ class PersonaWindow implements PersonaView {
 		result.center();
 		result.setVisible(false);
 		return result;
-	}
-
-	private BLabel createStat(BWindow window, String value, String statName, int y) {
-		BLabel statValue = new BLabel(value);
-		statValue.setStyleClass(UILookAndFeel.PERSONA_STATISTICS_VALUES);
-		statValue.setName(statName);
-		window.add(statValue, new Rectangle(0, y, 80, 35));
-		
-		BLabel stat = new BLabel(statName);
-		stat.setStyleClass(UILookAndFeel.PERSONA_STATISTICS);
-		window.add(stat, new Rectangle(60, y, 85, 35));
-		
-		return statValue;
 	}
 	
 	@Override
@@ -105,13 +94,13 @@ class PersonaWindow implements PersonaView {
     }
 
     @Override
-    public void setHP(String value){
-        attributesPanel.setHealth("" + value);
+    public void setHealth(int value, int max){
+        attributesPanel.setHealth(value, max);
     }
 
     @Override
-    public void setMP(String value){
-        attributesPanel.setMana("" + value);
+    public void setMana(int value, int max){
+        attributesPanel.setMana(value, max);
     }
 
     @Override
@@ -178,10 +167,15 @@ class PersonaWindow implements PersonaView {
     public void setClassification(String newClass){
         headerPanel.setClassification(newClass);
     }
+    
+    @Override
+    public void setBio(String newBio) {
+    	bioPanel.setBio(newBio);
+    }
 
 	@Override
-	public void setPresenter(PersonaPresenter anyObject) {
-
+	public void setPresenter(PersonaPresenter presenter) {
+		bioPanel.setPresenter(presenter);
 	}
 
 	@Override

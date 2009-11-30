@@ -15,5 +15,9 @@ public class NameOperatorSearch implements ComponentSearch {
 	public boolean isMatch(BComponent component) {
 		return name.equals(component.getName());
 	}
-
+	
+	@Override
+	public String toString() {
+		return "named " + name;
+	}
 }

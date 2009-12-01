@@ -1,5 +1,6 @@
 package com.aether.present.hud;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -19,6 +20,7 @@ import com.aether.present.InGamePage;
 import com.aether.present.Main;
 import com.aether.present.MainMenuPage;
 import com.aether.present.PersonaPage;
+import com.aether.present.PlayerMovementState;
 
 public class TestPersonaWindow {
 	
@@ -86,6 +88,13 @@ public class TestPersonaWindow {
 		persona.setBio("Some new bio");
 		CharacterSheet player = serviceStore.get(CharacterLocator.class).getPlayer();
 		assertEquals("Some new bio", player.getBio());
+	}
+	
+	@Test
+	public void test_Bio_gains_focus_player_cannot_move() throws Exception {
+		persona.setVisibility(true);
+		persona.setBio("setting bio");
+		assertFalse(serviceStore.get(PlayerMovementState.class).isActive());
 	}
 
 	@After

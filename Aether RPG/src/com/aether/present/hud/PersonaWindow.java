@@ -2,6 +2,7 @@ package com.aether.present.hud;
 
 import java.util.concurrent.Callable;
 
+import com.aether.present.PlayerMovementState;
 import com.aether.present.hud.persona.AttributesPanel;
 import com.aether.present.hud.persona.BiograhyPanel;
 import com.aether.present.hud.persona.CombatPanel;
@@ -23,13 +24,13 @@ class PersonaWindow implements PersonaView {
 	private ExperiencePanel xpPanel;
 	private BiograhyPanel bioPanel;
 	
-	public PersonaWindow() {
+	public PersonaWindow(PlayerMovementState state) {
 		window = initWindow();
 		headerPanel = new HeaderPanel();
 		attributesPanel = new AttributesPanel();
 		combatPanel = new CombatPanel();
 		xpPanel = new ExperiencePanel();
-		bioPanel = new BiograhyPanel();
+		bioPanel = new BiograhyPanel(state);
 		
 		window.add(headerPanel, 	new Rectangle(0, 318, 270, 54));
 		window.add(attributesPanel, new Rectangle(0, 120, 130, 120));

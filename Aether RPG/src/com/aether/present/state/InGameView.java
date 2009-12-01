@@ -1,11 +1,11 @@
 package com.aether.present.state;
 
 import java.awt.Image;
-import java.net.URL;
-
 
 public interface InGameView {
 	public static final String CHAT_ID = "in.game.chat";
+	public static final String CHAT_INPUT_ID = "in.game.chat.input";
+
 	public static final String STATS_ID = "in.game.statistics";
 	public static final String STATS_HEALTH_ID = "in.game.statistics.health";
 	public static final String STATS_MANA_ID = "in.game.statistics.mana";

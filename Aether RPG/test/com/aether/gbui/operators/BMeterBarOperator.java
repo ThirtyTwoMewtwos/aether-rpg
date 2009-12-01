@@ -3,8 +3,8 @@ package com.aether.gbui.operators;
 import java.awt.AWTException;
 import java.util.concurrent.Callable;
 
-import com.aether.gbui.BMeterBar;
 import com.aether.gbui.NameOperatorSearch;
+import com.aether.gbui.components.BMeterBar;
 import com.jmex.bui.BComponent;
 import com.jmex.bui.BWindow;
 

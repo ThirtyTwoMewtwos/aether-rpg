@@ -3,6 +3,7 @@ package com.aether.gbui.operators;
 import java.util.concurrent.Callable;
 
 import com.jmex.bui.BComponent;
+import com.jmex.bui.event.FocusEvent;
 
 public abstract class BComponentOperator {
 	
@@ -53,5 +54,16 @@ public abstract class BComponentOperator {
 			}
 		};
 		return BComponentOperatorUtil.callInBuiThread(callable);
+	}
+	
+	public void requestFocus() {
+		Callable<Void> callable = new Callable<Void>() {
+			public Void call() throws Exception {
+				getComponent().requestFocus();
+				getComponent().dispatchEvent(new FocusEvent(this, System.currentTimeMillis(), FocusEvent.FOCUS_GAINED));
+				return null;
+			}
+		};
+		BComponentOperatorUtil.callInBuiThread(callable);
 	}
 }

@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 
 import jmetest.flagrushtut.Lesson3;
 
+import com.aether.present.PlayerMovementState;
 import com.jme.bounding.BoundingBox;
 import com.jme.image.Texture;
 import com.jme.image.Texture.ApplyMode;
@@ -67,7 +68,7 @@ public class InGameWorldWindow extends BasicGameState {
 	private ProceduralTextureGenerator proceduralTextureGenerator;
 	private TextureState textureState;
 
-	public InGameWorldWindow(Camera theCamera) {
+	public InGameWorldWindow(Camera theCamera, PlayerMovementState state) {
 		super("InGame: mainState");
 		this.camera = theCamera;
 
@@ -76,12 +77,12 @@ public class InGameWorldWindow extends BasicGameState {
 		setupZBufferState(displaySystem);
 		PointLight light = setupBasicLight();
 		attachLightToLightState(displaySystem, light);
-		buildEnvironment();
+		buildEnvironment(state);
 
 		GameStateManager.getInstance().attachChild(this);
 	}
 
-	private void buildEnvironment() {
+	private void buildEnvironment(final PlayerMovementState state) {
 		GameTaskQueueManager.getManager().getQueue(GameTaskQueue.UPDATE)
 				.enqueue(new Callable<Void>() {
 					public Void call() throws Exception {
@@ -91,7 +92,7 @@ public class InGameWorldWindow extends BasicGameState {
 						buildChaseCamera();
 
 						rootNode.updateRenderState();
-						inputHandler = new MyInputHandler(player);
+						inputHandler = new MyInputHandler(player, state);
 
 						return null;
 					}

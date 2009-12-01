@@ -41,4 +41,8 @@ public class PersonaPage {
 		BTextFieldOperator bio = new BTextFieldOperator(getWindow(), "");
 		bio.setText(value);
 	}
+
+	public boolean isVisible() {
+		return persona.isVisible();
+	}
 }

@@ -1,6 +1,6 @@
 package com.aether.present.hud.persona;
 
-import com.aether.gbui.BMeterBar;
+import com.aether.gbui.components.BMeterBar;
 import com.aether.present.UILookAndFeel;
 import com.aether.present.hud.PersonaView;
 import com.jmex.bui.BContainer;

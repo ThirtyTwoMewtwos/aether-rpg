@@ -1,4 +1,4 @@
-package com.aether.gbui;
+package com.aether.gbui.components;
 
 import org.lwjgl.opengl.GL11;
 

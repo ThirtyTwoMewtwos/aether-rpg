@@ -9,6 +9,7 @@ import org.gap.jseed.ServiceStore;
 import com.aether.model.character.CharacterLocator;
 import com.aether.model.character.PCLocator;
 import com.aether.present.game.InGameWorldWindow;
+import com.aether.present.game.PCMovementState;
 import com.aether.present.hud.HUDLoader;
 import com.aether.present.state.ActiveState;
 import com.aether.present.state.CharacterCreationPresenter;
@@ -61,6 +62,7 @@ public class Main {
 		store.bind(ShutdownService.class, FinishGameService.class);
 		store.bind(StateTransition.class, GameStateTransition.class);
 		store.bind(CharacterLocator.class, PCLocator.class);
+		store.bind(PlayerMovementState.class, PCMovementState.class);
 	}
 
 	private static void bindGameViewStates(ServiceStore store) {

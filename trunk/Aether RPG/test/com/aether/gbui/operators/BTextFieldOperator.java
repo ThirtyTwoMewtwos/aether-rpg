@@ -22,9 +22,9 @@ public class BTextFieldOperator extends BComponentOperator {
 	}
 
 	public void setText(final String text) {
+		requestFocus();
 		BComponentOperatorUtil.callInBuiThread(new Callable<Void>() {
 			public Void call() throws Exception {
-				textField.dispatchEvent(new FocusEvent(this, System.currentTimeMillis(), FocusEvent.FOCUS_GAINED));
 				textField.setText(text);
 				return null;
 			}

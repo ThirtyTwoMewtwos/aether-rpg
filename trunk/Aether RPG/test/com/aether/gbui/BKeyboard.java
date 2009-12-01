@@ -13,15 +13,15 @@ public class BKeyboard {
 	}
 	
 	/**
-	 * TODO Seems escape key does not work sometimes.
+	 * java.awt.event.KeyEvent is used.
 	 * @param keycode
 	 */
 	public void typeKey(int keycode) {
-		BComponentOperatorUtil.delayForUpdate();
 		bot.keyPress(keycode);
 		BComponentOperatorUtil.delayForUpdate();
-//		BComponentOperatorUtil.delayForUpdate();
+		BComponentOperatorUtil.delayForUpdate();
 		bot.keyRelease(keycode);
+		BComponentOperatorUtil.delayForUpdate();
 		BComponentOperatorUtil.delayForUpdate();
 	}
 }

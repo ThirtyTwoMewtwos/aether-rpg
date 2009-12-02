@@ -22,6 +22,7 @@ public class BImageUtils {
 					each.clearBuffers();
 					each.clearTextureBuffers();
 				}
+				images.clear();
 			}
 			
 		});

@@ -20,8 +20,8 @@ public class BButtonOperator extends BLabelOperator {
 		BComponentOperatorUtil.callInBuiThread(new Callable<Object>() {
 			@Override
 			public Object call() throws Exception {
-				button.dispatchEvent(new MouseEvent(this, System.currentTimeMillis(), 0, MouseEvent.MOUSE_PRESSED, MouseEvent.BUTTON1, 0, 0));
-				button.dispatchEvent(new MouseEvent(this, System.currentTimeMillis(), 0, MouseEvent.MOUSE_RELEASED, MouseEvent.BUTTON1, 0, 0));
+				button.dispatchEvent(new MouseEvent(button, System.currentTimeMillis(), 0, MouseEvent.MOUSE_PRESSED, MouseEvent.BUTTON1, 0, 0));
+				button.dispatchEvent(new MouseEvent(button, System.currentTimeMillis(), 0, MouseEvent.MOUSE_RELEASED, MouseEvent.BUTTON1, 0, 0));
 				return null;
 			}
 		});

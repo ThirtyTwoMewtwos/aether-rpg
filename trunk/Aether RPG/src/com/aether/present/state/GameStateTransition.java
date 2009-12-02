@@ -9,6 +9,7 @@ import java.util.Map;
 public class GameStateTransition implements StateTransition {
 	private Map<ActiveState, Map<Object, ActiveState>> transitions = new Hashtable<ActiveState, Map<Object, ActiveState>>();
 	private ActiveState currentState;
+	private ActiveState startState;
 	
 	@Override
 	public void transition(ActiveState state, Object transition) {
@@ -35,6 +36,7 @@ public class GameStateTransition implements StateTransition {
 
 	@Override
 	public void setStartState(ActiveState startState) {
+		this.startState = startState;
 		if (!transitions.containsKey(startState)) {
 			String message = "The state given is not a registered state: " + startState;
 			throw new IllegalArgumentException(message);
@@ -45,5 +47,12 @@ public class GameStateTransition implements StateTransition {
 
 	public ActiveState currentState() {
 		return currentState;
+	}
+	
+	@Override
+	public void reset() {
+		currentState.exit();
+		currentState = startState;
+		currentState.enter();
 	}
 }

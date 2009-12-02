@@ -1,4 +1,4 @@
-package com.aether.model;
+package com.aether.model.quests;
 
 /*
  * Quest.java
@@ -29,46 +29,11 @@ package com.aether.model;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-public abstract class Quest 
-{
-    private String name, description;
-    private int levelRequirement;
-    private boolean complete;
-    
-    public String getName()
-    {
-        return name;
-    }
-    public void setName(String questName)
-    {
-        name = questName;
-    }
-    public String getDescription()
-    {
-        return description;
-    }
-    public void setDescription(String desc)
-    {
-        description = desc;
-    }
-    public int getLevelRequirement()
-    {
-        return levelRequirement;
-    }
-    public void setLevelRequirement(int req)
-    {
-        levelRequirement = req;
-    }
-
-    public boolean isComplete()
-    {
-        return complete;
-    }
-    protected void completeStatus(boolean completed)
-    {
-        complete = completed;
-    }
-    abstract public String getStatus();
-
-
+public interface JournalEntry {
+    String getTitle();
+    String getDescription();
+    int getLevelRequirement();
+    boolean isComplete();
+    void completeStatus(boolean completed);
+    String getStatus();
 }

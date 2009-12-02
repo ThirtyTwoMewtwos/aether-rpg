@@ -71,6 +71,12 @@ public class CharacterCreationPresenter implements ActiveState {
 
     @Override
     public void enter() {
+    	classification = null;
+    	race = null;
+    	name = null;
+    	view.setName("");
+    	view.setRace(0);
+    	view.clearClassifications();
         view.activate();
     }
 

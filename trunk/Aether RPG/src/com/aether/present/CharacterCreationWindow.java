@@ -184,6 +184,16 @@ public class CharacterCreationWindow extends BaseWindow implements CharacterCrea
     public void disableSave() {
     	saveCharacter.setEnabled(false);
     }
+    
+    @Override
+    public void setName(String name) {
+    	nameField.setText(name);
+    }
+    
+    @Override
+    public void setRace(int i) {
+    	raceSelection.selectItem(0);
+    }
 
     @Override
     public void setClasses(List<Classification> availableFor) {

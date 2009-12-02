@@ -77,6 +77,4 @@ public interface PersonaView {
     void setDispell(double d);
 
 	void setBio(String bio);
-
-
 }

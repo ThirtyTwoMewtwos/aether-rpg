@@ -1,5 +1,6 @@
 
-package com.aether.model;
+package com.aether.model.quests;
+
 
 /*
  * KillQuest.java
@@ -32,16 +33,15 @@ package com.aether.model;
  */
 
 
-public class KillQuest extends Quest{
+public class KillQuest extends BaseEntry {
 
     private String enemyType;
     private int killsNeeded;
     private int killsMade;
 
-    public KillQuest(String name, String description, int level_requirement, int kill_x_many, String enemy_type)
-    {
+    public KillQuest(String title, String description, int level_requirement, int kill_x_many, String enemy_type) {
         completeStatus(false);
-        setName(name);
+        setName(title);
         setDescription(description);
         setLevelRequirement(level_requirement);
         setKillsNeeded(kill_x_many);

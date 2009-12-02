@@ -22,4 +22,8 @@ public interface CharacterCreationView {
     void activate();
 
 	void clearClassifications();
+
+	void setName(String string);
+
+	void setRace(int i);
 }

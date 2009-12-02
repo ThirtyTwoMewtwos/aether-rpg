@@ -333,6 +333,9 @@ public class InGameWorldWindow extends BasicGameState {
 	@Override
 	public void cleanup() {
 		super.cleanup();
+		if (textureState == null) {
+			return;
+		}
 		textureState.clearTextures();
 		textureState.deleteAll();
 		textureState = null;

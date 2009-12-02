@@ -7,6 +7,7 @@ import static org.easymock.EasyMock.createNiceMock;
 import static org.easymock.EasyMock.matches;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -61,6 +62,9 @@ public class TestCharacterCreationPresenter {
 
     @Test
     public void testEnterActiveAndExitActiveState() throws Exception {
+    	view.setName("");
+    	view.setRace(0);
+    	view.clearClassifications();
         view.activate();
         view.deactivate();
 

@@ -80,4 +80,9 @@ public class CreateCharacterPage {
 		}
 		return finishButton;
 	}
+
+	public void clearAll() {
+		setName("");
+		clearRace();
+	}
 }

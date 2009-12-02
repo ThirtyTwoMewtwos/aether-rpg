@@ -5,4 +5,5 @@ public interface StateTransition {
 	void add(ActiveState from, Object transition, ActiveState to);
 	void setStartState(ActiveState stateA);
 	ActiveState currentState();
+	void reset();
 }

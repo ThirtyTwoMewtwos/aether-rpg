@@ -37,6 +37,7 @@ import java.io.*;
 import com.aether.model.character.Classification;
 import com.aether.model.character.Race;
 import com.aether.model.character.Statistic;
+import com.aether.model.quests.JournalEntry;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
 
@@ -93,7 +94,7 @@ public class CharacterSheet implements Serializable {
 
     private Point location;
     private Vector<Item> inventory;
-    private Vector<Quest> questLog;
+    private Vector<JournalEntry> questLog;
     private Equipment[] equiped;
     private Classification role;
     
@@ -188,13 +189,13 @@ public class CharacterSheet implements Serializable {
     {
         return questLog;
     }
-    public void addQuest(Quest quest)
+    public void addQuest(JournalEntry quest)
     {
         if(quest.getLevelRequirement() <= getLevel())
             if(questLog.size() < questLog.capacity())
                 questLog.add(quest);
     }
-    public int findQuestIndex(Quest quest)
+    public int findQuestIndex(JournalEntry quest)
     {
         int index = -1;
         if(questLog.contains(quest))
@@ -202,11 +203,11 @@ public class CharacterSheet implements Serializable {
         
         return index;
     }
-    public Quest findQuestByIndex(int index)
+    public JournalEntry findQuestByIndex(int index)
     {
         return questLog.elementAt(index);
     }
-    public void abandonQuest(Quest quest)
+    public void abandonQuest(JournalEntry quest)
     {
         if(questLog.contains(quest))
             questLog.remove(quest);

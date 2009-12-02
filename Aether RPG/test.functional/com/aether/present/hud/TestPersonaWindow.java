@@ -1,13 +1,13 @@
 package com.aether.present.hud;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.gap.jseed.ServiceStore;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.aether.gbui.NameOperatorSearch;
@@ -15,6 +15,7 @@ import com.aether.gbui.operators.BLabelOperator;
 import com.aether.gbui.operators.BMeterBarOperator;
 import com.aether.model.CharacterSheet;
 import com.aether.model.character.CharacterLocator;
+import com.aether.present.AetherTestCase;
 import com.aether.present.CreateCharacterPage;
 import com.aether.present.InGamePage;
 import com.aether.present.Main;
@@ -22,14 +23,13 @@ import com.aether.present.MainMenuPage;
 import com.aether.present.PersonaPage;
 import com.aether.present.PlayerMovementState;
 
-public class TestPersonaWindow {
+public class TestPersonaWindow extends AetherTestCase {
 	
-	private PersonaPage persona;
-	private ServiceStore serviceStore;
+	private static PersonaPage persona;
+	private static ServiceStore serviceStore;
 
 	@Before
 	public void setUp() throws Exception {
-		Main.startGame();
 		serviceStore = Main.getServiceStore();
 		CreateCharacterPage newCampain = new MainMenuPage().clickNewCampain();
 		newCampain.loadDummyData();
@@ -95,10 +95,5 @@ public class TestPersonaWindow {
 		persona.setVisibility(true);
 		persona.setBio("setting bio");
 		assertFalse(serviceStore.get(PlayerMovementState.class).isActive());
-	}
-
-	@After
-	public void tearDown() {
-		Main.shutdown();
 	}
 }

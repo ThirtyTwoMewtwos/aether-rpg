@@ -38,7 +38,7 @@ public class PersonaPage {
 		if (!persona.isVisible()) {
 			throw new IllegalStateException("Persona is not visible!");
 		}
-		BTextFieldOperator bio = new BTextFieldOperator(getWindow(), "");
+		BTextFieldOperator bio = new BTextFieldOperator(getWindow(), new NameOperatorSearch(PersonaView.BIO_FIELD));
 		bio.setText(value);
 	}
 

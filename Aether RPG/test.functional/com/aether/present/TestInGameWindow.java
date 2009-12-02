@@ -1,12 +1,11 @@
 package com.aether.present;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.event.KeyEvent;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,21 +15,17 @@ import com.aether.gbui.operators.BComponentOperatorUtil;
 import com.aether.gbui.operators.BLabelOperator;
 import com.aether.gbui.operators.BMeterBarOperator;
 import com.aether.gbui.operators.BTextFieldOperator;
-import com.aether.present.Main;
 import com.aether.present.state.InGameView;
 import com.aether.present.state.MainMenuView;
-import com.jmex.bui.BTextField;
 import com.jmex.bui.BWindow;
 import com.jmex.bui.icon.BlankIcon;
 
 
-public class TestInGameWindow {
-
+public class TestInGameWindow extends AetherTestCase {
 	private InGamePage inGamePage;
 
 	@Before
 	public void setUp() throws Exception {
-		Main.startGame();
 		CreateCharacterPage createCharacter = new MainMenuPage().clickNewCampain();
 		createCharacter.loadDummyData();
 		inGamePage = createCharacter.clickFinish();
@@ -82,10 +77,5 @@ public class TestInGameWindow {
 		input.requestFocus();
 		new BKeyboard().typeKey(KeyEvent.VK_P);
 		assertFalse(inGamePage.getPersonaPage().isVisible());
-	}
-	
-	@After
-	public void tearDown() {
-		Main.shutdown();
 	}
 }

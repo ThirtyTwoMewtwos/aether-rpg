@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,17 +14,16 @@ import com.aether.gbui.operators.BComboBoxOperator;
 import com.aether.gbui.operators.BComponentOperatorUtil;
 import com.aether.model.character.Classification;
 import com.aether.model.character.Race;
-import com.aether.present.Main;
 import com.aether.present.state.InGameView;
 import com.aether.present.state.MainMenuView;
+import com.aether.present.state.StateTransition;
 
-public class TestCreateCharacterWindow {
+public class TestCreateCharacterWindow extends AetherTestCase {
 	private CreateCharacterPage createCharacterPage;
 	private BComboBoxOperator classSelection;
-	
+
 	@Before
 	public void setUp() throws Exception {
-		Main.startGame();
 		createCharacterPage = new MainMenuPage().clickNewCampain();
 		classSelection = createCharacterPage.getClassSelection();
 	}
@@ -59,9 +59,9 @@ public class TestCreateCharacterWindow {
 		createCharacterPage.clearRace();
 		assertFalse(classSelection.isEnabled());
 	}
-
-	@After
-	public void tearDown() throws Exception {
-		Main.shutdown();
+	
+	@Override
+	public void tearDown() {
+		super.tearDown();
 	}
 }

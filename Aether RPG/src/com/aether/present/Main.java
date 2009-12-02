@@ -8,6 +8,7 @@ import org.gap.jseed.ServiceStore;
 
 import com.aether.model.character.CharacterLocator;
 import com.aether.model.character.PCLocator;
+import com.aether.model.quests.JournalLoader;
 import com.aether.present.game.InGameWorldWindow;
 import com.aether.present.game.PCMovementState;
 import com.aether.present.hud.HUDLoader;
@@ -26,6 +27,7 @@ import com.jme.app.AbstractGame;
 import com.jme.input.MouseInput;
 import com.jme.renderer.Camera;
 import com.jme.renderer.ColorRGBA;
+import com.jme.util.geom.BufferUtils;
 import com.jmex.game.StandardGame;
 
 public class Main {
@@ -62,6 +64,7 @@ public class Main {
 		store.bind(ShutdownService.class, FinishGameService.class);
 		store.bind(StateTransition.class, GameStateTransition.class);
 		store.bind(CharacterLocator.class, PCLocator.class);
+		new JournalLoader(store);
 		store.bind(PlayerMovementState.class, PCMovementState.class);
 	}
 
@@ -93,9 +96,11 @@ public class Main {
 
 	public static void shutdown() {
 		game.shutdown();
+		
 		callShutdownHooks();
 		assureGameIsShutdown();
 	}
+
 
 	private static void callShutdownHooks() {
 		for (ShutdownHook each : shutdownHooks) {

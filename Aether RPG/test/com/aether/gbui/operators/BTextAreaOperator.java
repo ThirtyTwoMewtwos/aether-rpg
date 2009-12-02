@@ -29,4 +29,17 @@ public class BTextAreaOperator extends BComponentOperator {
 			}
 		});
 	}
+
+	public int getLineCount() {
+		return textArea.getLineCount();
+	}
+
+	public void clearText() {
+		BComponentOperatorUtil.callInBuiThread(new Callable<Object>() {
+			public Object call() throws Exception {
+				textArea.clearText();
+				return null;
+			}
+		});
+	}
 }

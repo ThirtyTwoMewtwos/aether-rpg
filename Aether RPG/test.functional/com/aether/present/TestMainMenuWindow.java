@@ -13,7 +13,6 @@ import com.aether.present.state.CharacterCreationView;
 import com.jmex.game.StandardGame;
 
 public class TestMainMenuWindow {
-	
 	private MainMenuPage mainMenuPage;
 
 	@Before
@@ -24,15 +23,15 @@ public class TestMainMenuWindow {
 	
 	@Test
 	public void test_Pressing_exit_button_exits_the_game() throws Exception {
-		mainMenuPage.clickExit();
+		Thread.sleep(2000);
 		final StandardGame game = Main.getGame();
+		mainMenuPage.clickExit();
+		
 		BComponentOperatorUtil.waitFor(new Condition() {
-
 			@Override
 			public boolean existing() {
 				return !game.isStarted();
 			}
-			
 		});
 		assertFalse(game.isStarted());
 	}

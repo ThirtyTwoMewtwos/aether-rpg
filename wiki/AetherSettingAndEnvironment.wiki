@@ -18,4 +18,9 @@ Although the land of Aedar is vast, there are some key elements that will be bro
 
  * Churchs of the Human race should be a very common theme among their areas.  Aedar is a different world so the symbols used in the Human faith will be contained in it's own wiki page. Building in cities should have a gothic theme.  Buildings in villages are more commonly built from large trees.  Tents and huts should be found for tribe camps.  Each of these three tier living zones should have a human(good) or revenent(evil) feel while both keeping the extremes in check.
 
- * Swamps are common in Aedar, as are wooded areas. Next common are mountains.  
+ * Common landscapes in order of most common:
+   * Swamps
+   * Forests
+   * Caverns
+   * Mountain Ranges
+   * Plains

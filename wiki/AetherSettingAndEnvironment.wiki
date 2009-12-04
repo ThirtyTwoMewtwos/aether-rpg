@@ -1,4 +1,4 @@
-#The page is the setting for Aether and its world.
+#summary The page is the setting for Aether and its world.
 
 = Aedar =
 

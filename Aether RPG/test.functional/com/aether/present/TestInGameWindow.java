@@ -78,4 +78,12 @@ public class TestInGameWindow extends AetherTestCase {
 		new BKeyboard().typeKey(KeyEvent.VK_P);
 		assertFalse(inGamePage.getPersonaPage().isVisible());
 	}
+	
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+		if (!Main.getGame().isStarted()) {
+			Main.startGame();
+		}
+	}
 }

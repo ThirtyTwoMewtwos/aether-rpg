@@ -116,15 +116,8 @@ public class MyStandardGame {
 	private static void buildChaseCamera(StandardGame game) {
 		Vector3f targetOffset = new Vector3f();
 		targetOffset.y = ((BoundingBox) player.getWorldBound()).yExtent * 1f;
-		Map<String, Object> props = new HashMap<String, Object>();
-		props.put(ThirdPersonMouseLook.PROP_MAXROLLOUT, "10");
-		props.put(ThirdPersonMouseLook.PROP_MINROLLOUT, "2");
-		props.put(ChaseCamera.PROP_TARGETOFFSET, targetOffset);
-		props.put(ThirdPersonMouseLook.PROP_MAXASCENT, "" + 20 * FastMath.DEG_TO_RAD);
-		props.put(ChaseCamera.PROP_INITIALSPHERECOORDS, new Vector3f(5, 0, 0 * FastMath.DEG_TO_RAD));
-		props.put(ChaseCamera.PROP_TARGETOFFSET, targetOffset);
 		Camera cam = game.getCamera();
-		chaser = new ChaseCamera(cam, (Spatial) player, props);
+		chaser = new ChaseCamera(cam, (Spatial) player);
 		chaser.setMaxDistance(8);
 		chaser.setMinDistance(7);
 		chaser.setLooking(true);

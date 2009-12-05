@@ -1,14 +1,11 @@
 package com.aether.present.state;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import com.jme.app.AbstractGame;
 import com.jme.system.GameSettings;
-import com.jmex.game.StandardGame;
-import com.jmex.game.StandardGame.GameType;
-
 
 public class TestShutdownService {
 	@Test

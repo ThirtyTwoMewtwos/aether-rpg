@@ -59,9 +59,4 @@ public class TestCreateCharacterWindow extends AetherTestCase {
 		createCharacterPage.clearRace();
 		assertFalse(classSelection.isEnabled());
 	}
-	
-	@Override
-	public void tearDown() {
-		super.tearDown();
-	}
 }

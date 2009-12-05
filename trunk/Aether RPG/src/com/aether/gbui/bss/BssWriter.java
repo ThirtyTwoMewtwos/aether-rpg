@@ -36,6 +36,10 @@ public class BssWriter {
 	public BssStyleClass createStyle(StyleType widget, StyleState state) {
 		return get(widget + ":" + state);
 	}
+	
+	public BssStyleClass createStyle(String widget, StyleState state) {
+		return get(widget + ":" + state);
+	}
 
 	public BssStyleClass createStyle(StyleType widget) {
 		return get(widget.name());

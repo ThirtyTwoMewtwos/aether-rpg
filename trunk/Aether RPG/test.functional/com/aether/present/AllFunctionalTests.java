@@ -9,7 +9,7 @@ import com.aether.present.hud.TestJournalWindow;
 
 @SuiteClasses( 
 		{
-			TestCreateCharacterWindow.class,
+			TestCharacterCreationWindow.class,
 			TestInGameWindow.class,
 			TestMainMenuWindow.class,
 			TestPersonaWindow.class,

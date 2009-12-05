@@ -1,6 +1,7 @@
 package com.aether.present.state;
 
 import com.aether.model.character.Classification;
+import com.aether.model.character.Sex;
 
 import java.util.List;
 
@@ -26,4 +27,6 @@ public interface CharacterCreationView {
 	void setName(String string);
 
 	void setRace(int i);
+
+	void setSex(Sex sex);
 }

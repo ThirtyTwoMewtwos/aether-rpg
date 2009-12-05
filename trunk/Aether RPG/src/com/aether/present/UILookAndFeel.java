@@ -2,6 +2,7 @@ package com.aether.present;
 
 import static com.aether.gbui.bss.BssWriter.StyleState.disabled;
 import static com.aether.gbui.bss.BssWriter.StyleState.hover;
+import static com.aether.gbui.bss.BssWriter.StyleState.selected;
 import static com.aether.gbui.bss.BssWriter.StyleType.button;
 import static com.aether.gbui.bss.BssWriter.StyleType.combobox;
 import static com.aether.gbui.bss.BssWriter.StyleType.label;
@@ -19,6 +20,7 @@ import com.aether.gbui.bss.BssStyleClass;
 import com.aether.gbui.bss.BssTextAlign;
 import com.aether.gbui.bss.BssTextEffect;
 import com.aether.gbui.bss.BssWriter;
+import com.aether.gbui.bss.BssWriter.StyleState;
 import com.aether.gbui.bss.BssWriter.StyleType;
 import com.jme.input.InputHandler;
 import com.jme.util.Timer;
@@ -30,6 +32,7 @@ import com.jmex.bui.bss.BStyleSheetUtil;
 public class UILookAndFeel {
 	public static final String CHAT_LAYOUT = "chatlayout";
 	public static final String CHAT_INPUT = "chattext";
+	public static final String RADIO_BUTTON = "radio_button";
 
 	public static final String STATISTICS_HEALTH = "statistics_hitpoints";
 	public static final String STATISTICS_MANA_POINTS = "statistics_manapoints";
@@ -138,6 +141,16 @@ public class UILookAndFeel {
 				.setEffectColor(new BssColor(new Color(255, 0, 0, 50)));
 		
 		makeDisabledButton(button);
+		
+		writer.createStyle(RADIO_BUTTON)
+				.setFont(FONT_FAMILY, BssFontStyle.BOLD, 15)
+				.setColor(BssColor.white)
+				.setBackground("images/radio_button_unselected.png", BssBackgroundMode.SCALEXY);
+		
+		writer.createStyle(RADIO_BUTTON, selected)
+				.setFont(FONT_FAMILY, BssFontStyle.BOLD, 15)
+				.setColor(BssColor.white)
+				.setBackground("images/radio_button_selected.png", BssBackgroundMode.SCALEXY);
 	}
 
     private void setupLabels() {

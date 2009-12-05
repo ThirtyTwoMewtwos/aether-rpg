@@ -3,6 +3,7 @@ package com.aether.present;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.gap.jseed.ServiceStore;
 
@@ -27,7 +28,9 @@ import com.jme.app.AbstractGame;
 import com.jme.input.MouseInput;
 import com.jme.renderer.Camera;
 import com.jme.renderer.ColorRGBA;
+import com.jme.system.DisplaySystem;
 import com.jme.util.geom.BufferUtils;
+import com.jmex.bui.BuiSystem;
 import com.jmex.game.StandardGame;
 
 public class Main {
@@ -37,12 +40,21 @@ public class Main {
 
 	public static void startGame() {
 		try {
+			Thread.sleep(1000);
 			Main.main(new String[] {});
-		} catch (IOException e) {
+			try {
+				while (!game.isStarted()) {
+					Thread.sleep(20);
+					System.out.println("waiting to start");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (Exception e) {
 			throw new IllegalStateException("Unable to start game: ", e);
 		}
 	}
-	
+
 	public static void main(String[] args) throws IOException {
 		game = new StandardGame("Aether RPG");
 		game.setBackgroundColor(ColorRGBA.darkGray);
@@ -50,9 +62,9 @@ public class Main {
 
 		MouseInput.get().setCursorVisible(true);
 		store = new ServiceStore();
-		
+
 		store.bind(Camera.class, game.getCamera());
-		
+
 		loadServices(game, store);
 
 		new UILookAndFeel().loadBaseStyleSheet();
@@ -70,37 +82,49 @@ public class Main {
 
 	private static void bindGameViewStates(ServiceStore store) {
 		HUDLoader.initialize(store);
-		
+
 		store.bind(InGameWorldWindow.class, InGameWorldWindow.class);
-		
+
 		store.bind(MainMenuView.class, MainMenuWindow.class);
 		store.bind(MainMenuPresenter.class, MainMenuPresenter.class);
 		store.bind(CharacterCreationView.class, CharacterCreationWindow.class);
-		store.bind(CharacterCreationPresenter.class, CharacterCreationPresenter.class);
+		store.bind(CharacterCreationPresenter.class,
+				CharacterCreationPresenter.class);
 		store.bind(InGameView.class, InGameWindow.class);
 		store.bind(InGamePresenter.class, InGamePresenter.class);
 
 		StateTransition stateTransition = store.get(StateTransition.class);
 
 		ActiveState mainMenu = store.get(MainMenuPresenter.class);
-		ActiveState createCharacter = store.get(CharacterCreationPresenter.class);
+		ActiveState createCharacter = store
+				.get(CharacterCreationPresenter.class);
 		InGamePresenter inGame = store.get(InGamePresenter.class);
 
-		stateTransition.add(mainMenu, MainMenuPresenter.CREATE_CHARACTER_TRANSITION, createCharacter);
-		stateTransition.add(createCharacter, CharacterCreationPresenter.CANCEL_CREATE_CHARACTER_TRANSITION, mainMenu);
-		stateTransition.add(createCharacter, CharacterCreationPresenter.GAME_WINDOW_TRANSITION, inGame);
-		stateTransition.add(inGame, InGamePresenter.OPTIONS_MENU_TRANSITION, mainMenu);
-		
+		stateTransition.add(mainMenu,
+				MainMenuPresenter.CREATE_CHARACTER_TRANSITION, createCharacter);
+		stateTransition.add(createCharacter,
+				CharacterCreationPresenter.CANCEL_CREATE_CHARACTER_TRANSITION,
+				mainMenu);
+		stateTransition.add(createCharacter,
+				CharacterCreationPresenter.GAME_WINDOW_TRANSITION, inGame);
+		stateTransition.add(inGame, InGamePresenter.OPTIONS_MENU_TRANSITION,
+				mainMenu);
+
 		stateTransition.setStartState(mainMenu);
 	}
 
 	public static void shutdown() {
-		game.shutdown();
-		
 		callShutdownHooks();
+		callShutdown();
+		
 		assureGameIsShutdown();
 	}
 
+	private static void callShutdown() {
+		BuiSystem.getRootNode().clearBuffers();
+
+		game.shutdown();
+	}
 
 	private static void callShutdownHooks() {
 		for (ShutdownHook each : shutdownHooks) {
@@ -109,19 +133,19 @@ public class Main {
 	}
 
 	public static void assureGameIsShutdown() {
-		while (game.isStarted()) {
-			try {
+		try {
+			while (game.isStarted()) {
 				Thread.sleep(20);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	public static StandardGame getGame() {
 		return game;
 	}
-	
+
 	public static ServiceStore getServiceStore() {
 		return store;
 	}

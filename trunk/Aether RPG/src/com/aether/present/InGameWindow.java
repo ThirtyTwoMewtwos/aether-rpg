@@ -3,9 +3,7 @@ package com.aether.present;
 import java.awt.Image;
 
 import com.aether.gbui.BDraggableChatWindow;
-import com.aether.gbui.components.BExtendedTextField;
 import com.aether.gbui.components.BMeterBar;
-import com.aether.gbui.event.FocusListener;
 import com.aether.present.game.InGameWorldWindow;
 import com.aether.present.hud.BChatComponent;
 import com.aether.present.state.InGamePresenter;
@@ -15,9 +13,11 @@ import com.jmex.bui.BChatWindow;
 import com.jmex.bui.BImage;
 import com.jmex.bui.BLabel;
 import com.jmex.bui.BTextArea;
+import com.jmex.bui.BTextField;
 import com.jmex.bui.BWindow;
 import com.jmex.bui.BuiSystem;
 import com.jmex.bui.event.FocusEvent;
+import com.jmex.bui.event.FocusListener;
 import com.jmex.bui.headlessWindows.BDraggableWindow;
 import com.jmex.bui.icon.BlankIcon;
 import com.jmex.bui.icon.ImageIcon;
@@ -98,7 +98,7 @@ public class InGameWindow extends BaseWindow implements InGameView {
 	}
 
 	private void initChatBox(BChatWindow window, final PlayerMovementState state) {
-		BExtendedTextField input = new BExtendedTextField();
+		BTextField input = new BTextField();
 		input.setName(CHAT_INPUT_ID);
 		input.setStyleClass(UILookAndFeel.CHAT_INPUT);
 		input.addFocusListener(new FocusListener() {

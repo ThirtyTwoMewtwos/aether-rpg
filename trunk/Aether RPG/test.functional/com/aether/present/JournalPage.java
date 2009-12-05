@@ -29,6 +29,7 @@ public class JournalPage {
 		if (window.isVisible() != visibility) {
 			new BKeyboard().typeKey(KeyEvent.VK_J);
 		}
+		BComponentOperatorUtil.delayForUpdate();
 		BComponentOperatorUtil.waitFor(new Condition() {
 			@Override
 			public boolean existing() {
@@ -37,14 +38,9 @@ public class JournalPage {
 		});
 	}
 
-	public void select(final String index) {
+	public void select(final Object item) {
 		final BListOperator list = new BListOperator(window, new NameOperatorSearch(JournalView.JOURNAL_ENTRIES_ID));
-		BComponentOperatorUtil.callInBuiThread(new Callable<Object>() {
-			public Object call() throws Exception {
-				list.select(index);
-				return null;
-			}
-		});
+		list.select(item);
 	}
 
 	public int getDescription() {

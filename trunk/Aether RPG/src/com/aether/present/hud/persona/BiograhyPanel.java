@@ -1,7 +1,5 @@
 package com.aether.present.hud.persona;
 
-import com.aether.gbui.components.BExtendedTextField;
-import com.aether.gbui.event.FocusListener;
 import com.aether.present.PlayerMovementState;
 import com.aether.present.UILookAndFeel;
 import com.aether.present.hud.PersonaPresenter;
@@ -11,13 +9,14 @@ import com.jmex.bui.BContainer;
 import com.jmex.bui.BLabel;
 import com.jmex.bui.BTextField;
 import com.jmex.bui.event.FocusEvent;
+import com.jmex.bui.event.FocusListener;
 import com.jmex.bui.layout.AbsoluteLayout;
 import com.jmex.bui.text.Document;
 import com.jmex.bui.text.Document.Listener;
 import com.jmex.bui.util.Rectangle;
 
 public class BiograhyPanel extends BContainer {
-	private BExtendedTextField bio;
+	private BTextField bio;
 	private TextChangedListener listener;
 	private BLabel label;
 
@@ -26,7 +25,7 @@ public class BiograhyPanel extends BContainer {
 		label = new BLabel("Biography");
 		label.setStyleClass(UILookAndFeel.PERSONA_STATISTICS);
 		
-		bio = new BExtendedTextField("");
+		bio = new BTextField("");
 		bio.addFocusListener(new FocusListener() {
 
 			@Override

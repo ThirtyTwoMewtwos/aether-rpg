@@ -1,16 +1,11 @@
 package com.aether.present;
 
-import static org.junit.Assert.assertFalse;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aether.gbui.Condition;
 import com.aether.gbui.operators.BComponentOperatorUtil;
-import com.aether.present.Main;
 import com.aether.present.state.CharacterCreationView;
-import com.jmex.game.StandardGame;
 
 public class TestMainMenuWindow {
 	private MainMenuPage mainMenuPage;
@@ -19,21 +14,6 @@ public class TestMainMenuWindow {
 	public void setUp() throws Exception {
 		Main.startGame();
 		mainMenuPage = new MainMenuPage();
-	}
-	
-	@Test
-	public void test_Pressing_exit_button_exits_the_game() throws Exception {
-		Thread.sleep(2000);
-		final StandardGame game = Main.getGame();
-		mainMenuPage.clickExit();
-		
-		BComponentOperatorUtil.waitFor(new Condition() {
-			@Override
-			public boolean existing() {
-				return !game.isStarted();
-			}
-		});
-		assertFalse(game.isStarted());
 	}
 	
 	@Test

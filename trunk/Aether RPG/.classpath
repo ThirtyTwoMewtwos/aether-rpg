@@ -23,8 +23,8 @@
 			<attribute name="javadoc_location" value="jar:file:/D:/java/Aether RPG/lib/testing/easymock-2.5.2-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/gbui.jar" sourcepath="lib/gbui-src.zip"/>
+	<classpathentry kind="lib" path="lib/jme-bui.jar" sourcepath="/GBui"/>
 	<classpathentry kind="lib" path="D:/java/components/jemmy.jar"/>
-	<classpathentry kind="lib" path="lib/jME2.jar" sourcepath="D:/java/Aether RPG/lib/jME2_src.zip"/>
+	<classpathentry kind="lib" path="lib/jME_2.0.jar" sourcepath="D:/java/Aether RPG/lib/jME_2.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

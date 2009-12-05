@@ -9,7 +9,6 @@ import com.aether.present.hud.questJournal.JournalDescriptionHeader;
 import com.aether.present.hud.questJournal.JournalHeader;
 import com.jme.util.GameTaskQueueManager;
 import com.jmex.bui.BButton;
-import com.jmex.bui.BComponent;
 import com.jmex.bui.BList;
 import com.jmex.bui.BScrollPane;
 import com.jmex.bui.BTextArea;
@@ -40,12 +39,6 @@ class JournalWindow implements JournalView {
 	private BTextArea questDescription;
 
 	private JournalPresenter presenter;
-
-	// TODO We should get any model related stuff unnassociated with the
-	// window/view, and make
-	// the presenter know about the model, and feed information to the view as
-	// simple strings
-	// this will make it easier to separate the UI from the model.
 
 	public JournalWindow() {
 		window = initWindow();

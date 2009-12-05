@@ -179,7 +179,7 @@ public class InGameWorldWindow extends BasicGameState {
 		props.put(ChaseCamera.PROP_INITIALSPHERECOORDS, new Vector3f(5, 0,
 				20 * FastMath.DEG_TO_RAD));
 		props.put(ChaseCamera.PROP_TARGETOFFSET, targetOffset);
-		chaser = new ChaseCamera(camera, (Spatial) player, props);
+		chaser = new ChaseCamera(camera, (Spatial) player);
 		chaser.setMaxDistance(8);
 		chaser.setMinDistance(7);
 		chaser.setLooking(true);

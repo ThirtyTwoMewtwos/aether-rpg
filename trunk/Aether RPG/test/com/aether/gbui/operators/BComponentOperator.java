@@ -66,4 +66,14 @@ public abstract class BComponentOperator {
 		};
 		BComponentOperatorUtil.callInBuiThread(callable);
 	}
+	
+	public void releaseFocus() {
+		Callable<Void> callable = new Callable<Void>() {
+			public Void call() throws Exception {
+				getComponent().dispatchEvent(new FocusEvent(this, System.currentTimeMillis(), FocusEvent.FOCUS_LOST));
+				return null;
+			}
+		};
+		BComponentOperatorUtil.callInBuiThread(callable);
+	}
 }

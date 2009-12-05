@@ -45,4 +45,9 @@ public class PersonaPage {
 	public boolean isVisible() {
 		return persona.isVisible();
 	}
+
+	public void releaseFocus() {
+		BTextFieldOperator bio = new BTextFieldOperator(getWindow(), new NameOperatorSearch(PersonaView.BIO_FIELD));
+		bio.releaseFocus();
+	}
 }

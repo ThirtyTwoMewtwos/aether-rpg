@@ -4,19 +4,27 @@ import java.util.List;
 
 import com.aether.model.character.Classification;
 import com.aether.model.character.Race;
+import com.aether.model.character.Sex;
 import com.aether.present.state.CharacterCreationPresenter;
 import com.aether.present.state.CharacterCreationView;
 import com.jme.input.KeyInput;
 import com.jme.system.DisplaySystem;
 import com.jmex.bui.BButton;
 import com.jmex.bui.BComboBox;
+import com.jmex.bui.BGroupContainer;
 import com.jmex.bui.BLabel;
 import com.jmex.bui.BTextField;
+import com.jmex.bui.BToggleButton;
 import com.jmex.bui.BWindow;
 import com.jmex.bui.BuiSystem;
+import com.jmex.bui.Spacer;
 import com.jmex.bui.BComboBox.Item;
 import com.jmex.bui.event.ActionEvent;
 import com.jmex.bui.event.ActionListener;
+import com.jmex.bui.event.SelectionListener;
+import com.jmex.bui.event.StateChangedEvent;
+import com.jmex.bui.event.StateChangedEvent.SelectionState;
+import com.jmex.bui.layout.HGroupLayout;
 import com.jmex.bui.layout.TableLayout;
 import com.jmex.bui.text.Document;
 import com.jmex.bui.text.Document.Listener;
@@ -46,8 +54,11 @@ public class CharacterCreationWindow extends BaseWindow implements CharacterCrea
 		BWindow window = initWindow();
 
 		initNameField();
+		initSexSelection();
         initRaceSelection();
         initClassSelection();
+        
+        initFillRow();
         
         initBackToMainMenu();
         initSaveCharacter();
@@ -56,7 +67,6 @@ public class CharacterCreationWindow extends BaseWindow implements CharacterCrea
 
 		GameStateManager.getInstance().attachChild(this);
     }
-
 
 	private BWindow initWindow() {
 		DisplaySystem display = DisplaySystem.getDisplaySystem();
@@ -102,6 +112,31 @@ public class CharacterCreationWindow extends BaseWindow implements CharacterCrea
 			}
         });
 	}
+	
+	private void initSexSelection() {
+		getWindow(DEFAULT_WINDOW).add(new BLabel("Sex: "));
+		BGroupContainer container = new BGroupContainer();
+		container.setPreferredSize(BUTTON_WIDTH, 25);
+		container.setLayoutManager(new HGroupLayout());
+		createSexButton(container, Sex.Male);
+		createSexButton(container, Sex.Female);
+		getWindow(DEFAULT_WINDOW).add(container);
+	}
+
+	private void createSexButton(BGroupContainer container, final Sex sex) {
+		BToggleButton selection = new BToggleButton(sex.name());
+		selection.setPreferredSize(BUTTON_WIDTH / 2, 25);
+		selection.setStyleClass(UILookAndFeel.RADIO_BUTTON);
+		selection.addSelectionListener(new SelectionListener() {
+			@Override
+			public void stateChanged(StateChangedEvent event) {
+				if (event.getType() == SelectionState.Selected) {
+					presenter.setSex(sex);
+				}
+			}
+		});
+		container.add(selection);
+	}
 
 	private void initRaceSelection() {
 		getWindow(DEFAULT_WINDOW).add(new BLabel("Race: "));
@@ -144,6 +179,11 @@ public class CharacterCreationWindow extends BaseWindow implements CharacterCrea
 
 	private BLabel createLabel(String text) {
 		return new BLabel(text);
+	}
+	
+	private void initFillRow() {
+		getWindow(DEFAULT_WINDOW).add(new Spacer(-1, 25));
+		getWindow(DEFAULT_WINDOW).add(new Spacer(-1, 25));
 	}
 
 	private void initBackToMainMenu() {
@@ -188,6 +228,11 @@ public class CharacterCreationWindow extends BaseWindow implements CharacterCrea
     @Override
     public void setName(String name) {
     	nameField.setText(name);
+    }
+    
+    @Override
+    public void setSex(Sex sex) {
+    	
     }
     
     @Override

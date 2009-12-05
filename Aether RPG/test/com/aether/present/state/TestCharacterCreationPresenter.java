@@ -2,12 +2,11 @@ package com.aether.present.state;
 
 import static org.easymock.EasyMock.anyObject;
 import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.createStrictMock;
 import static org.easymock.EasyMock.createNiceMock;
+import static org.easymock.EasyMock.createStrictMock;
 import static org.easymock.EasyMock.matches;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
-import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +15,7 @@ import com.aether.model.CharacterSheet;
 import com.aether.model.character.CharacterLocator;
 import com.aether.model.character.Classification;
 import com.aether.model.character.Race;
+import com.aether.model.character.Sex;
 
 public class TestCharacterCreationPresenter {
     private StateTransition stateTransition;
@@ -33,15 +33,17 @@ public class TestCharacterCreationPresenter {
 
     @Test
     public void testCharacterCreation() throws Exception {
+    	CharacterSheet characterSheet = new CharacterSheet("Super boy", "", Sex.Male, Classification.Crusader);
     	view = createNiceMock(CharacterCreationView.class);
     	view.setPresenter((CharacterCreationPresenter)anyObject());
         view.setClasses(Classification.getAvailableFor(Race.Human));
-        characterManager.setPlayer((CharacterSheet)anyObject());
+        characterManager.setPlayer(characterSheet);
         stateTransition.transition((ActiveState)anyObject(), matches(CharacterCreationPresenter.GAME_WINDOW_TRANSITION));
 
         replay(view, stateTransition, characterManager);
         CharacterCreationPresenter presenter = new CharacterCreationPresenter(view, stateTransition, characterManager);
         presenter.setName("Billy the Kid");
+        presenter.setSex(Sex.Male);
         presenter.setRace(Race.Human);
         presenter.setClassification(Classification.Crusader);
         presenter.setName(""); // not a valid name, disable save
@@ -63,6 +65,7 @@ public class TestCharacterCreationPresenter {
     @Test
     public void testEnterActiveAndExitActiveState() throws Exception {
     	view.setName("");
+    	view.setSex(Sex.Female);
     	view.setRace(0);
     	view.clearClassifications();
         view.activate();

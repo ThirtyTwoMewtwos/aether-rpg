@@ -36,6 +36,7 @@ import java.io.*;
 
 import com.aether.model.character.Classification;
 import com.aether.model.character.Race;
+import com.aether.model.character.Sex;
 import com.aether.model.character.Statistic;
 import com.aether.model.quests.JournalEntry;
 import com.lowagie.text.*;
@@ -89,7 +90,7 @@ public class CharacterSheet implements Serializable {
 
     private String name;
     private String bio;
-    private String sex;
+    private Sex sex;
     private Race race;
 
     private Point location;
@@ -98,7 +99,7 @@ public class CharacterSheet implements Serializable {
     private Equipment[] equiped;
     private Classification role;
     
-    public CharacterSheet(String hName,String hBio, String sex, Classification hClass) {
+    public CharacterSheet(String hName,String hBio, Sex sex, Classification hClass) {
         level = 1;
         setXPToLevel(100);
         setLocation(new Point(20,20));
@@ -114,7 +115,7 @@ public class CharacterSheet implements Serializable {
         
         setName(hName);
         setBio(hBio);
-        setSex(sex);
+        this.sex = sex;
         setHeroClass(hClass);
         
         health = new Statistic(10);
@@ -261,17 +262,11 @@ public class CharacterSheet implements Serializable {
         bio = heroBio;
     }
     
-    public String getSex()
+    public Sex getSex()
     {
         return sex;
     }
-    public void setSex(String s)
-    {
-        if(s.toLowerCase().equals("male"))
-           sex = SEXS[MALE];
-        else
-           sex = SEXS[FEMALE];
-    }
+    
     public void setRace(Race hRace)
     {
         race = hRace;
@@ -506,6 +501,15 @@ public class CharacterSheet implements Serializable {
     double statRound(double d) {
         java.text.DecimalFormat twoDForm = new java.text.DecimalFormat("#.##");
 		return Double.valueOf(twoDForm.format(d));
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+    	if (obj instanceof CharacterSheet) {
+    		CharacterSheet sheet = (CharacterSheet) obj;
+    		return sheet.toString().equals(toString());
+    	}
+    	return false;
     }
 
     @Override

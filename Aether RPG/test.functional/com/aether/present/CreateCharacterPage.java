@@ -1,12 +1,16 @@
 package com.aether.present;
 
+import java.awt.AWTException;
+
 import com.aether.gbui.NameOperatorSearch;
 import com.aether.gbui.operators.BButtonOperator;
 import com.aether.gbui.operators.BComboBoxOperator;
 import com.aether.gbui.operators.BComponentOperatorUtil;
 import com.aether.gbui.operators.BTextFieldOperator;
+import com.aether.gbui.operators.BToggleButtonOperator;
 import com.aether.model.character.Classification;
 import com.aether.model.character.Race;
+import com.aether.model.character.Sex;
 import com.aether.present.state.CharacterCreationView;
 import com.jmex.bui.BWindow;
 
@@ -16,6 +20,7 @@ public class CreateCharacterPage {
 	private BButtonOperator backButton;
 	private BComboBoxOperator raceSelection;
 	private BComboBoxOperator classSelection;
+	private BToggleButtonOperator sexSelection;
 
 	public CreateCharacterPage() throws InterruptedException {
 		window = BComponentOperatorUtil.windowWithId(CharacterCreationView.ID);
@@ -45,8 +50,19 @@ public class CreateCharacterPage {
 		getRaceSelection().select(0);
 	}
 	
-	public void selectRace(Race race) {
-		getRaceSelection().select(race);
+	public void setSex(Sex newSex) throws AWTException {
+		getSexSelection(newSex).click();
+	}
+	
+	public BToggleButtonOperator getSexSelection(Sex newSex) throws AWTException {
+		if (sexSelection == null) {
+			sexSelection = new BToggleButtonOperator(window, newSex.name());
+		}
+		return sexSelection;
+	}
+
+	public void selectRace(Race newRace) {
+		getRaceSelection().select(newRace);
 	}
 
 	public BComboBoxOperator getRaceSelection() {

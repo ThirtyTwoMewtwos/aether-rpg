@@ -4,16 +4,20 @@ import com.aether.model.CharacterSheet;
 import com.aether.model.character.CharacterLocator;
 import com.aether.model.character.Classification;
 import com.aether.model.character.Race;
+import com.aether.model.character.Sex;
 import com.util.StringUtil;
 
 public class CharacterCreationPresenter implements ActiveState {
-    private CharacterCreationView view;
+	public static final String CANCEL_CREATE_CHARACTER_TRANSITION = "back.main.menu";
+	public static final String GAME_WINDOW_TRANSITION = "game.window";
+
+	private CharacterCreationView view;
     private StateTransition state;
+    
     private String name;
+    private Sex sex;
     private Race race;
     private Classification classification;
-    public static final String CANCEL_CREATE_CHARACTER_TRANSITION = "back.main.menu";
-    public static final String GAME_WINDOW_TRANSITION = "game.window";
 	private final CharacterLocator characterManager;
 
     public CharacterCreationPresenter(CharacterCreationView view, StateTransition state, CharacterLocator characterManager) {
@@ -41,6 +45,10 @@ public class CharacterCreationPresenter implements ActiveState {
         }
     }
 
+    public void setSex(Sex newSex) {
+		this.sex = newSex;
+    }
+
     public void setRace(Race newRace) {
         race = newRace;
         
@@ -65,16 +73,18 @@ public class CharacterCreationPresenter implements ActiveState {
     }
 
     public void finish() {
-    	characterManager.setPlayer(new CharacterSheet(name, "", "", classification));
+    	characterManager.setPlayer(new CharacterSheet(name, "", sex, classification));
         state.transition(this, GAME_WINDOW_TRANSITION);
     }
 
     @Override
     public void enter() {
     	classification = null;
+    	sex = Sex.Female;
     	race = null;
     	name = null;
     	view.setName("");
+    	view.setSex(Sex.Female);
     	view.setRace(0);
     	view.clearClassifications();
         view.activate();
@@ -84,4 +94,5 @@ public class CharacterCreationPresenter implements ActiveState {
     public void exit() {
         view.deactivate();
     }
+
 }

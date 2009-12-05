@@ -3,7 +3,6 @@ package com.aether.present;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import org.gap.jseed.ServiceStore;
 
@@ -28,8 +27,6 @@ import com.jme.app.AbstractGame;
 import com.jme.input.MouseInput;
 import com.jme.renderer.Camera;
 import com.jme.renderer.ColorRGBA;
-import com.jme.system.DisplaySystem;
-import com.jme.util.geom.BufferUtils;
 import com.jmex.bui.BuiSystem;
 import com.jmex.game.StandardGame;
 
@@ -45,7 +42,6 @@ public class Main {
 			try {
 				while (!game.isStarted()) {
 					Thread.sleep(20);
-					System.out.println("waiting to start");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

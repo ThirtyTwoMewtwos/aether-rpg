@@ -54,4 +54,13 @@ public class BListOperator extends BComponentOperator {
 		return list.getSelectedValue();
 	}
 
+	public int size() {
+		return BComponentOperatorUtil.callInBuiThread(new Callable<Integer>() {
+			@Override
+			public Integer call() throws Exception {
+				return list.getComponentCount();
+			}
+		});
+	}
+
 }

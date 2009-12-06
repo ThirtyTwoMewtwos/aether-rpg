@@ -5,6 +5,7 @@ import java.util.Vector;
 import java.util.concurrent.Callable;
 
 import com.aether.model.quests.JournalEntry;
+import com.aether.present.UILookAndFeel;
 import com.aether.present.hud.questJournal.JournalDescriptionHeader;
 import com.aether.present.hud.questJournal.JournalHeader;
 import com.jme.renderer.ColorRGBA;
@@ -29,7 +30,7 @@ class JournalWindow implements JournalView {
 
 	private BWindow window;
 
-	private BButton share;
+//	private BButton share;
 	private BButton abandon;
 
 	private BList entries;
@@ -57,10 +58,17 @@ class JournalWindow implements JournalView {
 	}
 
 	private void setupDisplay(BWindow window) {
-// 	We'll leave them out until we are actually able to use them.  
-//  at the moment they will do nothing
+// 	We'll leave the share out until we are actually able to use it.  
+//  at the moment it will do nothing
 //		share = new BButton("Share");
-//		abandon = new BButton("Abandon");
+		abandon = new BButton("Abandon");
+		abandon.setStyleClass(UILookAndFeel.STATISTICS_HEALTH);
+		abandon.addListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				presenter.removeQuest(entries.getSelectedValue().toString());
+			}
+		});
 
 		entries = new BList();
 		entries.setName(JOURNAL_ENTRIES_ID);
@@ -97,7 +105,7 @@ class JournalWindow implements JournalView {
 		window.add(scrollDescription, new Rectangle(0, 65, 290, 100));
 //
 //		window.add(share, new Rectangle(10, 10, 100, 40));
-//		window.add(abandon, new Rectangle(150, 10, 125, 40));
+		window.add(abandon, new Rectangle(150, 10, 125, 40));
 	}
 
 	public void addQuest(JournalEntry quest) {

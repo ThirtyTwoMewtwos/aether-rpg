@@ -209,7 +209,7 @@ public class InGameWorldWindow extends BasicGameState {
 			ac = new AnimationController();
 			ac.addAnimation(anim1);
 			ac.setRepeatType(Controller.RT_WRAP);
-			ac.setActive(true);
+			ac.setActive(false);
 			ac.setActiveAnimation(anim1);
 
 			// assign the animation controller to our skeleton

@@ -32,19 +32,19 @@ public class JournalPresenter implements ViewPresenter {
 	@Override
 	public void toggleVisibility() {
 		if (!visible ) {
-			showAllQuests();
+			showAvailableQuests();
 		}
 		visible = !visible;
 		view.setVisible(visible);
 	}
 
-	private void showAllQuests() {
-		if (!quests.isEmpty()) {
+	private void showAvailableQuests() {
+		if (quests.isEmpty()) {
+			view.setDescription("No quests to show!");
+		} else {
 			Collection<String> titles = quests.getEntryTitles();
 			view.setQuests(titles);
 			showQuest(titles.iterator().next());
-		} else {
-			view.setDescription("No quests to show!");
 		}
 	}
 
@@ -53,6 +53,11 @@ public class JournalPresenter implements ViewPresenter {
 		view.setSelection(title);
 		view.setLevelRequirement("" + entry.getLevelRequirement());
 		view.setDescription(entry.getDescription());
+	}
+
+	public void removeQuest(String title) {
+		quests.removeEntry(title);
+		showAvailableQuests();
 	}
 
 }

@@ -54,4 +54,21 @@ public class TestJournal {
 		assertEquals("Find billy!", iterator.next());
 		EasyMock.verify(quest, quest2);
 	}
+	
+	@Test
+	public void test_Removing_an_entry_from_the_journal() throws Exception {
+		EasyMock.expect(quest.getTitle()).andReturn("Kill bugbear!");
+		
+		EasyMock.replay(quest);
+		locator.addEntry(quest);
+		
+		assertEquals(1, locator.size());
+		assertFalse(locator.isEmpty());
+		
+		locator.removeEntry("Kill bugbear!");
+		
+		assertEquals(0, locator.size());
+		assertTrue(locator.isEmpty());
+		EasyMock.verify(quest);
+	}
 }

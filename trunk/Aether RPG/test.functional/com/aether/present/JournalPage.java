@@ -1,10 +1,12 @@
 package com.aether.present;
 
+import java.awt.AWTException;
 import java.awt.event.KeyEvent;
 
 import com.aether.gbui.BKeyboard;
 import com.aether.gbui.Condition;
 import com.aether.gbui.NameOperatorSearch;
+import com.aether.gbui.operators.BButtonOperator;
 import com.aether.gbui.operators.BComponentOperatorUtil;
 import com.aether.gbui.operators.BLabelOperator;
 import com.aether.gbui.operators.BListOperator;
@@ -14,6 +16,7 @@ import com.jmex.bui.BWindow;
 
 public class JournalPage {
 	private BWindow window;
+	private BListOperator questList;
 
 	public JournalPage() throws InterruptedException {
 		window = BComponentOperatorUtil.windowWithId(JournalView.JOURNAL_ID);
@@ -37,8 +40,14 @@ public class JournalPage {
 	}
 
 	public void select(final Object item) {
-		final BListOperator list = new BListOperator(window, new NameOperatorSearch(JournalView.JOURNAL_ENTRIES_ID));
-		list.select(item);
+		getQuestList().select(item);
+	}
+	
+	public BListOperator getQuestList() {
+		if (questList == null) {
+			questList = new BListOperator(window, new NameOperatorSearch(JournalView.JOURNAL_ENTRIES_ID));
+		}
+		return questList;
 	}
 
 	public int getDescription() {
@@ -54,5 +63,13 @@ public class JournalPage {
 	public Object getLevelRequirement() {
 		BLabelOperator fieldOperator = new BLabelOperator(window, new NameOperatorSearch(JournalView.LEVEL_REQUIREMENT_ID));
 		return fieldOperator.getText();
+	}
+
+	public void clickRemoveQuest() throws AWTException {
+		new BButtonOperator(window, "Abandon").click();
+	}
+
+	public int getQuestCount() {
+		return getQuestList().size();
 	}
 }

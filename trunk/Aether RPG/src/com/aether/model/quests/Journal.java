@@ -1,10 +1,7 @@
 package com.aether.model.quests;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import org.gap.jseed.injection.annotation.Singleton;
@@ -25,7 +22,7 @@ class Journal implements JournalEntryLocator {
 
 	@Override
 	public int size() {
-		return 0;
+		return entries.size();
 	}
 
 	public void addEntry(JournalEntry entry) {
@@ -34,5 +31,10 @@ class Journal implements JournalEntryLocator {
 
 	public JournalEntry getEntry(String title) {
 		return entries.get(title);
+	}
+	
+	@Override
+	public void removeEntry(String title) {
+		entries.remove(title);
 	}
 }

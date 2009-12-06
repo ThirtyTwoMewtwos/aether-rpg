@@ -23,7 +23,7 @@ public class BiograhyPanel extends BContainer {
 	public BiograhyPanel(final PlayerMovementState state) {
 		setLayoutManager(new AbsoluteLayout());
 		label = new BLabel("Biography");
-		label.setStyleClass(UILookAndFeel.PERSONA_STATISTICS);
+		label.setStyleClass(UILookAndFeel.HUD_STATISTICS_LABELS);
 		
 		bio = new BTextField("");
 		bio.addFocusListener(new FocusListener() {

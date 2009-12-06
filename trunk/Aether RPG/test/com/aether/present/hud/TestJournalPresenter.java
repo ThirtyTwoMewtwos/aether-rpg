@@ -7,21 +7,18 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aether.model.character.CharacterLocator;
 import com.aether.model.quests.JournalEntry;
 import com.aether.model.quests.JournalEntryLocator;
 
 
-public class TestQuestJournalPresenter {
+public class TestJournalPresenter {
 	private JournalView view;
-	private CharacterLocator locator;
 	private JournalEntryLocator quests;
 	private List<String> listOfQuests;
 
 	@Before
 	public void setUp() throws Exception {
 		view = EasyMock.createStrictMock(JournalView.class);
-		locator = EasyMock.createStrictMock(CharacterLocator.class);
 		quests = EasyMock.createStrictMock(JournalEntryLocator.class);
 		
 		view.setPresenter((JournalPresenter)EasyMock.anyObject());
@@ -44,6 +41,9 @@ public class TestQuestJournalPresenter {
 		view.setQuests(listOfQuests);
 		String description = "some good guy";
 		EasyMock.expect(quests.getEntry((String)EasyMock.anyObject())).andReturn(entry);
+		view.setSelection("Kill bugbear");
+		EasyMock.expect(entry.getLevelRequirement()).andReturn(1);
+		view.setLevelRequirement("1");
 		EasyMock.expect(entry.getDescription()).andReturn(description);
 		view.setDescription(description);
 		view.setVisible(true);
@@ -73,12 +73,15 @@ public class TestQuestJournalPresenter {
 							 "and now you must do something about it!";
 		JournalEntry entry = EasyMock.createStrictMock(JournalEntry.class);
 		EasyMock.expect(quests.getEntry((String)EasyMock.anyObject())).andReturn(entry);
+		view.setSelection("something");
+		EasyMock.expect(entry.getLevelRequirement()).andReturn(2);
+		view.setLevelRequirement("2");
 		EasyMock.expect(entry.getDescription()).andReturn(description);
 		view.setDescription(description);
 		
 		EasyMock.replay(view, quests, entry);
 		JournalPresenter presenter = new JournalPresenter(view, quests);
-		presenter.showDescription("something");
+		presenter.showQuest("something");
 		EasyMock.verify(view, quests, entry);
 	}
 }

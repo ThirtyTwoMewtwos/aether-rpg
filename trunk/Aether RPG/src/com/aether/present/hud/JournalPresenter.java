@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import org.gap.jseed.injection.annotation.Singleton;
 
+import com.aether.model.quests.JournalEntry;
 import com.aether.model.quests.JournalEntryLocator;
 
 @Singleton
@@ -41,15 +42,17 @@ public class JournalPresenter implements ViewPresenter {
 		if (!quests.isEmpty()) {
 			Collection<String> titles = quests.getEntryTitles();
 			view.setQuests(titles);
-			showDescription(titles.iterator().next());
+			showQuest(titles.iterator().next());
 		} else {
 			view.setDescription("No quests to show!");
 		}
 	}
 
-	public void showDescription(String title) {
-		String description = quests.getEntry(title).getDescription();
-		view.setDescription(description);
+	public void showQuest(String title) {
+		JournalEntry entry = quests.getEntry(title);
+		view.setSelection(title);
+		view.setLevelRequirement("" + entry.getLevelRequirement());
+		view.setDescription(entry.getDescription());
 	}
 
 }

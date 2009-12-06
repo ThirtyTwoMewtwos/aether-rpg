@@ -6,28 +6,37 @@
 package com.aether.present.hud.questJournal;
 
 import com.aether.present.UILookAndFeel;
-import com.aether.present.hud.PersonaView;
+import com.aether.present.hud.JournalView;
 import com.jmex.bui.BContainer;
 import com.jmex.bui.BLabel;
 import com.jmex.bui.layout.AbsoluteLayout;
 import com.jmex.bui.util.Rectangle;
 
 public class JournalHeader extends BContainer {
-	private BLabel questLogLabel;
-	private BLabel questLevelLabel;
+	private BLabel questLevel;
 
 	public JournalHeader() {
 		AbsoluteLayout layout = new AbsoluteLayout();
 		this.setLayoutManager(layout);
 		this.setStyleClass(UILookAndFeel.PERSONA_HEADER_PANEL);
 
-		questLogLabel =  new BLabel("Quest Log:");
-		questLevelLabel = new BLabel("Level Requirement:");
-        questLogLabel.setStyleClass(UILookAndFeel.PERSONA_STATISTICS);
-        questLevelLabel.setStyleClass(UILookAndFeel.PERSONA_STATISTICS);
+		BLabel questLogLabel =  new BLabel("Entries");
+		questLogLabel.setStyleClass(UILookAndFeel.HUD_STATISTICS_LABELS);
 
+		BLabel questLevelLabel = new BLabel("Level Requirement:");
+        questLevelLabel.setStyleClass(UILookAndFeel.HUD_STATISTICS_LABELS);
+
+        questLevel = new BLabel("A");
+        questLevel.setName(JournalView.LEVEL_REQUIREMENT_ID);
+        questLevel.setStyleClass(UILookAndFeel.HUD_STATISTICS_VALUES);
+        
         add(questLogLabel,new Rectangle(0,0,200,40));
-        add(questLevelLabel,new Rectangle(200,0,200,40));
+        add(questLevelLabel,new Rectangle(135,0,200,40));
+        add(questLevel, new Rectangle(235, 0, 50, 40));
+	}
+
+	public void setLevelRequirement(String level) {
+		questLevel.setText(level);
 	}
 
 }

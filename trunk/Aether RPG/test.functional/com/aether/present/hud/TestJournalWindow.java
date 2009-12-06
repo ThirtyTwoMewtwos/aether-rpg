@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import com.aether.model.quests.JournalEntryLocator;
 import com.aether.model.quests.KillQuest;
-import com.aether.present.AetherTestCase;
 import com.aether.present.CreateCharacterPage;
 import com.aether.present.InGamePage;
 import com.aether.present.JournalPage;
@@ -28,7 +27,7 @@ public class TestJournalWindow {
 		title1 = "Kill them!";
 		locator.addEntry(new KillQuest(title1, "get the fabulous dagger, and kill them.", 1, 5, "Bugbear"));
 		title2 = "Find billy!";
-		locator.addEntry(new KillQuest(title2, "Find billy\n then kill\n him.", 1, 1, "Dwarf"));
+		locator.addEntry(new KillQuest(title2, "Find billy\n then kill\n him.", 2, 1, "Dwarf"));
 		
 		CreateCharacterPage createCharacterPage = new MainMenuPage().clickNewCampain();
 		createCharacterPage.loadDummyData();
@@ -46,6 +45,8 @@ public class TestJournalWindow {
 		journalPage.setVisible(true);
 		journalPage.select(title2);
 		assertEquals(3, journalPage.getDescription());
+		assertEquals("2", journalPage.getLevelRequirement());
+		
 		journalPage.select(title1);
 		assertEquals(1, journalPage.getDescription());
 	}

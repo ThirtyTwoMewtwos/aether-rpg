@@ -4,6 +4,8 @@ import static com.aether.gbui.bss.BssWriter.StyleState.disabled;
 import static com.aether.gbui.bss.BssWriter.StyleState.hover;
 import static com.aether.gbui.bss.BssWriter.StyleState.selected;
 import static com.aether.gbui.bss.BssWriter.StyleType.button;
+import static com.aether.gbui.bss.BssWriter.StyleType.list_entry;
+import static com.aether.gbui.bss.BssWriter.StyleType.textarea;
 import static com.aether.gbui.bss.BssWriter.StyleType.combobox;
 import static com.aether.gbui.bss.BssWriter.StyleType.label;
 import static com.aether.gbui.bss.BssWriter.StyleType.menuitem;
@@ -20,7 +22,6 @@ import com.aether.gbui.bss.BssStyleClass;
 import com.aether.gbui.bss.BssTextAlign;
 import com.aether.gbui.bss.BssTextEffect;
 import com.aether.gbui.bss.BssWriter;
-import com.aether.gbui.bss.BssWriter.StyleState;
 import com.aether.gbui.bss.BssWriter.StyleType;
 import com.jme.input.InputHandler;
 import com.jme.util.Timer;
@@ -38,11 +39,12 @@ public class UILookAndFeel {
 	public static final String STATISTICS_MANA_POINTS = "statistics_manapoints";
 	public static final String STATISTICS_TOOLTIP_TEXT = "tooltip_text";
 	
-	public static final String PERSONA_STATISTICS = "persona_statistics";
-	public static final String PERSONA_STATISTICS_VALUES = "persona_statistics_values";
+	public static final String HUD_STATISTICS_LABELS = "persona_statistics";
+	public static final String HUD_STATISTICS_VALUES = "persona_statistics_values";
 	public static final String PERSONA_HEADER_VALUES = "persona_header_values";
 	public static final String PERSONA_HEADER_PANEL = "persona_header_panel";
 	public static final String PERSONA_ATTRIBUTES_PANEL = "persona_attributes_panel";
+	public static final String HUD_LIST = "hud_list";
 	
 	private static final int BUTTON_FONT_SIZE = 24;
 	private static final String FONT_FAMILY = "Helvetica";
@@ -83,13 +85,13 @@ public class UILookAndFeel {
 				.setColor(BssColor.blue)
 				.setBorder(1, BssColor.GRAY);
 		
-		writer.createStyle(PERSONA_STATISTICS)
+		writer.createStyle(HUD_STATISTICS_LABELS)
 				.clearBackground()
 				.setTextAlign(BssTextAlign.LEFT)
 				.setFont(FONT_FAMILY, BssFontStyle.BOLD, 12)
 				.setColor(BssColor.WHITE);
 		
-		writer.createStyle(PERSONA_STATISTICS_VALUES)
+		writer.createStyle(HUD_STATISTICS_VALUES)
 				.clearBackground()
 				.setTextAlign(BssTextAlign.CENTER)
 				.setFont(FONT_FAMILY, BssFontStyle.BOLD, 12)
@@ -140,6 +142,24 @@ public class UILookAndFeel {
 				.setBackground("images/button_up.png", BssBackgroundMode.FRAMEXY)
 				.setEffectColor(new BssColor(new Color(255, 0, 0, 50)));
 		
+		writer.createStyle(list_entry)
+				.setFont(FONT_FAMILY, BssFontStyle.BOLD, 12)
+				.setColor(BssColor.white)
+				.setTextAlign(BssTextAlign.LEFT)
+				.clearBackground();
+		
+		writer.createStyle(list_entry, selected)
+				.setFont(FONT_FAMILY, BssFontStyle.BOLD, 12)
+				.setColor(BssColor.white)
+				.setTextAlign(BssTextAlign.LEFT)
+				.setBackground(BssColor.DARK_GRAY);
+		
+		writer.createStyle(textarea)
+				.setFont(FONT_FAMILY, BssFontStyle.BOLD, 12)
+				.setTextAlign(BssTextAlign.LEFT)
+				.setColor(BssColor.white)
+				.clearBackground();
+
 		makeDisabledButton(button);
 		
 		writer.createStyle(RADIO_BUTTON)

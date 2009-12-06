@@ -26,7 +26,7 @@ public class HeaderPanel extends BContainer {
 	
 	private BLabel createHeader(String header, int x, int y, int width) {
 		BLabel stat = new BLabel(header);
-		stat.setStyleClass(UILookAndFeel.PERSONA_STATISTICS);
+		stat.setStyleClass(UILookAndFeel.HUD_STATISTICS_LABELS);
 		int statNameWidth = header.length() * 12;
 		add(stat, new Rectangle(x, y, statNameWidth, 35));
 

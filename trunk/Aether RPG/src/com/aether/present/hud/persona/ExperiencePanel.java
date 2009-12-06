@@ -27,13 +27,13 @@ public class ExperiencePanel extends BContainer {
 		xpPoints.setName(PersonaView.CURRENT_EXPERIENCE);
 		
 		experienceLabel = new BLabel("text");
-		experienceLabel.setStyleClass(UILookAndFeel.PERSONA_STATISTICS_VALUES);
+		experienceLabel.setStyleClass(UILookAndFeel.HUD_STATISTICS_VALUES);
 		add(experienceLabel, new Rectangle(0, 0, 270, 12));
 	}
 
 	private void createTitle() {
 		BLabel title = new BLabel("XP");
-		title.setStyleClass(UILookAndFeel.PERSONA_STATISTICS);
+		title.setStyleClass(UILookAndFeel.HUD_STATISTICS_LABELS);
 		add(title, new Rectangle(0, 15, 50, 12));
 	}
 

@@ -59,7 +59,7 @@ public class AttributesPanel extends BContainer {
 
 	private BLabel createAttributeValue(BContainer container, String statId) {
 		BLabel result = new BLabel("9");
-		result.setStyleClass(UILookAndFeel.PERSONA_STATISTICS_VALUES);
+		result.setStyleClass(UILookAndFeel.HUD_STATISTICS_VALUES);
 		result.setName(statId);
 		container.add(result);
 		return result;
@@ -79,7 +79,7 @@ public class AttributesPanel extends BContainer {
 	
 	private void createAttribute(BContainer container, String text) {
 		BLabel result = new BLabel(text);
-		result.setStyleClass(UILookAndFeel.PERSONA_STATISTICS);
+		result.setStyleClass(UILookAndFeel.HUD_STATISTICS_LABELS);
 		container.add(result);
 	}
 

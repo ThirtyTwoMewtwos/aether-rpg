@@ -218,13 +218,14 @@ public class InGameWorldWindow extends BasicGameState {
 		player.setLocalScale(0.15f);
 		Quaternion pitch90 = new Quaternion();
 		pitch90.fromAngleAxis(FastMath.PI / 2, new Vector3f(-1, 0, 0));
+		sn.setLocalRotation(pitch90);
 		sn.setModelBound(new BoundingBox());
 		sn.updateModelBound();
-		sn.setLocalRotation(pitch90);
 		// attach the skeleton and the skin to the rootnode. Skeletons could
 		// possibly
 		// be used to update multiple skins, so they are seperate objects.
 		player.attachChild(sn);
+		player.attachChild(skel);
 
 		player.updateGeometricState(0, true);
 		// all done clean up.

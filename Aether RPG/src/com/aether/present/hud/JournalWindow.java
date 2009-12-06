@@ -57,8 +57,10 @@ class JournalWindow implements JournalView {
 	}
 
 	private void setupDisplay(BWindow window) {
-		share = new BButton("Share");
-		abandon = new BButton("Abandon");
+// 	We'll leave them out until we are actually able to use them.  
+//  at the moment they will do nothing
+//		share = new BButton("Share");
+//		abandon = new BButton("Abandon");
 
 		entries = new BList();
 		entries.setName(JOURNAL_ENTRIES_ID);
@@ -93,9 +95,9 @@ class JournalWindow implements JournalView {
 		window.add(scrollQuests, new Rectangle(5, 247, 280, 70));
 		window.add(descriptionHeader, new Rectangle(0, 165, 290, 40));
 		window.add(scrollDescription, new Rectangle(0, 65, 290, 100));
-
-		window.add(share, new Rectangle(10, 10, 100, 40));
-		window.add(abandon, new Rectangle(150, 10, 125, 40));
+//
+//		window.add(share, new Rectangle(10, 10, 100, 40));
+//		window.add(abandon, new Rectangle(150, 10, 125, 40));
 	}
 
 	public void addQuest(JournalEntry quest) {

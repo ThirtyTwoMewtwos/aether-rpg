@@ -13,4 +13,6 @@ public interface JournalEntryLocator {
 	int size();
 
 	boolean isEmpty();
+
+	void removeEntry(String string);
 }

@@ -56,7 +56,6 @@ public class TestJournalPresenter {
 	
 	@Test
 	public void test_No_quests_to_show_on_toggle_visibility() throws Exception {
-		listOfQuests = Arrays.asList();
 		EasyMock.expect(quests.isEmpty()).andReturn(true);
 		view.setDescription("No quests to show!");
 		view.setVisible(true);
@@ -83,5 +82,17 @@ public class TestJournalPresenter {
 		JournalPresenter presenter = new JournalPresenter(view, quests);
 		presenter.showQuest("something");
 		EasyMock.verify(view, quests, entry);
+	}
+	
+	@Test
+	public void test_Abandon_a_quest_removes_it_from_the_journal() throws Exception {
+		quests.removeEntry("something");
+		EasyMock.expect(quests.isEmpty()).andReturn(true);
+		view.setDescription("No quests to show!");
+		
+		EasyMock.replay(view, quests);
+		JournalPresenter presenter = new JournalPresenter(view, quests);
+		presenter.removeQuest("something");
+		EasyMock.verify(view, quests);
 	}
 }

@@ -44,7 +44,7 @@ public class CombatPanel extends BContainer {
 	private BLabel createStatistic(String statistic) {
 		BLabel result = new BLabel("100");
 		result.setName(statistic);
-		result.setStyleClass(UILookAndFeel.PERSONA_STATISTICS_VALUES);
+		result.setStyleClass(UILookAndFeel.HUD_STATISTICS_VALUES);
 		result.setSize(45, 45);
 		add(result);
 		return result;

@@ -1,18 +1,16 @@
 package com.aether.present;
 
-import java.awt.AWTException;
 import java.awt.event.KeyEvent;
-import java.util.concurrent.Callable;
 
 import com.aether.gbui.BKeyboard;
 import com.aether.gbui.Condition;
 import com.aether.gbui.NameOperatorSearch;
 import com.aether.gbui.operators.BComponentOperatorUtil;
+import com.aether.gbui.operators.BLabelOperator;
 import com.aether.gbui.operators.BListOperator;
 import com.aether.gbui.operators.BTextAreaOperator;
 import com.aether.present.hud.JournalView;
 import com.jmex.bui.BWindow;
-import com.jmex.bui.event.FocusEvent;
 
 public class JournalPage {
 	private BWindow window;
@@ -51,5 +49,10 @@ public class JournalPage {
 	public void clearDescription() {
 		BTextAreaOperator textArea = new BTextAreaOperator(window, new NameOperatorSearch(JournalView.ENTRY_DESCRIPTION_ID));
 		textArea.clearText();
+	}
+
+	public Object getLevelRequirement() {
+		BLabelOperator fieldOperator = new BLabelOperator(window, new NameOperatorSearch(JournalView.LEVEL_REQUIREMENT_ID));
+		return fieldOperator.getText();
 	}
 }

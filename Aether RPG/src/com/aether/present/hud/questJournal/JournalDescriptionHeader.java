@@ -6,7 +6,6 @@
 package com.aether.present.hud.questJournal;
 
 import com.aether.present.UILookAndFeel;
-import com.aether.present.hud.PersonaView;
 import com.jmex.bui.BContainer;
 import com.jmex.bui.BLabel;
 import com.jmex.bui.layout.AbsoluteLayout;
@@ -20,8 +19,8 @@ public class JournalDescriptionHeader extends BContainer {
 		this.setLayoutManager(layout);
 		this.setStyleClass(UILookAndFeel.PERSONA_HEADER_PANEL);
 
-		description =  new BLabel("Quest Description:");
-        description.setStyleClass(UILookAndFeel.PERSONA_STATISTICS);
+		description =  new BLabel("Description");
+        description.setStyleClass(UILookAndFeel.HUD_STATISTICS_LABELS);
 
         add(description,new Rectangle(0,0,200,40));
 	}

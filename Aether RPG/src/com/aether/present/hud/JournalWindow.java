@@ -7,6 +7,7 @@ import java.util.concurrent.Callable;
 import com.aether.model.quests.JournalEntry;
 import com.aether.present.hud.questJournal.JournalDescriptionHeader;
 import com.aether.present.hud.questJournal.JournalHeader;
+import com.jme.renderer.ColorRGBA;
 import com.jme.util.GameTaskQueueManager;
 import com.jmex.bui.BButton;
 import com.jmex.bui.BList;
@@ -36,7 +37,7 @@ class JournalWindow implements JournalView {
 	private BScrollPane scrollQuests;
 	private BScrollPane scrollDescription;
 
-	private BTextArea questDescription;
+	private BTextArea description;
 
 	private JournalPresenter presenter;
 
@@ -49,7 +50,7 @@ class JournalWindow implements JournalView {
 		AbsoluteLayout layout = new AbsoluteLayout();
 		BWindow result = new BDraggableWindow(BuiSystem.getStyle(), layout);
 		result.setName(JOURNAL_ID);
-		result.setSize(350, 450);
+		result.setSize(300, 375);
 		result.center();
 		result.setVisible(false);
 		return result;
@@ -67,35 +68,34 @@ class JournalWindow implements JournalView {
 			public void actionPerformed(ActionEvent event) {
 				if (event.getAction() == BList.SELECT) {
 					String selected = (String)entries.getSelectedValue();
-					presenter.showDescription(selected);
+					presenter.showQuest(selected);
 				}
 			}
 		});
 		
-		questDescription = new BTextArea();
-		questDescription.setName(ENTRY_DESCRIPTION_ID);
-		questDescription.setEnabled(false);
+		description = new BTextArea();
+		description.getHorizontalAlignment();
+		description.setName(ENTRY_DESCRIPTION_ID);
+		description.setEnabled(false);
 
 		scrollQuests = new BScrollPane(entries);
 		scrollQuests.setVisible(true);
 		scrollQuests.setShowScrollbarAlways(true);
-		scrollDescription = new BScrollPane(questDescription);
+		scrollDescription = new BScrollPane(description);
 		scrollDescription.setVisible(true);
 		scrollDescription.setShowScrollbarAlways(true);
 
 		journalHeader = new JournalHeader();
 		descriptionHeader = new JournalDescriptionHeader();
 
-		entries.setSize(310, 200);
+		window.add(journalHeader, new Rectangle(0, 327, 290, 40));
 
-		window.add(journalHeader, new Rectangle(0, 385, 340, 54));
-
-		window.add(scrollQuests, new Rectangle(0, 315, 350, 70));
-		window.add(descriptionHeader, new Rectangle(0, 230, 340, 54));
-		window.add(scrollDescription, new Rectangle(0, 120, 340, 100));
+		window.add(scrollQuests, new Rectangle(5, 247, 280, 70));
+		window.add(descriptionHeader, new Rectangle(0, 165, 290, 40));
+		window.add(scrollDescription, new Rectangle(0, 65, 290, 100));
 
 		window.add(share, new Rectangle(10, 10, 100, 40));
-		window.add(abandon, new Rectangle(200, 10, 125, 40));
+		window.add(abandon, new Rectangle(150, 10, 125, 40));
 	}
 
 	public void addQuest(JournalEntry quest) {
@@ -135,10 +135,21 @@ class JournalWindow implements JournalView {
 			entries.addValue(each);
 		}
 	}
+	
+	@Override
+	public void setSelection(String selection) {
+		entries.setSelectedValue(selection);
+	}
+	
+	@Override
+	public void setLevelRequirement(String level) {
+		journalHeader.setLevelRequirement(level);
+	}
 
 	@Override
 	public void setDescription(String description) {
-		questDescription.setText(description);
+		this.description.clearText();
+		this.description.appendText(description, ColorRGBA.white, BTextArea.BOLD);
 	}
 
 	@Override

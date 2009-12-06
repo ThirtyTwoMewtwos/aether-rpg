@@ -14,11 +14,11 @@ This process can change as time goes on.
    # ~~Show all stats - _complete_~~
    # ~~displays experience - _complete_~~
    # ~~Editable biography field - _complete_~~
-  * Journal - _im.a.hypocrite & captain.queezy_
+  * Journal - _complete_
    # ~~Able to show quests - _complete_~~
    # ~~Selecting on a quest reveals quest details - _complete_~~
-   # Able to drop quest - _in progress_ 
-  * Equipment
+   # ~~Able to drop quest - _complete_~~ 
+  * Equipment - _im.a.hypocrite & captain.queezy_
    # Able to arrange equipment
    # Able to drop equipment
    # Can transfer equipment

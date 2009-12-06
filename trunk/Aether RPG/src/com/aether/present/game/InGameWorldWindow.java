@@ -1,16 +1,24 @@
 package com.aether.present.game;
 
+import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 
 import jmetest.flagrushtut.Lesson3;
+import jmetest.renderer.loader.TestColladaLoading;
 
 import com.aether.present.PlayerMovementState;
+import com.jme.animation.AnimationController;
+import com.jme.animation.Bone;
+import com.jme.animation.BoneAnimation;
+import com.jme.animation.SkinNode;
 import com.jme.bounding.BoundingBox;
 import com.jme.image.Texture;
 import com.jme.image.Texture.ApplyMode;
@@ -25,10 +33,12 @@ import com.jme.input.thirdperson.ThirdPersonMouseLook;
 import com.jme.light.DirectionalLight;
 import com.jme.light.PointLight;
 import com.jme.math.FastMath;
+import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jme.renderer.Camera;
 import com.jme.renderer.ColorRGBA;
 import com.jme.renderer.Renderer;
+import com.jme.scene.Controller;
 import com.jme.scene.Node;
 import com.jme.scene.Skybox;
 import com.jme.scene.Spatial;
@@ -45,16 +55,22 @@ import com.jme.util.GameTaskQueue;
 import com.jme.util.GameTaskQueueManager;
 import com.jme.util.TextureManager;
 import com.jme.util.Timer;
+import com.jme.util.resource.ResourceLocatorTool;
+import com.jme.util.resource.SimpleResourceLocator;
 import com.jmex.game.state.BasicGameState;
 import com.jmex.game.state.GameStateManager;
+import com.jmex.model.collada.ColladaImporter;
 import com.jmex.terrain.TerrainPage;
 import com.jmex.terrain.util.FaultFractalHeightMap;
 import com.jmex.terrain.util.ProceduralTextureGenerator;
 
 public class InGameWorldWindow extends BasicGameState {
+	private static final Logger logger = Logger.getLogger(InGameWorldWindow.class.toString());
 	private Node player;
 	List<Texture> textures = new ArrayList<Texture>();
-
+	
+	private Vector3f normal = new Vector3f();
+	private AnimationController ac;
 	private Node startNode;
 	private TerrainPage terrain;
 	private LightState lightState;
@@ -83,26 +99,24 @@ public class InGameWorldWindow extends BasicGameState {
 	}
 
 	private void buildEnvironment(final PlayerMovementState state) {
-		GameTaskQueueManager.getManager().getQueue(GameTaskQueue.UPDATE)
-				.enqueue(new Callable<Void>() {
-					public Void call() throws Exception {
-						setupTerrain();
-						initSkybox();
-						buildPlayer();
-						buildChaseCamera();
+		GameTaskQueueManager.getManager().getQueue(GameTaskQueue.UPDATE).enqueue(new Callable<Void>() {
+			public Void call() throws Exception {
+				setupTerrain();
+				initSkybox();
+				buildPlayer();
+				buildChaseCamera();
 
-						rootNode.updateRenderState();
-						inputHandler = new MyInputHandler(player, state);
+				rootNode.updateRenderState();
+				inputHandler = new MyInputHandler(player, state);
 
-						return null;
-					}
-				});
+				return null;
+			}
+		});
 		KeyBindingManager.getKeyBindingManager().add("mouse_trigger", KeyInput.KEY_LCONTROL);
 	}
 
 	private void setupCamera(DisplaySystem displaySystem, Camera theCamera) {
-		theCamera.setFrustumPerspective(60.0f, (float) displaySystem.getWidth()
-				/ (float) displaySystem.getHeight(), 1, 1500);
+		theCamera.setFrustumPerspective(60.0f, (float) displaySystem.getWidth() / (float) displaySystem.getHeight(), 1, 1500);
 		theCamera.setParallelProjection(false);
 		theCamera.update();
 	}
@@ -114,8 +128,7 @@ public class InGameWorldWindow extends BasicGameState {
 		rootNode.setRenderState(buf);
 	}
 
-	private void attachLightToLightState(DisplaySystem displaySystem,
-			PointLight light) {
+	private void attachLightToLightState(DisplaySystem displaySystem, PointLight light) {
 		lightState = displaySystem.getRenderer().createLightState();
 		lightState.setEnabled(true);
 		lightState.attach(light);
@@ -134,54 +147,102 @@ public class InGameWorldWindow extends BasicGameState {
 	}
 
 	private void initSkybox() {
-		Skybox skybox = getSkybox(Face.North, Face.South, Face.East, Face.West,
-				Face.Up, Face.Down);
-		rootNode.attachChild(skybox); 
+		Skybox skybox = getSkybox(Face.North, Face.South, Face.East, Face.West, Face.Up, Face.Down);
+		rootNode.attachChild(skybox);
 	}
 
 	private Skybox getSkybox(Face... facings) {
 		skybox = new Skybox("skybox", 500, 500, 500);
 		for (Face each : facings) {
 			java.awt.Image image = SkyboxFacingImage.getImage(each);
-			Texture loadTexture = TextureManager.loadTexture(image,
-					Texture.MinificationFilter.BilinearNearestMipMap,
-					Texture.MagnificationFilter.Bilinear,
-					1, 
-					true);
+			Texture loadTexture = TextureManager.loadTexture(image, Texture.MinificationFilter.BilinearNearestMipMap, Texture.MagnificationFilter.Bilinear, 1, true);
 			textures.add(loadTexture);
 			skybox.setTexture(each, loadTexture);
 		}
 		return skybox;
-    }
+	}
 
 	private void buildPlayer() {
-		Box b = new Box("box", new Vector3f(), 0.35f, 0.25f, 0.5f);
-		b.setModelBound(new BoundingBox());
-		b.updateModelBound();
+		ClassLoader classLoader = TestColladaLoading.class.getClassLoader();
+		try {
+			ResourceLocatorTool.addResourceLocator(ResourceLocatorTool.TYPE_TEXTURE, new SimpleResourceLocator(classLoader.getResource("jmetest/data/model/collada/")));
+		} catch (URISyntaxException e1) {
+			logger.warning("Unable to add texture directory to RLT: " + e1.toString());
+		}
 
 		player = new Node("Player Node");
 		player.setLocalTranslation(new Vector3f(100, 0, 100));
 		getRootNode().attachChild(player);
-		player.attachChild(b);
 		player.updateWorldBound();
+
+		// this stream points to the model itself.
+		InputStream mobboss = classLoader.getResourceAsStream("jmetest/data/model/collada/man.dae");
+		// this stream points to the animation file. Note: You don't necessarily
+		// have to split animations out into seperate files, this just helps.
+		InputStream animation = classLoader.getResourceAsStream("jmetest/data/model/collada/man_walk.dae");
+		if (mobboss == null) {
+			logger.info("Unable to find file, did you include jme-test.jar in classpath?");
+			System.exit(0);
+		}
+		// tell the importer to load the mob boss
+		ColladaImporter.load(mobboss, "model");
+		// we can then retrieve the skin from the importer as well as the
+		// skeleton
+		SkinNode sn = ColladaImporter.getSkinNode(ColladaImporter.getSkinNodeNames().get(0));
+		Bone skel = ColladaImporter.getSkeleton(ColladaImporter.getSkeletonNames().get(0));
+		// clean up the importer as we are about to use it again.
+		ColladaImporter.cleanUp();
+
+		// load the animation file.
+		ColladaImporter.load(animation, "anim");
+		// this file might contain multiple animations, (in our case it's one)
+		ArrayList<String> animations = ColladaImporter.getControllerNames();
+		if (animations != null) {
+			logger.info("Number of animations: " + animations.size());
+			for (int i = 0; i < animations.size(); i++) {
+				logger.info(animations.get(i));
+			}
+			// Obtain the animation from the file by name
+			BoneAnimation anim1 = ColladaImporter.getAnimationController(animations.get(0));
+
+			// set up a new animation controller with our BoneAnimation
+			ac = new AnimationController();
+			ac.addAnimation(anim1);
+			ac.setRepeatType(Controller.RT_WRAP);
+			ac.setActive(true);
+			ac.setActiveAnimation(anim1);
+
+			// assign the animation controller to our skeleton
+			skel.addController(ac);
+		}
+		player.setLocalScale(0.15f);
+		Quaternion pitch90 = new Quaternion();
+		pitch90.fromAngleAxis(FastMath.PI / 2, new Vector3f(-1, 0, 0));
+		sn.setModelBound(new BoundingBox());
+		sn.updateModelBound();
+		sn.setLocalRotation(pitch90);
+		// attach the skeleton and the skin to the rootnode. Skeletons could
+		// possibly
+		// be used to update multiple skins, so they are seperate objects.
+		player.attachChild(sn);
+
+		player.updateGeometricState(0, true);
+		// all done clean up.
+		ColladaImporter.cleanUp();
 	}
 
 	private void buildChaseCamera() {
 		Vector3f targetOffset = new Vector3f();
 		targetOffset.y = ((BoundingBox) player.getWorldBound()).yExtent * 1f;
-		Map<String, Object> props = new HashMap<String, Object>();
-		props.put(ThirdPersonMouseLook.PROP_MAXROLLOUT, "10");
-		props.put(ThirdPersonMouseLook.PROP_MINROLLOUT, "2");
-		props.put(ThirdPersonMouseLook.PROP_ENABLED, "false");
-		props.put(ChaseCamera.PROP_TARGETOFFSET, targetOffset);
-		props.put(ThirdPersonMouseLook.PROP_MAXASCENT, "" + 40
-				* FastMath.DEG_TO_RAD);
-		props.put(ChaseCamera.PROP_INITIALSPHERECOORDS, new Vector3f(5, 0,
-				20 * FastMath.DEG_TO_RAD));
-		props.put(ChaseCamera.PROP_TARGETOFFSET, targetOffset);
 		chaser = new ChaseCamera(camera, (Spatial) player);
 		chaser.setMaxDistance(8);
 		chaser.setMinDistance(7);
+		chaser.setEnabled(true);
+		chaser.setTargetOffset(targetOffset);
+		chaser.setIdealSphereCoords(new Vector3f(5, 0, 20*FastMath.DEG_TO_RAD));
+		chaser.getMouseLook().setMinRollOut(10);
+		chaser.getMouseLook().setMaxRollOut(40);
+		chaser.getMouseLook().setMaxAscent(40 * FastMath.DEG_TO_RAD);
 		chaser.setLooking(true);
 		chaser.setEnableSpring(true);
 		chaser.setEnabledOfAttachedHandlers(false);
@@ -203,46 +264,31 @@ public class InGameWorldWindow extends BasicGameState {
 		rootNode.attachChild(terrainNode);
 
 		// this piece is pretty much copied from the jme terrain test
-		FaultFractalHeightMap heightMap = new FaultFractalHeightMap(257, 32, 0,
-				255, 0.75f);
+		FaultFractalHeightMap heightMap = new FaultFractalHeightMap(257, 32, 0, 255, 0.75f);
 		Vector3f terrainScale = new Vector3f(10, 1, 10);
 		heightMap.setHeightScale(0.001f);
-		terrain = new TerrainPage("Terrain", 33, heightMap.getSize(),
-				terrainScale, heightMap.getHeightMap());
+		terrain = new TerrainPage("Terrain", 33, heightMap.getSize(), terrainScale, heightMap.getHeightMap());
 
 		terrain.setDetailTexture(1, 16);
 		terrainNode.attachChild(terrain);
 
 		proceduralTextureGenerator = new ProceduralTextureGenerator(heightMap);
-		proceduralTextureGenerator.addTexture(new ImageIcon(Lesson3.class
-				.getClassLoader()
-				.getResource("jmetest/data/texture/grassb.png")), -128, 0, 128);
-		proceduralTextureGenerator.addTexture(
-				new ImageIcon(Lesson3.class.getClassLoader().getResource(
-						"jmetest/data/texture/dirt.jpg")), 0, 128, 255);
-		proceduralTextureGenerator.addTexture(new ImageIcon(Lesson3.class
-				.getClassLoader().getResource(
-						"jmetest/data/texture/highest.jpg")), 128, 255, 384);
+		proceduralTextureGenerator.addTexture(new ImageIcon(Lesson3.class.getClassLoader().getResource("jmetest/data/texture/grassb.png")), -128, 0, 128);
+		proceduralTextureGenerator.addTexture(new ImageIcon(Lesson3.class.getClassLoader().getResource("jmetest/data/texture/dirt.jpg")), 0, 128, 255);
+		proceduralTextureGenerator.addTexture(new ImageIcon(Lesson3.class.getClassLoader().getResource("jmetest/data/texture/highest.jpg")), 128, 255, 384);
 		proceduralTextureGenerator.createTexture(512);
 
-		textureState = DisplaySystem.getDisplaySystem().getRenderer()
-				.createTextureState();
+		textureState = DisplaySystem.getDisplaySystem().getRenderer().createTextureState();
 		textureState.setEnabled(true);
-		Texture texture1 = TextureManager.loadTexture(
-				proceduralTextureGenerator.getImageIcon().getImage(),
-				Texture.MinificationFilter.Trilinear,
-				Texture.MagnificationFilter.Bilinear, true);
+		Texture texture1 = TextureManager.loadTexture(proceduralTextureGenerator.getImageIcon().getImage(), Texture.MinificationFilter.Trilinear, Texture.MagnificationFilter.Bilinear, true);
 		textureState.setTexture(texture1, 0);
 
-		Texture texture2 = TextureManager.loadTexture(InGameWorldWindow.class
-				.getClassLoader()
-				.getResource("jmetest/data/texture/Detail.jpg"),
-				Texture.MinificationFilter.Trilinear,
+		Texture texture2 = TextureManager.loadTexture(InGameWorldWindow.class.getClassLoader().getResource("jmetest/data/texture/Detail.jpg"), Texture.MinificationFilter.Trilinear,
 				Texture.MagnificationFilter.Bilinear);
 
 		textures.add(texture1);
 		textures.add(texture2);
-		
+
 		textureState.setTexture(texture2, 1);
 		texture2.setWrap(Texture.WrapMode.Repeat);
 
@@ -263,8 +309,7 @@ public class InGameWorldWindow extends BasicGameState {
 		texture2.setCombineScaleRGB(CombinerScale.One);
 		terrainNode.setRenderState(textureState);
 
-		FogState fs = DisplaySystem.getDisplaySystem().getRenderer()
-				.createFogState();
+		FogState fs = DisplaySystem.getDisplaySystem().getRenderer().createFogState();
 		fs.setDensity(0.0015f);
 		fs.setEnabled(true);
 		fs.setColor(new ColorRGBA(0.5f, 0.55f, 0.5f, 0.5f));
@@ -275,8 +320,7 @@ public class InGameWorldWindow extends BasicGameState {
 		terrainNode.lock();
 		terrainNode.lockBranch();
 
-		CullState cs = DisplaySystem.getDisplaySystem().getRenderer()
-				.createCullState();
+		CullState cs = DisplaySystem.getDisplaySystem().getRenderer().createCullState();
 		cs.setCullFace(CullState.Face.Back);
 		cs.setEnabled(true);
 		terrainNode.setRenderState(cs);
@@ -302,11 +346,8 @@ public class InGameWorldWindow extends BasicGameState {
 		if (!_isPaused) {
 			super.update(tpf);
 
-			float characterMinHeight = terrain.getHeight(player
-					.getLocalTranslation())
-					+ ((BoundingBox) player.getWorldBound()).yExtent;
-			if (!Float.isInfinite(characterMinHeight)
-					&& !Float.isNaN(characterMinHeight)) {
+			float characterMinHeight = terrain.getHeight(player.getLocalTranslation()) + ((BoundingBox) player.getWorldBound()).yExtent;
+			if (!Float.isInfinite(characterMinHeight) && !Float.isNaN(characterMinHeight)) {
 				player.getLocalTranslation().y = characterMinHeight;
 			}
 
@@ -318,7 +359,7 @@ public class InGameWorldWindow extends BasicGameState {
 			} else {
 				chaser.getMouseLook().setEnabled(false);
 			}
-			
+
 			chaser.update(interpolation);
 		}
 	}
@@ -339,26 +380,25 @@ public class InGameWorldWindow extends BasicGameState {
 		textureState.clearTextures();
 		textureState.deleteAll();
 		textureState = null;
-		
+
 		lightState.detachAll();
 		lightState = null;
 
 		proceduralTextureGenerator.clearTextures();
 		proceduralTextureGenerator = null;
-		
+
 		for (Texture each : textures) {
 			TextureManager.releaseTexture(each);
 		}
 		clearNode(skybox);
 		skybox = null;
-		
-		
+
 		clearNode(terrain);
 		terrain = null;
-		
+
 		clearNode(rootNode);
 		rootNode = null;
-		
+
 		TextureManager.doTextureCleanup();
 		TextureManager.clearCache();
 	}

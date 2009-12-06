@@ -9,43 +9,58 @@ This process can change as time goes on.
 
 == Backlog ==
 
-  * Paint world map - _complete_
-  * Paint character (PC) - _complete_
-  * Keys can be used to navigate the character - _complete_
-
-  * Create or use open source 3D character model - _Captain.queezy_
-  * Complete view windows - _im.a.hypocrite_
-  * Complete user UI -
-
-  * Code review of curves (xp, stats, etc.) - _im.a.hypocrite_
-
-  * Skill creation tool -
-  * Create unique skill sets for individual classes -
+ * *Create view windows*
+  * Persona - _complete_
+   # Show all stats
+   # displays experience
+   # Editable biography field
+  * Journal - _im.a.hypocrite & captain.queezy_
+   # Able to show quests _complete_
+   # Selecting on a quest reveals quest details _complete_
+   # able to drop quest _in progress_ 
+  * Equipment
+   # Able to arrange equipment
+   # Able to drop equipment
+   # Can transfer equipment
+   # Show equipped/used items
   
-  * Equipment creation tool -
-  * Create a set of equipment (testing purposes) -
+ * Complete user UI -
 
-  * Over arching story -
-  * Quest creation tool -
-  * Create introduction quests -
+ * Code review of curves (xp, stats, etc.) - _im.a.hypocrite_
 
-  * NPC class -
-  * NPC creation tool -
-  * Link NPCs to Quests -
+ * Skill creation tool -
+ * Create unique skill sets for individual classes -
+  
+ * Equipment creation tool -
+ * Create a set of equipment (testing purposes) -
 
-  * Item (Generic non-equipable) creation tool -
+ * Over arching story -
+ * Quest creation tool -
+ * Create introduction quests -
 
-  * Develop enemy class -
-  * Develop enemy creation tool -
+ * NPC class -
+ * NPC creation tool -
+ * Link NPCs to Quests -
 
-  * Develop battle system -
+ * Item (Generic non-equipable) creation tool -
 
-  * World Terrain creation -
-  * Structures (Buildings and such) creation -
-  * Important world object creation -
+ * Develop enemy class -
+ * Develop enemy creation tool -
 
-  * Implement system to generate havest nodes -
-  * Implement system to generate enemies -
+ * Develop battle system -
 
-  * Implement networking framestructure (small scale) -
-  * Implement newtorking framestructure (large scale) -
+ * World Terrain creation -
+ * Structures (Buildings and such) creation -
+ * Important world object creation -
+
+ * Implement system to generate havest nodes -
+ * Implement system to generate enemies -
+
+ * Implement networking framestructure (small scale) -
+ * Implement newtorking framestructure (large scale) -
+
+== Completed items ==
+ * ~~Paint world map - _complete_~~
+ * ~~Paint character (PC) - _complete_~~
+ * ~~Keys can be used to navigate the character - _complete_~~
+ * ~~Create or use open source 3D character model - _complete_~~

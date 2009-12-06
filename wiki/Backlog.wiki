@@ -11,13 +11,13 @@ This process can change as time goes on.
 
  * *Create view windows*
   * Persona - _complete_
-   # Show all stats
-   # displays experience
-   # Editable biography field
+   # ~~Show all stats _complete_~~
+   # ~~displays experience _complete_~~
+   # ~~Editable biography field _complete_~~
   * Journal - _im.a.hypocrite & captain.queezy_
-   # Able to show quests _complete_
-   # Selecting on a quest reveals quest details _complete_
-   # able to drop quest _in progress_ 
+   # ~~Able to show quests _complete_~~
+   # ~~Selecting on a quest reveals quest details _complete_~~
+   # Able to drop quest _in progress_ 
   * Equipment
    # Able to arrange equipment
    # Able to drop equipment

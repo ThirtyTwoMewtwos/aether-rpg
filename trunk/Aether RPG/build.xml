@@ -21,8 +21,8 @@
 	<target name="init">
 		<delete dir="${build.dir}" />
 		<mkdir dir="${classes.dir}" />
-		<mkdir dir="${test.classes.dir}"/>
-		<mkdir dir="${functional.test.classes.dir}"/>
+		<mkdir dir="${test.dir}"/>
+		<mkdir dir="${functional.test.dir}"/>
 
 		<condition property="jogl.arch.suffix" value="amd64">
 			<os arch="amd64" />
@@ -84,7 +84,7 @@
 			<formatter type="xml" />
 
 			<batchtest fork="yes" haltonerror="true" haltonfailure="true" todir="${report.dir}">
-				<fileset dir="${test.dir}" includes="**/Test*.java" />
+				<fileset dir="${test.dir}" includes="**/All*Tests.java" />
 			</batchtest>
 		</junit>
 	</target>

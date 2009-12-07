@@ -1,4 +1,4 @@
-package com.aether.gbui.bss;
+package com.aether.model.character;
 
 import static org.junit.Assert.assertNotNull;
 

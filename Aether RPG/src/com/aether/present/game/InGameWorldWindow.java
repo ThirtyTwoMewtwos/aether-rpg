@@ -219,6 +219,7 @@ public class InGameWorldWindow extends BasicGameState {
 		Quaternion pitch90 = new Quaternion();
 		pitch90.fromAngleAxis(FastMath.PI / 2, new Vector3f(-1, 0, 0));
 		sn.setLocalRotation(pitch90);
+		sn.setLocalTranslation(new Vector3f(0, 0, 0));
 		sn.setModelBound(new BoundingBox());
 		sn.updateModelBound();
 		// attach the skeleton and the skin to the rootnode. Skeletons could

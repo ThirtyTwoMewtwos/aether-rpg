@@ -1,10 +1,8 @@
 package com.aether.present.hud;
 
 import java.util.Collection;
-import java.util.Vector;
 import java.util.concurrent.Callable;
 
-import com.aether.model.quests.JournalEntry;
 import com.aether.present.UILookAndFeel;
 import com.aether.present.hud.questJournal.JournalDescriptionHeader;
 import com.aether.present.hud.questJournal.JournalHeader;
@@ -18,26 +16,18 @@ import com.jmex.bui.BWindow;
 import com.jmex.bui.BuiSystem;
 import com.jmex.bui.event.ActionEvent;
 import com.jmex.bui.event.ActionListener;
+import com.jmex.bui.event.SelectionListener;
+import com.jmex.bui.event.StateChangedEvent;
+import com.jmex.bui.event.StateChangedEvent.SelectionState;
 import com.jmex.bui.headlessWindows.BDraggableWindow;
 import com.jmex.bui.layout.AbsoluteLayout;
 import com.jmex.bui.util.Rectangle;
 
 class JournalWindow implements JournalView {
-	private Vector<JournalEntry> qpointers = new Vector<JournalEntry>(30);
-
 	private JournalHeader journalHeader;
-	private JournalDescriptionHeader descriptionHeader;
 
 	private BWindow window;
-
-//	private BButton share;
-	private BButton abandon;
-
 	private BList entries;
-
-	private BScrollPane scrollQuests;
-	private BScrollPane scrollDescription;
-
 	private BTextArea description;
 
 	private JournalPresenter presenter;
@@ -58,64 +48,62 @@ class JournalWindow implements JournalView {
 	}
 
 	private void setupDisplay(BWindow window) {
-// 	We'll leave the share out until we are actually able to use it.  
-//  at the moment it will do nothing
-//		share = new BButton("Share");
-		abandon = new BButton("Abandon");
-		abandon.setStyleClass(UILookAndFeel.STATISTICS_HEALTH);
-		abandon.addListener(new ActionListener() {
+		journalHeader = new JournalHeader();
+		createJournalEntries();
+		JournalDescriptionHeader descriptionHeader = new JournalDescriptionHeader();
+		createDescription();
+
+		BScrollPane scrollQuests = new BScrollPane(entries);
+		scrollQuests.setVisible(true);
+		scrollQuests.setShowScrollbarAlways(true);
+		
+		BScrollPane scrollDescription = new BScrollPane(description);
+		scrollDescription.setVisible(true);
+		scrollDescription.setShowScrollbarAlways(true);
+
+		BButton abandon = createAbandonButton();
+		
+		window.add(journalHeader, new Rectangle(0, 327, 290, 40));
+		window.add(scrollQuests, new Rectangle(5, 247, 280, 70));
+		window.add(descriptionHeader, new Rectangle(0, 165, 290, 40));
+		window.add(scrollDescription, new Rectangle(0, 65, 290, 100));
+		window.add(abandon, new Rectangle(150, 10, 125, 40));
+	}
+
+	private void createDescription() {
+		description = new BTextArea();
+		description.getHorizontalAlignment();
+		description.setName(ENTRY_DESCRIPTION_ID);
+		description.setEnabled(false);
+	}
+
+	private void createJournalEntries() {
+		entries = new BList();
+		entries.setName(JOURNAL_ENTRIES_ID);
+		entries.setEnabled(true);
+		entries.addSelectionListener(new SelectionListener() {
+			@Override
+			public void stateChanged(StateChangedEvent event) {
+				if (event.getType() == SelectionState.Selected) {
+					String selected = (String)entries.getSelectedValue();
+					if (selected != null)
+						presenter.showQuest(selected);
+				}
+			}
+		});
+		
+	}
+
+	private BButton createAbandonButton() {
+		BButton result = new BButton("Abandon");
+		result.setStyleClass(UILookAndFeel.STATISTICS_HEALTH);
+		result.addListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				presenter.removeQuest(entries.getSelectedValue().toString());
 			}
 		});
-
-		entries = new BList();
-		entries.setName(JOURNAL_ENTRIES_ID);
-		entries.setEnabled(true);
-		entries.addListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				if (event.getAction() == BList.SELECT) {
-					String selected = (String)entries.getSelectedValue();
-					presenter.showQuest(selected);
-				}
-			}
-		});
-		
-		description = new BTextArea();
-		description.getHorizontalAlignment();
-		description.setName(ENTRY_DESCRIPTION_ID);
-		description.setEnabled(false);
-
-		scrollQuests = new BScrollPane(entries);
-		scrollQuests.setVisible(true);
-		scrollQuests.setShowScrollbarAlways(true);
-		scrollDescription = new BScrollPane(description);
-		scrollDescription.setVisible(true);
-		scrollDescription.setShowScrollbarAlways(true);
-
-		journalHeader = new JournalHeader();
-		descriptionHeader = new JournalDescriptionHeader();
-
-		window.add(journalHeader, new Rectangle(0, 327, 290, 40));
-
-		window.add(scrollQuests, new Rectangle(5, 247, 280, 70));
-		window.add(descriptionHeader, new Rectangle(0, 165, 290, 40));
-		window.add(scrollDescription, new Rectangle(0, 65, 290, 100));
-//
-//		window.add(share, new Rectangle(10, 10, 100, 40));
-		window.add(abandon, new Rectangle(150, 10, 125, 40));
-	}
-
-	public void addQuest(JournalEntry quest) {
-		String logFormat = quest.getTitle()
-				+ "-                                                  ["
-				+ quest.getLevelRequirement() + "]";
-		if (qpointers.size() < qpointers.capacity()) {
-			entries.addValue(logFormat);
-			qpointers.add(quest);
-		}
+		return result;
 	}
 
 	@Override

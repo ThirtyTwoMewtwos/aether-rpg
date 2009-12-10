@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.concurrent.Callable;
 
 import com.aether.present.UILookAndFeel;
-import com.aether.present.hud.questJournal.JournalDescriptionHeader;
-import com.aether.present.hud.questJournal.JournalHeader;
+import com.aether.present.hud.journal.JournalDescriptionHeader;
+import com.aether.present.hud.journal.JournalHeader;
 import com.jme.renderer.ColorRGBA;
 import com.jme.util.GameTaskQueueManager;
 import com.jmex.bui.BButton;

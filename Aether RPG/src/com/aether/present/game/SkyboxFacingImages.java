@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 import com.jme.scene.Skybox.Face;
 import com.util.FileUtil;
 
-public class SkyboxFacingImage {
+public class SkyboxFacingImages {
 
 	public static Image getImage(Face type) {
 		String fileName = "dg_" + type.name().toLowerCase() + ".png";

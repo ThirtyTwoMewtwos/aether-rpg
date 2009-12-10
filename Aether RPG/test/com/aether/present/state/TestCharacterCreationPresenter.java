@@ -11,9 +11,10 @@ import static org.easymock.EasyMock.verify;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aether.model.CharacterSheet;
 import com.aether.model.character.CharacterLocator;
+import com.aether.model.character.CharacterSheet;
 import com.aether.model.character.Classification;
+import com.aether.model.character.PlayerCharacter;
 import com.aether.model.character.Race;
 import com.aether.model.character.Sex;
 
@@ -33,7 +34,7 @@ public class TestCharacterCreationPresenter {
 
     @Test
     public void testCharacterCreation() throws Exception {
-    	CharacterSheet characterSheet = new CharacterSheet("Super boy", "", Sex.Male, Classification.Crusader);
+    	CharacterSheet characterSheet = new PlayerCharacter("Super boy", "", Sex.Male, Classification.Crusader);
     	view = createNiceMock(CharacterCreationView.class);
     	view.setPresenter((CharacterCreationPresenter)anyObject());
         view.setClasses(Classification.getAvailableFor(Race.Human));

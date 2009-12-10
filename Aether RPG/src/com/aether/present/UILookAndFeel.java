@@ -42,7 +42,7 @@ public class UILookAndFeel {
 	public static final String HUD_STATISTICS_LABELS = "persona_statistics";
 	public static final String HUD_STATISTICS_VALUES = "persona_statistics_values";
 	public static final String PERSONA_HEADER_VALUES = "persona_header_values";
-	public static final String PERSONA_HEADER_PANEL = "persona_header_panel";
+	public static final String HUD_HEADER_PANEL = "persona_header_panel";
 	public static final String PERSONA_ATTRIBUTES_PANEL = "persona_attributes_panel";
 	public static final String HUD_LIST = "hud_list";
 	
@@ -103,7 +103,7 @@ public class UILookAndFeel {
 				.setFont(FONT_FAMILY, BssFontStyle.BOLD, 12)
 				.setColor(BssColor.LIGHT_GRAY);
 		
-		writer.createStyle(PERSONA_HEADER_PANEL)
+		writer.createStyle(HUD_HEADER_PANEL)
 				.setBackground("images/button_up.png", BssBackgroundMode.FRAMEXY);
 		
 		writer.createStyle(PERSONA_ATTRIBUTES_PANEL)

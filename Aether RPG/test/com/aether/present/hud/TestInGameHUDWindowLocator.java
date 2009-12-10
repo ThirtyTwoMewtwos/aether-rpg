@@ -23,7 +23,7 @@ public class TestInGameHUDWindowLocator {
 		view.toggleVisibility();
 		
 		EasyMock.replay(view);
-		locator.bind(View.PERSONA, view);
+		locator.attach(View.PERSONA, view);
 		locator.toggleViewVisibility(View.PERSONA);
 		EasyMock.verify(view);
 	}
@@ -44,7 +44,7 @@ public class TestInGameHUDWindowLocator {
 		view.deactivate();
 		
 		EasyMock.replay(view);
-		locator.bind(View.PERSONA, view);
+		locator.attach(View.PERSONA, view);
 		locator.activate();
 		locator.deactivate();
 		EasyMock.verify(view);

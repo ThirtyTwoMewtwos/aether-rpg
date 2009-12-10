@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.aether.present.hud.questJournal;
+package com.aether.present.hud.journal;
 
 import com.aether.present.UILookAndFeel;
 import com.jmex.bui.BContainer;
@@ -17,7 +17,7 @@ public class JournalDescriptionHeader extends BContainer {
 	public JournalDescriptionHeader() {
 		AbsoluteLayout layout = new AbsoluteLayout();
 		this.setLayoutManager(layout);
-		this.setStyleClass(UILookAndFeel.PERSONA_HEADER_PANEL);
+		this.setStyleClass(UILookAndFeel.HUD_HEADER_PANEL);
 
 		description =  new BLabel("Description");
         description.setStyleClass(UILookAndFeel.HUD_STATISTICS_LABELS);

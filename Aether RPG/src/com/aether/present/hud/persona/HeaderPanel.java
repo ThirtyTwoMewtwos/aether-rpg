@@ -16,7 +16,7 @@ public class HeaderPanel extends BContainer {
 	public HeaderPanel() {
 		AbsoluteLayout layout = new AbsoluteLayout();
 		this.setLayoutManager(layout);
-		this.setStyleClass(UILookAndFeel.PERSONA_HEADER_PANEL);
+		this.setStyleClass(UILookAndFeel.HUD_HEADER_PANEL);
 		
 		name = createHeader(PersonaView.NAME_FIELD, 0, 17, 200);
 		level = createHeader(PersonaView.EXPERIENCE_LEVEL, 180, 17, 70);

@@ -29,7 +29,7 @@ package com.aether.model;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-public abstract class Equipment extends Item
+public abstract class Equipment implements Item
 {
     public final static int HEAD = 0;
     public final static int SHOULDER = 1;
@@ -52,6 +52,24 @@ public abstract class Equipment extends Item
     private int wisdom;
     private int defense;
     private int levelRequirement;
+ String name, description;
+    
+    public String getName()
+    {
+        return name;
+    }
+    public void setName(String itemName)
+    {
+        name = itemName;
+    }
+    public String getDescription()
+    {
+        return description;
+    }
+    public void setDescription(String desc)
+    {
+        description = desc;
+    }
     
     public int getStrengthMod()
     {
@@ -110,4 +128,8 @@ public abstract class Equipment extends Item
         levelRequirement = req;
     }
     public abstract int getSlot();
+    
+    public int getWeight() {
+    	return 0;
+    }
 }

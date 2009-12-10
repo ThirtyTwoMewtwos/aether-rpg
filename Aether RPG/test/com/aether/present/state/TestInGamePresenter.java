@@ -5,7 +5,6 @@ import static org.easymock.EasyMock.createStrictMock;
 import static org.easymock.EasyMock.matches;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
-import static org.junit.Assert.*;
 
 import java.awt.Image;
 
@@ -13,9 +12,10 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aether.model.CharacterSheet;
 import com.aether.model.character.CharacterLocator;
+import com.aether.model.character.CharacterSheet;
 import com.aether.model.character.Classification;
+import com.aether.model.character.PlayerCharacter;
 import com.aether.model.character.Sex;
 import com.aether.present.hud.HUDViewLocator;
 
@@ -56,7 +56,7 @@ public class TestInGamePresenter {
     public void test_Enter_active_and_exit_active_state() throws Exception {
         view.activate();
         hudLocator.activate();
-		CharacterSheet hero = new CharacterSheet("Joe", "other", Sex.Male, Classification.Crusader);
+		CharacterSheet hero = new PlayerCharacter("Joe", "other", Sex.Male, Classification.Crusader);
 		EasyMock.expect(characterLocator.getPlayer()).andReturn(hero);
 		view.setHealth(10, 10);
 		view.setMana(10, 2);

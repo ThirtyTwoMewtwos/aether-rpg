@@ -1,8 +1,8 @@
 package com.aether.present.state;
 
-import com.aether.model.CharacterSheet;
 import com.aether.model.character.CharacterLocator;
 import com.aether.model.character.Classification;
+import com.aether.model.character.PlayerCharacter;
 import com.aether.model.character.Race;
 import com.aether.model.character.Sex;
 import com.util.StringUtil;
@@ -73,7 +73,7 @@ public class CharacterCreationPresenter implements ActiveState {
     }
 
     public void finish() {
-    	characterManager.setPlayer(new CharacterSheet(name, "", sex, classification));
+    	characterManager.setPlayer(new PlayerCharacter(name, "", sex, classification));
         state.transition(this, GAME_WINDOW_TRANSITION);
     }
 

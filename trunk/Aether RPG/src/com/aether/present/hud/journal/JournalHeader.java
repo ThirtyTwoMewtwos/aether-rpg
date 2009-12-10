@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.aether.present.hud.questJournal;
+package com.aether.present.hud.journal;
 
 import com.aether.present.UILookAndFeel;
 import com.aether.present.hud.JournalView;
@@ -18,7 +18,7 @@ public class JournalHeader extends BContainer {
 	public JournalHeader() {
 		AbsoluteLayout layout = new AbsoluteLayout();
 		this.setLayoutManager(layout);
-		this.setStyleClass(UILookAndFeel.PERSONA_HEADER_PANEL);
+		this.setStyleClass(UILookAndFeel.HUD_HEADER_PANEL);
 
 		BLabel questLogLabel =  new BLabel("Entries");
 		questLogLabel.setStyleClass(UILookAndFeel.HUD_STATISTICS_LABELS);

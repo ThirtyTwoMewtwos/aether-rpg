@@ -5,9 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import com.aether.model.CharacterSheet;
 import com.aether.model.character.CharacterLocator;
+import com.aether.model.character.CharacterSheet;
 import com.aether.model.character.Classification;
+import com.aether.model.character.PlayerCharacter;
 import com.aether.model.character.Sex;
 import com.aether.model.character.Statistic;
 
@@ -33,7 +34,7 @@ public class TestPersonaPresenter {
 	
 	@Test
 	public void test_Toggle_view_shows_character_sheet_data() throws Exception {
-		CharacterSheet characterSheet = new CharacterSheet("Joe the big guy", "something cool", Sex.Male, Classification.Acolyte);
+		CharacterSheet characterSheet = new PlayerCharacter("Joe the big guy", "something cool", Sex.Male, Classification.Acolyte);
 		EasyMock.expect(locator.getPlayer()).andReturn(characterSheet);
 		view.setName("Joe the big guy");
 		view.setBlock(characterSheet.getBlockChance());
@@ -82,7 +83,7 @@ public class TestPersonaPresenter {
 	
 	@Test
 	public void test_Changing_the_bio_is_saved_to_the_character_sheet() throws Exception {
-		CharacterSheet characterSheet = new CharacterSheet("Joe the big guy", "something cool", Sex.Male, Classification.Acolyte);
+		CharacterSheet characterSheet = new PlayerCharacter("Joe the big guy", "something cool", Sex.Male, Classification.Acolyte);
 		EasyMock.expect(locator.getPlayer()).andReturn(characterSheet);
 		
 		EasyMock.replay(view, locator);

@@ -5,6 +5,16 @@ import java.util.Map;
 
 import org.gap.jseed.injection.annotation.Singleton;
 
+/**
+ * This class represents a container of Views when in the InGameView.
+ * 
+ * When the InGameWindow is made visible the HUDViewLocator is loaded 
+ * in the same way that other windows are loaded.  This class then manages
+ * the initialization and finalization of each of the HUD windows visible
+ * in the InGame view.
+ * 
+ * @author gpelcha
+ */
 @Singleton
 class InGameHUDWindowLocator implements HUDViewLocator {
 	private Map<View, ViewPresenter> views;
@@ -39,7 +49,7 @@ class InGameHUDWindowLocator implements HUDViewLocator {
 		}
 	}
 
-	public void bind(View view, ViewPresenter presenter) {
+	public void attach(View view, ViewPresenter presenter) {
 		views.put(view, presenter);
 	}
 

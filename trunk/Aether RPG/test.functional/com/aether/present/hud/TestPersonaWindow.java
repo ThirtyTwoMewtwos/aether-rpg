@@ -15,8 +15,8 @@ import org.junit.Test;
 import com.aether.gbui.NameOperatorSearch;
 import com.aether.gbui.operators.BLabelOperator;
 import com.aether.gbui.operators.BMeterBarOperator;
-import com.aether.model.CharacterSheet;
 import com.aether.model.character.CharacterLocator;
+import com.aether.model.character.CharacterSheet;
 import com.aether.present.AetherTestCase;
 import com.aether.present.CreateCharacterPage;
 import com.aether.present.InGamePage;
@@ -43,16 +43,16 @@ public class TestPersonaWindow extends AetherTestCase {
 	@Test
 	public void test_Window_is_available() throws Exception {
 		assertFalse(persona.getWindow().isVisible());
-		persona.setVisibility(true);
+		persona.setVisible(true);
 		assertTrue(persona.getWindow().isVisible());
-		persona.setVisibility(false);
+		persona.setVisible(false);
 		assertFalse(persona.getWindow().isVisible());
 	}
 
 	@Test
 	public void test_Statistics_have_been_set_from_character_sheet()
 			throws Exception {
-		persona.setVisibility(true);
+		persona.setVisible(true);
 
 		assertLabelText("John Grisham", PersonaView.NAME_FIELD);
 		assertLabelText("Crusader", PersonaView.CLASS_FIELD);
@@ -89,7 +89,7 @@ public class TestPersonaWindow extends AetherTestCase {
 
 	@Test
 	public void test_Changing_bio_sets_character_bio() throws Exception {
-		persona.setVisibility(true);
+		persona.setVisible(true);
 		persona.setBio("Some new bio");
 		CharacterSheet player = serviceStore.get(CharacterLocator.class)
 				.getPlayer();
@@ -98,7 +98,7 @@ public class TestPersonaWindow extends AetherTestCase {
 
 	@Test
 	public void test_Bio_gains_focus_player_cannot_move() throws Exception {
-		persona.setVisibility(true);
+		persona.setVisible(true);
 		persona.setBio("setting bio");
 		assertFalse(serviceStore.get(PlayerMovementState.class).isActive());
 	}
@@ -107,7 +107,7 @@ public class TestPersonaWindow extends AetherTestCase {
 	public void tearDown() throws Exception {
 		if (persona.isVisible()) {
 			persona.releaseFocus();
-			persona.setVisibility(false);
+			persona.setVisible(false);
 		}
 		super.tearDown();
 	}

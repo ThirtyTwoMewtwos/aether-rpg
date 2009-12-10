@@ -1,49 +1,27 @@
 package com.aether.present;
 
-import java.awt.AWTException;
 import java.awt.event.KeyEvent;
 
-import com.aether.gbui.BKeyboard;
-import com.aether.gbui.Condition;
 import com.aether.gbui.NameOperatorSearch;
-import com.aether.gbui.operators.BComponentOperatorUtil;
 import com.aether.gbui.operators.BTextFieldOperator;
 import com.aether.present.hud.PersonaView;
-import com.jmex.bui.BWindow;
 
-public class PersonaPage {
-	private BWindow persona;
-
+public class PersonaPage extends BaseHUDWindowPage {
 	public PersonaPage() throws InterruptedException {
-		persona = BComponentOperatorUtil.windowWithId(PersonaView.PERSONA_ID);
-	}
-
-	public BWindow getWindow() {
-		return persona;
+		super(PersonaView.PERSONA_ID);
 	}
 	
-	public void setVisibility(final boolean visibility) throws AWTException {
-		if (persona.isVisible() != visibility) {
-			new BKeyboard().typeKey(KeyEvent.VK_P);
-		}
-		BComponentOperatorUtil.waitFor(new Condition() {
-			@Override
-			public boolean existing() {
-				return persona.isVisible() == visibility;
-			}
-		});
+	@Override
+	protected int getVisibilityKeyEvent() {
+		return KeyEvent.VK_P;
 	}
-
+	
 	public void setBio(String value) {
-		if (!persona.isVisible()) {
+		if (!window.isVisible()) {
 			throw new IllegalStateException("Persona is not visible!");
 		}
 		BTextFieldOperator bio = new BTextFieldOperator(getWindow(), new NameOperatorSearch(PersonaView.BIO_FIELD));
 		bio.setText(value);
-	}
-
-	public boolean isVisible() {
-		return persona.isVisible();
 	}
 
 	public void releaseFocus() {

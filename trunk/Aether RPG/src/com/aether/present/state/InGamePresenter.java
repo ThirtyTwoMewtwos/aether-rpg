@@ -1,7 +1,7 @@
 package com.aether.present.state;
 
-import com.aether.model.CharacterSheet;
 import com.aether.model.character.CharacterLocator;
+import com.aether.model.character.CharacterSheet;
 import com.aether.model.character.Statistic;
 import com.aether.present.CharacterTypeImage;
 import com.aether.present.hud.HUDViewLocator;
@@ -52,6 +52,10 @@ public class InGamePresenter implements ActiveState {
 		hudLocator.toggleViewVisibility(View.PERSONA);
 	}
     public void toggleQuestJournal(){
-        hudLocator.toggleViewVisibility(View.QUESTJOURNAl);
+        hudLocator.toggleViewVisibility(View.JOURNAL);
     }
+
+	public void toggleEquipment() {
+		hudLocator.toggleViewVisibility(View.EQUIPMENT);
+	}
 }

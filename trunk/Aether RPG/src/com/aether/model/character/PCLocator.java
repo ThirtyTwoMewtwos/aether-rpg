@@ -2,7 +2,6 @@ package com.aether.model.character;
 
 import org.gap.jseed.injection.annotation.Singleton;
 
-import com.aether.model.CharacterSheet;
 
 @Singleton
 public class PCLocator implements CharacterLocator {

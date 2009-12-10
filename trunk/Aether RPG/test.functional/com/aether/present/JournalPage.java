@@ -14,29 +14,16 @@ import com.aether.gbui.operators.BTextAreaOperator;
 import com.aether.present.hud.JournalView;
 import com.jmex.bui.BWindow;
 
-public class JournalPage {
-	private BWindow window;
+public class JournalPage extends BaseHUDWindowPage {
 	private BListOperator questList;
 
 	public JournalPage() throws InterruptedException {
-		window = BComponentOperatorUtil.windowWithId(JournalView.JOURNAL_ID);
+		super(JournalView.JOURNAL_ID);
 	}
-
-	public boolean isVisible() {
-		return window.isVisible();
-	}
-
-	public void setVisible(final boolean visibility) throws Exception {
-		if (window.isVisible() != visibility) {
-			new BKeyboard().typeKey(KeyEvent.VK_J);
-		}
-		BComponentOperatorUtil.delayForUpdate();
-		BComponentOperatorUtil.waitFor(new Condition() {
-			@Override
-			public boolean existing() {
-				return window.isVisible() == visibility;
-			}
-		});
+	
+	@Override
+	protected int getVisibilityKeyEvent() {
+		return KeyEvent.VK_J;
 	}
 
 	public void select(final Object item) {

@@ -4,6 +4,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import com.aether.present.hud.TestEquipmentWindow;
 import com.aether.present.hud.TestPersonaWindow;
 import com.aether.present.hud.TestJournalWindow;
 
@@ -13,7 +14,8 @@ import com.aether.present.hud.TestJournalWindow;
 			TestInGameWindow.class,
 			TestMainMenuWindow.class,
 			TestPersonaWindow.class,
-			TestJournalWindow.class
+			TestJournalWindow.class,
+			TestEquipmentWindow.class
 		})
 @RunWith(Suite.class)
 public class AllFunctionalTests {

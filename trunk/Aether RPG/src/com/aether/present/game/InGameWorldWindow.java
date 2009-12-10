@@ -154,7 +154,7 @@ public class InGameWorldWindow extends BasicGameState {
 	private Skybox getSkybox(Face... facings) {
 		skybox = new Skybox("skybox", 500, 500, 500);
 		for (Face each : facings) {
-			java.awt.Image image = SkyboxFacingImage.getImage(each);
+			java.awt.Image image = SkyboxFacingImages.getImage(each);
 			Texture loadTexture = TextureManager.loadTexture(image, Texture.MinificationFilter.BilinearNearestMipMap, Texture.MagnificationFilter.Bilinear, 1, true);
 			textures.add(loadTexture);
 			skybox.setTexture(each, loadTexture);

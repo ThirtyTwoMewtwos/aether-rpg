@@ -19,6 +19,10 @@ public class InGamePage {
 		return new JournalPage();
 	}
 
+	public EquipmentPage getEquipmentPage() throws Exception {
+		return new EquipmentPage();
+	}
+
 	public BWindow getPlayerStats() throws InterruptedException {
 		return BComponentOperatorUtil.windowWithId(InGameView.STATS_ID);
 	}
@@ -30,6 +34,4 @@ public class InGamePage {
 	public BTextFieldOperator getChatInputField() throws InterruptedException {
 		return new BTextFieldOperator(getChatWindow(), new NameOperatorSearch(InGameView.CHAT_INPUT_ID));
 	}
-
-
 }

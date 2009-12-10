@@ -1,4 +1,4 @@
-package com.aether.model;
+package com.aether.model.character;
 
 /*
  * CharacterSheet.java
@@ -29,17 +29,24 @@ package com.aether.model;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-import java.awt.Point;
 import java.awt.Color;
-import java.util.*;
-import java.io.*;
+import java.awt.Point;
+import java.io.FileOutputStream;
+import java.io.Serializable;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
-import com.aether.model.character.Classification;
-import com.aether.model.character.Race;
-import com.aether.model.character.Sex;
-import com.aether.model.character.Statistic;
-import com.aether.model.quests.JournalEntry;
-import com.lowagie.text.*;
+import com.aether.model.Equipment;
+import com.aether.model.Item;
+import com.aether.model.items.CharacterBackpack;
+import com.aether.model.items.EquipmentContainer;
+import com.lowagie.text.Chapter;
+import com.lowagie.text.Document;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Section;
 import com.lowagie.text.pdf.PdfWriter;
 
 // TODO Character sheet seems to be the central hub for all things player related.  
@@ -47,9 +54,9 @@ import com.lowagie.text.pdf.PdfWriter;
 // maintainability.  Quests as a service locator, xp as a separate module, attributes
 // into it's own manager.  This would help the CharacterSheet to be more focused
 // and make it into a more maintainable implementation of a container as opposed
-// to the full implementation.  character sheets, in rpg's are always broken up
+// to the full implementation.  Character sheets, in rpg's are always broken up
 // into it's separate containers/divisions.
-public class CharacterSheet implements Serializable {
+public class PlayerCharacter implements CharacterSheet, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public final static int MOVE_MODIFIER = 2;
@@ -60,9 +67,6 @@ public class CharacterSheet implements Serializable {
     private final double CHANCE_MODIFER = 0.01;
     private final double LARGE_STAT_MODIFIER = 0.05;
     private final double SMALL_STAT_MODIFIER = 0.02;
-    private final static int MALE = 0;
-    private final static int FEMALE = 1;
-    private final static String[] SEXS = { "Male", "Female" };
 
     private Statistic health;
     private Statistic mana;
@@ -95,11 +99,13 @@ public class CharacterSheet implements Serializable {
 
     private Point location;
     private Vector<Item> inventory;
-    private Vector<JournalEntry> questLog;
     private Equipment[] equiped;
     private Classification role;
+
+	private CharacterBackpack backpack;
     
-    public CharacterSheet(String hName,String hBio, Sex sex, Classification hClass) {
+    public PlayerCharacter(String hName,String hBio, Sex sex, Classification hClass) {
+    	backpack = new CharacterBackpack();
         level = 1;
         setXPToLevel(100);
         setLocation(new Point(20,20));
@@ -160,6 +166,8 @@ public class CharacterSheet implements Serializable {
         setDodgeChance(dodge);
         setDispelChance(dispel);
     }
+    
+    
     public void unequip(int index)
     {
         if(inventory.size() < inventory.capacity())
@@ -186,38 +194,7 @@ public class CharacterSheet implements Serializable {
             updateStats(equipment, true);
         }
     }
-    public Vector getQuestLog()
-    {
-        return questLog;
-    }
-    public void addQuest(JournalEntry quest)
-    {
-        if(quest.getLevelRequirement() <= getLevel())
-            if(questLog.size() < questLog.capacity())
-                questLog.add(quest);
-    }
-    public int findQuestIndex(JournalEntry quest)
-    {
-        int index = -1;
-        if(questLog.contains(quest))
-            index = questLog.indexOf(quest);
-        
-        return index;
-    }
-    public JournalEntry findQuestByIndex(int index)
-    {
-        return questLog.elementAt(index);
-    }
-    public void abandonQuest(JournalEntry quest)
-    {
-        if(questLog.contains(quest))
-            questLog.remove(quest);
-    }
-    public void abandonQuest(int index)
-    {
-        if(questLog.elementAt(index) != null)
-            questLog.remove(index);
-    }
+
     public void pickUpItem(Item item)
     {
         if(inventory.size() < inventory.capacity())
@@ -245,6 +222,12 @@ public class CharacterSheet implements Serializable {
         if(inventory.contains(item))
             inventory.remove(item);   
     }
+
+	@Override
+	public EquipmentContainer getEquipmentContainer() {
+		return backpack;
+	}
+    
     public String getName()
     {
         return name;
@@ -418,10 +401,10 @@ public class CharacterSheet implements Serializable {
             addCopper(copper);
         }
     }
-    public int getLevel()
-    {
+    public int getLevel() {
         return level;
     }
+    
     public void levelUp()
     {
         level++;

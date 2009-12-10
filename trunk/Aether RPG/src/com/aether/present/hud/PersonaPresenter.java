@@ -2,8 +2,8 @@ package com.aether.present.hud;
 
 import org.gap.jseed.injection.annotation.Singleton;
 
-import com.aether.model.CharacterSheet;
 import com.aether.model.character.CharacterLocator;
+import com.aether.model.character.CharacterSheet;
 import com.aether.model.character.Statistic;
 
 @Singleton

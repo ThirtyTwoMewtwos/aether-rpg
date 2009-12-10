@@ -1,7 +1,7 @@
 package com.aether.model.character;
 
 /*
- * CharacterSheet.java
+ * PlayerCharacter.java
  * 
  * Copyright (c) 2008, Tyler Hoersch
  * All rights reserved.

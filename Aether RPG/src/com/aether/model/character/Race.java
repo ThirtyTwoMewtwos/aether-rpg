@@ -1,6 +1,8 @@
 package com.aether.model.character;
 
 /*
+ * Race.java
+ *
  * Copyright (c) 2008, Tyler Hoersch
  * All rights reserved.
  *

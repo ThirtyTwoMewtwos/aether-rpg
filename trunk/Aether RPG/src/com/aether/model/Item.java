@@ -31,6 +31,7 @@ package com.aether.model;
  */
 public interface Item {
     public String getName();
+    public String getItemType();
     public String getDescription();
     public int getWeight();
 }

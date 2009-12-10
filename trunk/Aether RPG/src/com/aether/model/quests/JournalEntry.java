@@ -1,7 +1,7 @@
 package com.aether.model.quests;
 
 /*
- * Quest.java
+ * JournalEntry.java
  * 
  * Copyright (c) 2008, Tyler Hoersch
  * All rights reserved.

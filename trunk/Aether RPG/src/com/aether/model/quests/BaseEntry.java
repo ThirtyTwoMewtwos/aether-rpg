@@ -1,6 +1,6 @@
 package com.aether.model.quests;
 /*
- * QuestEntry.java
+ * BaseEntry.java
  * 
  * Copyright (c) 2008, Tyler Hoersch
  * All rights reserved.

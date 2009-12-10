@@ -132,4 +132,8 @@ public abstract class Equipment implements Item
     public int getWeight() {
     	return 0;
     }
+    public String getItemType()
+    {
+        return "Equipment";
+    }
 }

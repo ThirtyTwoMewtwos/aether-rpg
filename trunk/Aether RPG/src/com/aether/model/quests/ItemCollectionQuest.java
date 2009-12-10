@@ -1,7 +1,9 @@
-package com.aether.present;
+
+package com.aether.model.quests;
+
 
 /*
- * ColorConstants.java
+ * ItemCOllectionQuest.java
  *
  * Copyright (c) 2008, Tyler Hoersch
  * All rights reserved.
@@ -30,15 +32,63 @@ package com.aether.present;
  *
  */
 
-import java.awt.Color;
 
-public interface ColorConstants
-{
-    public final Color AGRO_ENEMY_COLOR = Color.red;
-    public final Color NON_AGRO_ENEMY_COLOR = Color.yellow;
-    public final Color PLAYER_COLOR = Color.blue;
-    public final Color NPC_COLOR = Color.white;
-    public final Color GUILD_COLOR = Color.green;
-    public final Color GROUP_COLOR = Color.cyan;
-    public final Color OBJECT_COLOR = Color.lightGray;
+public class ItemCollectionQuest extends BaseEntry {
+
+    private String itemType;
+    private int numItemsNeeded;
+    private int numItemsCollected;
+
+    public ItemCollectionQuest(String title, String description, int level_requirement, int collect_x_many, String item_type) {
+        completeStatus(false);
+        setName(title);
+        setDescription(description);
+        setLevelRequirement(level_requirement);
+        setNumItemsNeeded(collect_x_many);
+        setItemType(item_type);
+    }
+
+    public int getNumItemsCollected()
+    {
+        return numItemsCollected;
+    }
+
+    private void setNumItemsCollected(int collected)
+    {
+        numItemsCollected = collected;
+
+        if(numItemsCollected >= numItemsNeeded)
+        {
+            completeStatus(true);
+            numItemsCollected = numItemsNeeded;
+        }
+    }
+
+    public int getNumItemsNeeded()
+    {
+        return numItemsNeeded;
+    }
+
+    private void setNumItemsNeeded(int need)
+    {
+        numItemsNeeded = need;
+    }
+    private void setItemType(String type)
+    {
+        itemType = type;
+    }
+    public String getItemType()
+    {
+        return itemType;
+    }
+
+    public String getStatus()
+    {
+        String status;
+        if(!isComplete())
+            status = numItemsCollected + "/" + numItemsNeeded + " " + getItemType() + " collected.";
+        else
+            status = "Complete!";
+        return status;
+    }
 }

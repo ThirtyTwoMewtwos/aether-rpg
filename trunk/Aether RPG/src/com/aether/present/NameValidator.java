@@ -1,7 +1,7 @@
 package com.aether.present;
 
 /*
- * HeroValidate.java
+ * NameValidator.java
  * 
  * Copyright (c) 2008, Tyler Hoersch
  * All rights reserved.

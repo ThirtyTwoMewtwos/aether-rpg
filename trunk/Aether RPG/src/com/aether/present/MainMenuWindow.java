@@ -54,7 +54,7 @@ public class MainMenuWindow extends BaseWindow implements MainMenuView {
 	private static final int BUTTON_HEIGHT = 40;
 	private static final int BUTTON_WIDTH = 250;
 	
-	private BButton startCampaign;
+	private BButton createCharacter;
 	private BButton exitGame;
 
 	private MainMenuPresenter presenter;
@@ -88,10 +88,10 @@ public class MainMenuWindow extends BaseWindow implements MainMenuView {
 	}
 
 	private void initStartCampaignButton(int stepPosY,  int posX) {
-		startCampaign = new BButton("New Campaign");
-        startCampaign.setPreferredSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-		getWindow(DEFAULT_WINDOW).add(startCampaign, new Point(posX, startPosY - stepPosY * counter++));
-		startCampaign.addListener(new ActionListener() {
+		createCharacter = new BButton("Create Character");
+        createCharacter.setPreferredSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+		getWindow(DEFAULT_WINDOW).add(createCharacter, new Point(posX, startPosY - stepPosY * counter++));
+		createCharacter.addListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
                 presenter.performCreateCharacter();

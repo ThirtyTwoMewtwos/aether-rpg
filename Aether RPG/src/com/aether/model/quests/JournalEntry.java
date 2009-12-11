@@ -36,4 +36,5 @@ public interface JournalEntry {
     boolean isComplete();
     void completeStatus(boolean completed);
     String getStatus();
+    QuestType getQuestType();
 }

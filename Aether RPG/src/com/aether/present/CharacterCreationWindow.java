@@ -30,6 +30,7 @@ package com.aether.present;
  *
  */
 
+import java.awt.Image;
 import java.util.List;
 
 import com.aether.model.character.Classification;
@@ -42,11 +43,14 @@ import com.jme.system.DisplaySystem;
 import com.jmex.bui.BButton;
 import com.jmex.bui.BComboBox;
 import com.jmex.bui.BGroupContainer;
+import com.jmex.bui.BImage;
 import com.jmex.bui.BLabel;
 import com.jmex.bui.BTextField;
 import com.jmex.bui.BToggleButton;
 import com.jmex.bui.BWindow;
 import com.jmex.bui.BuiSystem;
+import com.jmex.bui.ImageLabelProvider;
+import com.jmex.bui.LabelProvider;
 import com.jmex.bui.Spacer;
 import com.jmex.bui.BComboBox.Item;
 import com.jmex.bui.event.ActionEvent;
@@ -54,6 +58,8 @@ import com.jmex.bui.event.ActionListener;
 import com.jmex.bui.event.SelectionListener;
 import com.jmex.bui.event.StateChangedEvent;
 import com.jmex.bui.event.StateChangedEvent.SelectionState;
+import com.jmex.bui.icon.BIcon;
+import com.jmex.bui.icon.ImageIcon;
 import com.jmex.bui.layout.HGroupLayout;
 import com.jmex.bui.layout.TableLayout;
 import com.jmex.bui.text.Document;
@@ -174,16 +180,31 @@ public class CharacterCreationWindow extends BaseWindow implements CharacterCrea
         raceSelection.setPreferredSize(BUTTON_WIDTH, 25);
         raceSelection.addItem(PLEASE_SELECT_ITEM);
         raceSelection.setName(RACE_SELELECTION_NAME);
+        raceSelection.setLabelProvider(new LabelProvider() {
+			@Override
+			public String getText(Object object) {
+				if (object instanceof Race) {
+					Race race = (Race)object;
+					return race.name();
+				}
+				return PLEASE_SELECT_ITEM.toString();
+			}
+        	
+        });
         for (Race each : Race.values()) {
-			Item item = new BComboBox.Item(each, each.name());
+			BComboBox.Item item = new BComboBox.Item(each, "");
 			raceSelection.addItem(item);
 		}
-        raceSelection.selectItem(0);
+        raceSelection.selectValue(PLEASE_SELECT_ITEM);
         raceSelection.addListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				Object selectedItem = raceSelection.getSelectedValue();
-				presenter.setRace((Race)selectedItem);
+				if (raceSelection.getSelectedValue() instanceof Race) {
+					Object selectedItem = raceSelection.getSelectedValue();
+					presenter.setRace((Race)selectedItem);
+				} else {
+					presenter.setRace(null);
+				}
 			}
         });
         getWindow(DEFAULT_WINDOW).add(raceSelection);
@@ -194,15 +215,38 @@ public class CharacterCreationWindow extends BaseWindow implements CharacterCrea
 		classSelection = new BComboBox();
 		classSelection.setPreferredSize(BUTTON_WIDTH, 25);
 		classSelection.setName(CLASS_SELECTION_NAME);
-		
+		classSelection.setLabelProvider(new ImageLabelProvider() {
+			@Override
+			public String getText(Object object) {
+				if (object instanceof Classification) {
+					Classification klass = (Classification)object;
+					return klass.getName();
+				}
+				return PLEASE_SELECT_ITEM.toString();
+			}
+			
+			@Override
+			public BIcon getImage(Object value) {
+				if (value instanceof Classification) {
+					Image image = CharacterTypeImage.getImage((Classification)value);
+					BImage bImage = new BImage(image);
+					return new ImageIcon(bImage);
+				}
+				return null;
+			}
+			
+		});
 		classSelection.addListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				Object selectedItem = classSelection.getSelectedValue();
-				presenter.setClassification((Classification)selectedItem);
+				if (classSelection.getSelectedValue() instanceof Classification) {
+					Object selectedItem = classSelection.getSelectedValue();
+					presenter.setClassification((Classification)selectedItem);
+				} else {
+					presenter.setClassification(null);
+				}
 			}
 		});
-		
 		clearClassifications();
 		getWindow(DEFAULT_WINDOW).add(classSelection);
 	}
@@ -274,8 +318,8 @@ public class CharacterCreationWindow extends BaseWindow implements CharacterCrea
     public void setClasses(List<Classification> availableFor) {
     	clearClassifications();
     	for (Classification each : availableFor) {
-    		Item item = new BComboBox.Item(each, each.getName());
-    		classSelection.addItem(item);
+    		BComboBox.Item item = new BComboBox.Item(each, "");
+			classSelection.addItem(item);
 		}
     	classSelection.setEnabled(true);
     }
@@ -284,7 +328,7 @@ public class CharacterCreationWindow extends BaseWindow implements CharacterCrea
 	public void clearClassifications() {
 		classSelection.clearItems();
 		classSelection.addItem(PLEASE_SELECT_ITEM);
-		classSelection.selectItem(PLEASE_SELECT_ITEM);
+		classSelection.selectItem(0);
 		classSelection.setEnabled(false);
 	}
 }

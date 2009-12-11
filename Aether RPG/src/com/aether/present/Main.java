@@ -147,7 +147,7 @@ public class Main {
 	}
 
 	private static void callShutdown() {
-		BuiSystem.getRootNode().clearBuffers();
+//		BuiSystem.getRootNode().clearBuffers();
 
 		game.shutdown();
 	}

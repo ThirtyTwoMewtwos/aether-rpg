@@ -91,4 +91,9 @@ public class ItemCollectionQuest extends BaseEntry {
             status = "Complete!";
         return status;
     }
+    
+    @Override
+    public QuestType getQuestType() {
+    	return QuestType.FetchItem;
+    }
 }

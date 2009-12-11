@@ -3,6 +3,7 @@ package com.aether.present.hud;
 import java.util.Collection;
 import java.util.concurrent.Callable;
 
+import com.aether.model.quests.JournalEntry;
 import com.aether.present.UILookAndFeel;
 import com.aether.present.hud.journal.JournalDescriptionHeader;
 import com.aether.present.hud.journal.JournalHeader;
@@ -81,11 +82,12 @@ class JournalWindow implements JournalView {
 		entries = new BList();
 		entries.setName(JOURNAL_ENTRIES_ID);
 		entries.setEnabled(true);
+		entries.setLabelProvider(new QuestLabelProvider());
 		entries.addSelectionListener(new SelectionListener() {
 			@Override
 			public void stateChanged(StateChangedEvent event) {
 				if (event.getType() == SelectionState.Selected) {
-					String selected = (String)entries.getSelectedValue();
+					JournalEntry selected = (JournalEntry)entries.getSelectedValue();
 					if (selected != null)
 						presenter.showQuest(selected);
 				}
@@ -100,7 +102,7 @@ class JournalWindow implements JournalView {
 		result.addListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				presenter.removeQuest(entries.getSelectedValue().toString());
+				presenter.removeQuest((JournalEntry)entries.getSelectedValue());
 			}
 		});
 		return result;
@@ -127,15 +129,15 @@ class JournalWindow implements JournalView {
 	}
 
 	@Override
-	public void setQuests(Collection<String> listOfQuests) {
+	public void setQuests(Collection<JournalEntry> listOfQuests) {
 		entries.removeAll();
-		for (String each : listOfQuests) {
+		for (JournalEntry each : listOfQuests) {
 			entries.addValue(each);
 		}
 	}
 	
 	@Override
-	public void setSelection(String selection) {
+	public void setSelection(JournalEntry selection) {
 		entries.setSelectedValue(selection);
 	}
 	

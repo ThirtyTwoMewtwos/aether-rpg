@@ -29,15 +29,6 @@ public class TestJournal {
 	}
 	
 	@Test
-	public void test_Getting_the_first_entry() throws Exception {
-		EasyMock.expect(quest.getTitle()).andReturn("goody");
-		EasyMock.replay(quest);
-		locator.addEntry(quest);
-		assertEquals(quest, locator.getEntry("goody"));
-		EasyMock.verify(quest);
-	}
-	
-	@Test
 	public void test_Get_all_entry_titles() throws Exception {
 		JournalEntry quest2 = EasyMock.createStrictMock("quest2", JournalEntry.class);
 		EasyMock.expect(quest.getTitle()).andReturn("Kill bugbear!");
@@ -57,7 +48,7 @@ public class TestJournal {
 	
 	@Test
 	public void test_Removing_an_entry_from_the_journal() throws Exception {
-		EasyMock.expect(quest.getTitle()).andReturn("Kill bugbear!");
+		EasyMock.expect(quest.getTitle()).andReturn("Kill bugbear!").atLeastOnce();
 		
 		EasyMock.replay(quest);
 		locator.addEntry(quest);
@@ -65,7 +56,7 @@ public class TestJournal {
 		assertEquals(1, locator.size());
 		assertFalse(locator.isEmpty());
 		
-		locator.removeEntry("Kill bugbear!");
+		locator.removeEntry(quest);
 		
 		assertEquals(0, locator.size());
 		assertTrue(locator.isEmpty());

@@ -18,7 +18,7 @@ public class BComboBoxOperator extends BComponentOperator {
 	}
 
 	public void select(Object value) {
-		comboBox.selectItem(value);
+		comboBox.selectValue(value);
 		for (int i = 0; i < comboBox.getItemCount(); i++) {
 			Object item = comboBox.getItem(i);
 			Object currentItem = item;

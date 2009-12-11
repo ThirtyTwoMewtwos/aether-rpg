@@ -38,11 +38,11 @@ public interface JournalEntryLocator {
 
 	void addEntry(JournalEntry entry);
 
-	JournalEntry getEntry(String title);
-
 	int size();
 
 	boolean isEmpty();
 
-	void removeEntry(String string);
+	void removeEntry(JournalEntry entry);
+
+	Collection<JournalEntry> getAllEntries();
 }

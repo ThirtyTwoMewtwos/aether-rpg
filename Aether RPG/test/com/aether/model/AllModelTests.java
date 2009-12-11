@@ -9,6 +9,7 @@ import com.aether.model.character.TestClassification;
 import com.aether.model.items.TestCharacterBackpack;
 import com.aether.model.items.TestGenericItem;
 import com.aether.model.quests.TestJournal;
+import com.aether.model.quests.TestQuestTypeImage;
 
 @SuiteClasses ({
 	TestStatistic.class,
@@ -16,7 +17,8 @@ import com.aether.model.quests.TestJournal;
 	TestClassification.class, 
 	TestJournal.class,
 	TestGenericItem.class,
-	TestCharacterBackpack.class
+	TestCharacterBackpack.class,
+	TestQuestTypeImage.class
 })
 @RunWith(Suite.class)
 public class AllModelTests {

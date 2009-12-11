@@ -21,9 +21,9 @@ public class TestCharacterBackpack {
 	@Before
 	public void setUp() throws Exception {
 		backpack = new CharacterBackpack();
-		itemA = new GenericItem("itemA", null, 5);
-		itemB = new GenericItem("itemB", null, 3);
-		itemC = new GenericItem("itemC", null, 7);
+		itemA = new GenericItem("itemA", null, null, 5);
+		itemB = new GenericItem("itemB", null, null, 3);
+		itemC = new GenericItem("itemC", null, null, 7);
 	}
 	
 	@Test

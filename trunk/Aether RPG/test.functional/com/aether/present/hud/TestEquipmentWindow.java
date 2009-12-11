@@ -47,7 +47,7 @@ public class TestEquipmentWindow extends AetherTestCase {
 
 	private void addPocketProtector() {
 		EquipmentContainer container = locator.getPlayer().getEquipmentContainer();
-		container.addItem(new GenericItem("Pocket protector", "nerd tool", 15));
+		container.addItem(new GenericItem("Pocket protector", "nerd tool", null, 15));
 	}
 	
 	@Test

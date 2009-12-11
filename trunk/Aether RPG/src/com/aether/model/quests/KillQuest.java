@@ -91,4 +91,9 @@ public class KillQuest extends BaseEntry {
             status = "Complete!";
         return status;
     }
+    
+    @Override
+    public QuestType getQuestType() {
+    	return QuestType.Hunt;
+    }
 }

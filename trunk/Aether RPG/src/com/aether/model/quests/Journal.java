@@ -58,13 +58,18 @@ class Journal implements JournalEntryLocator {
 	public void addEntry(JournalEntry entry) {
 		entries.put(entry.getTitle(), entry);
 	}
-
-	public JournalEntry getEntry(String title) {
-		return entries.get(title);
-	}
 	
 	@Override
-	public void removeEntry(String title) {
-		entries.remove(title);
+	public void removeEntry(JournalEntry entry) {
+		entries.remove(entry.getTitle());
+	}
+
+	public JournalEntry getEntry(JournalEntry entry) {
+		return entries.get(entry.getTitle());
+	}
+
+	@Override
+	public Collection<JournalEntry> getAllEntries() {
+		return entries.values();
 	}
 }

@@ -2,6 +2,8 @@ package com.aether.present.hud;
 
 import java.util.Collection;
 
+import com.aether.model.quests.JournalEntry;
+
 public interface JournalView {
 	public static final String JOURNAL_ID = "hud.journal.view";
 	public static final String JOURNAL_ENTRIES_ID = "journal.entries.list";
@@ -16,11 +18,11 @@ public interface JournalView {
 
     void setVisible(boolean b);
     
-	void setQuests(Collection<String> listOfQuests);
+	void setQuests(Collection<JournalEntry> listOfQuests);
 
 	void setDescription(String description);
 
-	void setSelection(String string);
+	void setSelection(JournalEntry string);
 
 	void setLevelRequirement(String string);
 }

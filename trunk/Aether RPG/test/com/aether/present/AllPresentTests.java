@@ -10,6 +10,7 @@ import com.aether.present.hud.TestEquipmentPresenter;
 import com.aether.present.hud.TestInGameHUDWindowLocator;
 import com.aether.present.hud.TestJournalPresenter;
 import com.aether.present.hud.TestPersonaPresenter;
+import com.aether.present.hud.TestQuestLabelProvider;
 import com.aether.present.hud.persona.TestPersonaImages;
 import com.aether.present.state.TestCharacterCreationPresenter;
 import com.aether.present.state.TestGamePresentationTransitioner;
@@ -33,7 +34,8 @@ import com.aether.present.state.TestShutdownService;
 	TestPersonaImages.class,
 	
 	TestGamePresentationTransitioner.class,
-	TestShutdownService.class
+	TestShutdownService.class,
+	TestQuestLabelProvider.class
 })
 @RunWith(Suite.class)
 public class AllPresentTests {

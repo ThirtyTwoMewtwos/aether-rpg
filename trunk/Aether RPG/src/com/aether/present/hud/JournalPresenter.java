@@ -42,21 +42,20 @@ public class JournalPresenter implements ViewPresenter {
 		if (quests.isEmpty()) {
 			view.setDescription("No quests to show!");
 		} else {
-			Collection<String> titles = quests.getEntryTitles();
+			Collection<JournalEntry> titles = quests.getAllEntries();
 			view.setQuests(titles);
 			showQuest(titles.iterator().next());
 		}
 	}
 
-	public void showQuest(String title) {
-		JournalEntry entry = quests.getEntry(title);
-		view.setSelection(title);
+	public void showQuest(JournalEntry entry) {
+		view.setSelection(entry);
 		view.setLevelRequirement("" + entry.getLevelRequirement());
 		view.setDescription(entry.getDescription());
 	}
 
-	public void removeQuest(String title) {
-		quests.removeEntry(title);
+	public void removeQuest(JournalEntry entry) {
+		quests.removeEntry(entry);
 		showAvailableQuests();
 	}
 

@@ -48,6 +48,9 @@
 		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" />
 		<javac srcdir="${test.dir}" destdir="${classes.dir}" classpathref="classpath" />
 		<javac srcdir="${functional.test.dir}" destdir="${classes.dir}" classpathref="classpath" />
+		<copydir dest="${classes.dir}" src="${src.dir}" />
+		<copydir dest="${test.dir}" src="${src.dir}" />
+		<copydir dest="${functional.test.dir}" src="${src.dir}" />
 	</target>
 
 	<target name="jar" depends="compile">

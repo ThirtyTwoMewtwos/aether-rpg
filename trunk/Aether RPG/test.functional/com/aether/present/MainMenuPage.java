@@ -13,7 +13,7 @@ public class MainMenuPage {
 	}
 	
 	public CreateCharacterPage clickNewCampain() throws Exception {
-		new BButtonOperator(mainWindow, "New Campaign").click();
+		new BButtonOperator(mainWindow, "Create Character").click();
 		return new CreateCharacterPage();
 	}
 

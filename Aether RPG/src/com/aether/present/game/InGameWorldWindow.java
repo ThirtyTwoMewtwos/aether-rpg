@@ -32,6 +32,7 @@ package com.aether.present.game;
 
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -193,9 +194,10 @@ public class InGameWorldWindow extends BasicGameState {
 	}
 
 	private void buildPlayer() {
-		ClassLoader classLoader = TestColladaLoading.class.getClassLoader();
+		ClassLoader classLoader = getClass().getClassLoader();
 		try {
-			ResourceLocatorTool.addResourceLocator(ResourceLocatorTool.TYPE_TEXTURE, new SimpleResourceLocator(classLoader.getResource("jmetest/data/model/collada/")));
+			URL resource = classLoader.getResource("data/models/player/");
+			ResourceLocatorTool.addResourceLocator(ResourceLocatorTool.TYPE_TEXTURE, new SimpleResourceLocator(resource));
 		} catch (URISyntaxException e1) {
 			logger.warning("Unable to add texture directory to RLT: " + e1.toString());
 		}
@@ -206,7 +208,7 @@ public class InGameWorldWindow extends BasicGameState {
 		player.updateWorldBound();
 
 		// this stream points to the model itself.
-		InputStream mobboss = classLoader.getResourceAsStream("jmetest/data/model/collada/man.dae");
+		InputStream mobboss = classLoader.getResourceAsStream("data/models/player/man.dae");
 		// this stream points to the animation file. Note: You don't necessarily
 		// have to split animations out into seperate files, this just helps.
 		InputStream animation = classLoader.getResourceAsStream("jmetest/data/model/collada/man_walk.dae");

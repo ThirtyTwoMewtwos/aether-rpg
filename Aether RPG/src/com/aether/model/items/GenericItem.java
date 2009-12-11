@@ -33,19 +33,19 @@ package com.aether.model.items;
 import com.aether.model.Item;
 
 public class GenericItem implements Item {
-	
+
 	private final String name;
 	private final String description;
-        private final String item_type;
+	private final String item_type;
 	private final int weight;
 
 	public GenericItem(String name, String description, String item_type, int weight) {
 		this.name = name;
 		this.description = description;
-                this.item_type = item_type;
+		this.item_type = item_type;
 		this.weight = weight;
 	}
-	
+
 	@Override
 	public String getName() {
 		return name;
@@ -61,9 +61,8 @@ public class GenericItem implements Item {
 		return weight;
 	}
 
-        public String getItemType()
-        {
-            return item_type;
-        }
-        
+	public String getItemType() {
+		return item_type;
+	}
+
 }

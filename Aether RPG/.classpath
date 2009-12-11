@@ -6,6 +6,8 @@
 	<classpathentry kind="lib" path="lib/jseed.jar"/>
 	<classpathentry kind="lib" path="lib/iText-2.1.5.jar" sourcepath="D:/components/sun/jdk1.5.0_11/src.zip"/>
 	<classpathentry kind="lib" path="lib/mouseManager_r1_jme2.jar"/>
+	<classpathentry kind="lib" path="lib/jme-collada.jar"/>
+	<classpathentry kind="lib" path="lib/jme-colladabinding.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6"/>
 	<classpathentry kind="lib" path="lib/jogl/gluegen-rt.jar"/>
@@ -25,6 +27,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/jme-bui.jar" sourcepath="/GBui"/>
 	<classpathentry kind="lib" path="D:/java/components/jemmy.jar"/>
-	<classpathentry kind="lib" path="lib/jME_2.0.jar" sourcepath="D:/java/Aether RPG/lib/jME_2.0.jar"/>
+	<classpathentry kind="lib" path="lib/jME_2.0.jar" sourcepath="/jme"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

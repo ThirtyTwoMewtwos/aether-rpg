@@ -51,6 +51,8 @@ import com.aether.present.state.InGamePresenter;
 import com.aether.present.state.InGameView;
 import com.aether.present.state.MainMenuPresenter;
 import com.aether.present.state.MainMenuView;
+import com.aether.present.state.LoginPresenter;
+import com.aether.present.state.LoginView;
 import com.aether.present.state.ShutdownService;
 import com.aether.present.state.StateTransition;
 import com.jme.app.AbstractGame;
@@ -82,7 +84,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws IOException {
-		game = new StandardGame("Aether RPG");
+		game = new StandardGame(" Aether Online ");
 		game.setBackgroundColor(ColorRGBA.darkGray);
 		game.start();
 
@@ -111,6 +113,38 @@ public class Main {
 
 		store.bind(InGameWorldWindow.class, InGameWorldWindow.class);
 
+                store.bind(LoginView.class, LoginWindow.class);
+		store.bind(LoginPresenter.class, LoginPresenter.class);
+		store.bind(MainMenuView.class, MainMenuWindow.class);
+		store.bind(MainMenuPresenter.class,
+				MainMenuPresenter.class);
+                store.bind(CharacterCreationView.class, CharacterCreationWindow.class);
+                store.bind(CharacterCreationPresenter.class,CharacterCreationPresenter.class);
+		store.bind(InGameView.class, InGameWindow.class);
+		store.bind(InGamePresenter.class, InGamePresenter.class);
+
+		StateTransition stateTransition = store.get(StateTransition.class);
+
+		ActiveState loginScreen = store.get(LoginPresenter.class);
+		ActiveState mainMenuScreen = store
+				.get(MainMenuPresenter.class);
+                ActiveState createCharacterScreen = store.get(CharacterCreationPresenter.class);
+		InGamePresenter inGame = store.get(InGamePresenter.class);
+
+		stateTransition.add(loginScreen,
+				LoginPresenter.LOGIN_TRANSITION, mainMenuScreen);
+		stateTransition.add(mainMenuScreen,
+				MainMenuPresenter.LOGOUT_TRANSITION,
+				loginScreen);
+		stateTransition.add(mainMenuScreen,
+				MainMenuPresenter.CREATE_CHARACTER_TRANSITION, createCharacterScreen);
+                stateTransition.add(createCharacterScreen, CharacterCreationPresenter.CANCEL_CREATE_CHARACTER_TRANSITION, mainMenuScreen);
+                stateTransition.add(createCharacterScreen,CharacterCreationPresenter.GAME_WINDOW_TRANSITION,inGame);
+		stateTransition.add(inGame, InGamePresenter.OPTIONS_MENU_TRANSITION,
+				mainMenuScreen);
+
+		stateTransition.setStartState(loginScreen);
+                /*
 		store.bind(MainMenuView.class, MainMenuWindow.class);
 		store.bind(MainMenuPresenter.class, MainMenuPresenter.class);
 		store.bind(CharacterCreationView.class, CharacterCreationWindow.class);
@@ -137,6 +171,7 @@ public class Main {
 				mainMenu);
 
 		stateTransition.setStartState(mainMenu);
+                 */
 	}
 
 	public static void shutdown() {

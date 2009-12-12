@@ -34,6 +34,7 @@ import org.gap.jseed.injection.annotation.Singleton;
 
 import com.aether.present.state.LoginPresenter;
 import com.aether.present.state.LoginView;
+import com.aether.present.UILookAndFeel;
 import com.jme.input.KeyInput;
 import com.jme.system.DisplaySystem;
 import com.jmex.bui.BButton;
@@ -88,16 +89,18 @@ public class LoginWindow extends BaseWindow implements LoginView {
 
         userLabel = new BLabel("Username:");
         userLabel.setPreferredSize(200 , 20);
-        mainWindow.add(userLabel, new Point((posX /2) - 70,startPosY - 70));
+        mainWindow.add(userLabel, new Point((posX /2) - 70,startPosY - 110));
 
         username = new BTextField(30);
-        mainWindow.add(username,new Point((posX /2) - 70,startPosY - 120));
+        username.setStyleClass(UILookAndFeel.LOGIN_TEXTFIELD_LOOK);
+        mainWindow.add(username,new Point((posX /2) - 70,startPosY - 140));
 
         pswdLabel = new BLabel("Password:");
         pswdLabel.setPreferredSize(200 , 20);
-        mainWindow.add(pswdLabel,new Point((posX /2) - 70,startPosY - 145));
+        mainWindow.add(pswdLabel,new Point((posX /2) - 70,startPosY - 165));
 
         password = new BPasswordField(30);
+        password.setStyleClass(UILookAndFeel.LOGIN_TEXTFIELD_LOOK);
         mainWindow.add(password, new Point((posX /2) - 70, startPosY - 195));
 
         mainWindow.center();

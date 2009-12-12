@@ -144,34 +144,6 @@ public class Main {
 				mainMenuScreen);
 
 		stateTransition.setStartState(loginScreen);
-                /*
-		store.bind(MainMenuView.class, MainMenuWindow.class);
-		store.bind(MainMenuPresenter.class, MainMenuPresenter.class);
-		store.bind(CharacterCreationView.class, CharacterCreationWindow.class);
-		store.bind(CharacterCreationPresenter.class,
-				CharacterCreationPresenter.class);
-		store.bind(InGameView.class, InGameWindow.class);
-		store.bind(InGamePresenter.class, InGamePresenter.class);
-
-		StateTransition stateTransition = store.get(StateTransition.class);
-
-		ActiveState mainMenu = store.get(MainMenuPresenter.class);
-		ActiveState createCharacter = store
-				.get(CharacterCreationPresenter.class);
-		InGamePresenter inGame = store.get(InGamePresenter.class);
-
-		stateTransition.add(mainMenu,
-				MainMenuPresenter.CREATE_CHARACTER_TRANSITION, createCharacter);
-		stateTransition.add(createCharacter,
-				CharacterCreationPresenter.CANCEL_CREATE_CHARACTER_TRANSITION,
-				mainMenu);
-		stateTransition.add(createCharacter,
-				CharacterCreationPresenter.GAME_WINDOW_TRANSITION, inGame);
-		stateTransition.add(inGame, InGamePresenter.OPTIONS_MENU_TRANSITION,
-				mainMenu);
-
-		stateTransition.setStartState(mainMenu);
-                 */
 	}
 
 	public static void shutdown() {

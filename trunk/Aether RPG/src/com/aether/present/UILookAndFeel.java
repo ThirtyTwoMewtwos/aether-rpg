@@ -75,6 +75,9 @@ public class UILookAndFeel {
 	public static final String HUD_HEADER_PANEL = "persona_header_panel";
 	public static final String PERSONA_ATTRIBUTES_PANEL = "persona_attributes_panel";
 	public static final String HUD_LIST = "hud_list";
+
+        public static final String LOGIN_LOGO_LOOK = "login_logo_look";
+        public static final String LOGIN_TEXTFIELD_LOOK = "login_textfield_look";
 	
 	private static final int BUTTON_FONT_SIZE = 24;
 	private static final String FONT_FAMILY = "Helvetica";
@@ -84,6 +87,7 @@ public class UILookAndFeel {
 
 	public void loadBaseStyleSheet() {
 		try {
+                        setupLoginLookAndFeel();
 			setupInGameStatistics();
 			setupInGameChatBox();
 			setupWindow();
@@ -98,6 +102,18 @@ public class UILookAndFeel {
         
 		setupDefaultStyleSheet();
 	}
+
+        private void setupLoginLookAndFeel()
+        {
+            writer.createStyle(LOGIN_LOGO_LOOK)
+                                .setBackground("images/logoPlaceHolder.png", BssBackgroundMode.FRAMEXY);
+
+            writer.createStyle(LOGIN_TEXTFIELD_LOOK)
+                                .setBackground("images/clearTextField.png", BssBackgroundMode.SCALEX)
+                                .setPadding(3, 30)
+                                .setColor(BssColor.BLACK)
+                                .setFont("serif", BssFontStyle.PLAIN, 15);
+        }
 
 	private void setupInGameStatistics() {
 		writer.createStyle(STATISTICS_TOOLTIP_TEXT)

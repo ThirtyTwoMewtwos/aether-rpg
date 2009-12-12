@@ -13,6 +13,7 @@ import org.gap.jseed.injection.annotation.Singleton;
 @Singleton
 public class MainMenuPresenter implements ActiveState {
 	public static final String CREATE_CHARACTER_TRANSITION = "create.character.view";
+        public static final String LOGOUT_TRANSITION = "logout.account";
 	
 	private final ShutdownService exitService;
 	private final MainMenuView view;
@@ -32,6 +33,11 @@ public class MainMenuPresenter implements ActiveState {
 	public void enter() {
 		view.activate();
 	}
+
+        public void performLogout()
+        {
+            presentationState.transition(this, LOGOUT_TRANSITION);
+        }
 
 	public void performCreateCharacter() {
 		presentationState.transition(this, CREATE_CHARACTER_TRANSITION);

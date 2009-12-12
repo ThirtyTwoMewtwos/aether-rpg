@@ -53,9 +53,6 @@ public class LoginWindow extends BaseWindow implements LoginView {
 	private static final Object DEFAULT_WINDOW = "base.window";
 	private static final String EXIT_KEY_BINDING = "exit";
         private static final String LOGIN_KEY_BINDING = "login";
-	private static final int MENU_ITEMS = 4;
-	private static final int BUTTON_HEIGHT = 20;
-	private static final int BUTTON_WIDTH = 50;
 
         private BLabel welcome;
         private BLabel userLabel;
@@ -80,28 +77,28 @@ public class LoginWindow extends BaseWindow implements LoginView {
         BWindow mainWindow = new BWindow(BuiSystem.getStyle(), new AbsoluteLayout());
         mainWindow.setName(ID);
         addWindow(DEFAULT_WINDOW, mainWindow);
-        mainWindow.setSize(BUTTON_WIDTH + 150, BUTTON_HEIGHT * MENU_ITEMS + 220);
+        mainWindow.setSize(450,450);
 
         startPosY = mainWindow.getHeight() - 100;
-        int posX = (mainWindow.getWidth() - BUTTON_WIDTH) / 2;
+        int posX = mainWindow.getWidth() / 2;
 
-        welcome = new BLabel("Welcome to AEther");
-        welcome.setPreferredSize(BUTTON_WIDTH + 80, BUTTON_HEIGHT);
-        mainWindow.add(welcome, new Point(posX /2, startPosY));
+        welcome = new BLabel("AEther Online");
+        welcome.setPreferredSize(200, 20);
+        mainWindow.add(welcome, new Point((posX /2) , startPosY));
 
-        userLabel = new BLabel("username:");
-        userLabel.setPreferredSize(BUTTON_WIDTH , BUTTON_HEIGHT);
-        mainWindow.add(userLabel, new Point(posX /2,startPosY - 200));
+        userLabel = new BLabel("Username:");
+        userLabel.setPreferredSize(200 , 20);
+        mainWindow.add(userLabel, new Point((posX /2) - 70,startPosY - 70));
 
         username = new BTextField(30);
-        mainWindow.add(username,new Point(posX /2,startPosY - 225));
+        mainWindow.add(username,new Point((posX /2) - 70,startPosY - 120));
 
-        pswdLabel = new BLabel("password:");
-        pswdLabel.setPreferredSize(BUTTON_WIDTH , BUTTON_HEIGHT);
-        mainWindow.add(pswdLabel,new Point(posX /2,startPosY - 235));
+        pswdLabel = new BLabel("Password:");
+        pswdLabel.setPreferredSize(200 , 20);
+        mainWindow.add(pswdLabel,new Point((posX /2) - 70,startPosY - 145));
 
         password = new BPasswordField(30);
-        mainWindow.add(password, new Point(posX /2, startPosY - 260));
+        mainWindow.add(password, new Point((posX /2) - 70, startPosY - 195));
 
         mainWindow.center();
 
@@ -114,8 +111,8 @@ public class LoginWindow extends BaseWindow implements LoginView {
 	private void initLoginButton(int posX)
         {
             login = new BButton("login");
-            login.setPreferredSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-            getWindow(DEFAULT_WINDOW).add(login, new Point(posX /2 - BUTTON_WIDTH, startPosY - 290));
+            login.setPreferredSize(50, 20);
+            getWindow(DEFAULT_WINDOW).add(login, new Point((posX /2) - 70, startPosY - 240));
             login.addListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
@@ -126,9 +123,9 @@ public class LoginWindow extends BaseWindow implements LoginView {
 
 	private void initExitGameButton(int posX)
         {
-            exitGame = new BButton("Exit");
-            exitGame.setPreferredSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-            getWindow(DEFAULT_WINDOW).add(exitGame, new Point(posX /2 + 10, startPosY - 290));
+            exitGame = new BButton("exit");
+            exitGame.setPreferredSize(50, 20);
+            getWindow(DEFAULT_WINDOW).add(exitGame, new Point((posX /2) + 100, startPosY - 240));
             exitGame.addListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {

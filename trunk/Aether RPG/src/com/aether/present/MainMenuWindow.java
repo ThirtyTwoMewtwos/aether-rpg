@@ -55,7 +55,7 @@ public class MainMenuWindow extends BaseWindow implements MainMenuView {
 	private static final int BUTTON_WIDTH = 250;
 	
 	private BButton createCharacter;
-	private BButton exitGame;
+	private BButton logout;
 
 	private MainMenuPresenter presenter;
 	private int startPosY;
@@ -76,13 +76,13 @@ public class MainMenuWindow extends BaseWindow implements MainMenuView {
 		int stepPosY = (int)(BUTTON_HEIGHT * 1.5f);
 		int posX = (mainWindow.getWidth() - BUTTON_WIDTH) / 2;
 		
-		BLabel titleLabel = new BLabel("Welcome to AEther");
+		BLabel titleLabel = new BLabel("Login in successful.");
 		titleLabel.setPreferredSize(BUTTON_WIDTH + 80, BUTTON_HEIGHT);
 		mainWindow.add(titleLabel, new Point(posX - 40, startPosY - stepPosY * counter++));
 		mainWindow.center();		
 
 		initStartCampaignButton(stepPosY, posX);
-        initExitGameButton(stepPosY, posX);
+        initlogoutButton(stepPosY, posX);
 		
 		GameStateManager.getInstance().attachChild(this);
 	}
@@ -99,14 +99,14 @@ public class MainMenuWindow extends BaseWindow implements MainMenuView {
 		});
 	}
 
-	private void initExitGameButton(int stepPosY, int posX) {
-		exitGame = new BButton("Exit");
-		exitGame.setPreferredSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-		getWindow(DEFAULT_WINDOW).add(exitGame, new Point(posX, startPosY - stepPosY * counter++));
-		exitGame.addListener(new ActionListener() {
+	private void initlogoutButton(int stepPosY, int posX) {
+		logout = new BButton("Logout");
+		logout.setPreferredSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+		getWindow(DEFAULT_WINDOW).add(logout, new Point(posX, startPosY - stepPosY * counter++));
+		logout.addListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				presenter.performExit();
+				presenter.performLogout();
 			}
 		});
 	}

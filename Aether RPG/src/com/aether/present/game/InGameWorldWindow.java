@@ -203,7 +203,7 @@ public class InGameWorldWindow extends BasicGameState {
 		}
 
 		player = new Node("Player Node");
-		player.setLocalTranslation(new Vector3f(100, 0, 100));
+		player.setLocalTranslation(new Vector3f(100, 0, 60));
 		getRootNode().attachChild(player);
 		player.updateWorldBound();
 
@@ -229,7 +229,7 @@ public class InGameWorldWindow extends BasicGameState {
 		ColladaImporter.load(animation, "anim");
 		// this file might contain multiple animations, (in our case it's one)
 		ArrayList<String> animations = ColladaImporter.getControllerNames();
-		if (animations != null) {
+                if (animations != null) {
 			logger.info("Number of animations: " + animations.size());
 			for (int i = 0; i < animations.size(); i++) {
 				logger.info(animations.get(i));
@@ -382,7 +382,7 @@ public class InGameWorldWindow extends BasicGameState {
 
 			float characterMinHeight = terrain.getHeight(player.getLocalTranslation()) + ((BoundingBox) player.getWorldBound()).yExtent;
 			if (!Float.isInfinite(characterMinHeight) && !Float.isNaN(characterMinHeight)) {
-				player.getLocalTranslation().y = characterMinHeight;
+				player.getLocalTranslation().y = characterMinHeight-2.1f;
 			}
 
 			timer.update();
@@ -395,6 +395,11 @@ public class InGameWorldWindow extends BasicGameState {
 			}
 
 			chaser.update(interpolation);
+
+                        terrain.getSurfaceNormal(player.getLocalTranslation(), normal);
+                        if(normal != null) {
+                            player.rotateUpTo(normal);
+                        }
 		}
 	}
 

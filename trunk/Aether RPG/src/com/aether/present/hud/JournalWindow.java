@@ -3,6 +3,8 @@ package com.aether.present.hud;
 import java.util.Collection;
 import java.util.concurrent.Callable;
 
+import org.gap.jseed.injection.annotation.Singleton;
+
 import com.aether.model.quests.JournalEntry;
 import com.aether.present.UILookAndFeel;
 import com.aether.present.hud.journal.JournalDescriptionHeader;
@@ -24,6 +26,7 @@ import com.jmex.bui.headlessWindows.BDraggableWindow;
 import com.jmex.bui.layout.AbsoluteLayout;
 import com.jmex.bui.util.Rectangle;
 
+@Singleton
 class JournalWindow implements JournalView {
 	private JournalHeader journalHeader;
 

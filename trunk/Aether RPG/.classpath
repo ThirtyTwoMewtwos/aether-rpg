@@ -28,5 +28,6 @@
 	<classpathentry kind="lib" path="lib/jme-bui.jar" sourcepath="/GBui"/>
 	<classpathentry kind="lib" path="D:/java/components/jemmy.jar"/>
 	<classpathentry kind="lib" path="lib/jME_2.0.jar" sourcepath="/jme"/>
+	<classpathentry kind="lib" path="lib/javassist.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

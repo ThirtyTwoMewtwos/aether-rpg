@@ -112,30 +112,26 @@ public class Main {
 		HUDLoader.initialize(store);
 
 		store.bind(InGameWorldWindow.class, InGameWorldWindow.class);
-
                 store.bind(LoginView.class, LoginWindow.class);
 		store.bind(LoginPresenter.class, LoginPresenter.class);
 		store.bind(MainMenuView.class, MainMenuWindow.class);
-		store.bind(MainMenuPresenter.class,
-				MainMenuPresenter.class);
-                store.bind(CharacterCreationView.class, CharacterCreationWindow.class);
-                store.bind(CharacterCreationPresenter.class,CharacterCreationPresenter.class);
+		store.bind(MainMenuPresenter.class, MainMenuPresenter.class);
+		store.bind(CharacterCreationView.class, CharacterCreationWindow.class);
+		store.bind(CharacterCreationPresenter.class, CharacterCreationPresenter.class);
 		store.bind(InGameView.class, InGameWindow.class);
 		store.bind(InGamePresenter.class, InGamePresenter.class);
 
 		StateTransition stateTransition = store.get(StateTransition.class);
 
-		ActiveState loginScreen = store.get(LoginPresenter.class);
-		ActiveState mainMenuScreen = store
-				.get(MainMenuPresenter.class);
-                ActiveState createCharacterScreen = store.get(CharacterCreationPresenter.class);
+		ActiveState mainMenuScreen = store.get(MainMenuPresenter.class);
+		ActiveState createCharacterScreen = store.get(CharacterCreationPresenter.class);
 		InGamePresenter inGame = store.get(InGamePresenter.class);
 
-		stateTransition.add(loginScreen,
-				LoginPresenter.LOGIN_TRANSITION, mainMenuScreen);
-		stateTransition.add(mainMenuScreen,
-				MainMenuPresenter.LOGOUT_TRANSITION,
-				loginScreen);
+//		stateTransition.add(loginScreen,
+//				LoginPresenter.LOGIN_TRANSITION, mainMenuScreen);
+//		stateTransition.add(mainMenuScreen,
+//				MainMenuPresenter.LOGOUT_TRANSITION,
+//				loginScreen);
 		stateTransition.add(mainMenuScreen,
 				MainMenuPresenter.CREATE_CHARACTER_TRANSITION, createCharacterScreen);
                 stateTransition.add(createCharacterScreen, CharacterCreationPresenter.CANCEL_CREATE_CHARACTER_TRANSITION, mainMenuScreen);
@@ -143,7 +139,7 @@ public class Main {
 		stateTransition.add(inGame, InGamePresenter.OPTIONS_MENU_TRANSITION,
 				mainMenuScreen);
 
-		stateTransition.setStartState(loginScreen);
+		stateTransition.setStartState(mainMenuScreen);
 	}
 
 	public static void shutdown() {
@@ -154,7 +150,7 @@ public class Main {
 	}
 
 	private static void callShutdown() {
-//		BuiSystem.getRootNode().clearBuffers();
+		BuiSystem.getRootNode().clearBuffers();
 
 		game.shutdown();
 	}

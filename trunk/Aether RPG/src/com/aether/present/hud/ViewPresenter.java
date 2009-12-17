@@ -1,6 +1,6 @@
 package com.aether.present.hud;
 
-interface ViewPresenter {
+public interface ViewPresenter {
 
 	void toggleVisibility();
 

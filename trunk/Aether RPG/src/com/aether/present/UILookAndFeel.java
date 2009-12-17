@@ -94,6 +94,7 @@ public class UILookAndFeel {
 			setupButtons();
 			setupLabels();
 	        setupTextField();
+	        setupGridContainer();
 	        setupComboBox();
 	        setupMenuItem();
 		} catch (IOException e) {
@@ -233,6 +234,14 @@ public class UILookAndFeel {
         		.setBackground("images/textfield.png", BssBackgroundMode.SCALEX)
         		.setColor(BssColor.BLACK);
     }
+    
+	private void setupGridContainer() {
+		writer.createStyle("gridcell")
+				.setFont(FONT_FAMILY, BssFontStyle.PLAIN, 16)
+				.setBorder(1, BssColor.DARK_GRAY)
+				.setBackground(BssColor.BLACK)
+				.setColor(BssColor.white);
+	}
     
     private void setupComboBox() throws IOException {
     	writer.createStyle(combobox)

@@ -3,6 +3,7 @@ package com.aether.present;
 import java.awt.event.KeyEvent;
 
 import com.aether.gbui.NameOperatorSearch;
+import com.aether.gbui.operators.BGridContainerOperator;
 import com.aether.gbui.operators.BLabelOperator;
 import com.aether.gbui.operators.BListOperator;
 import com.aether.present.hud.EquipmentView;
@@ -24,7 +25,7 @@ public class EquipmentPage extends BaseHUDWindowPage {
 	}
 
 	public Object getItemsCount() {
-		BListOperator items = new BListOperator(window, new NameOperatorSearch(EquipmentView.EQUIPMENT_LIST));
+		BGridContainerOperator items = new BGridContainerOperator(window, new NameOperatorSearch(EquipmentView.EQUIPMENT_LIST));
 		return items.size();
 	}
 }

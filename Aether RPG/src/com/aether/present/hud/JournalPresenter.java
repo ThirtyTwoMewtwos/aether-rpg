@@ -8,7 +8,7 @@ import com.aether.model.quests.JournalEntry;
 import com.aether.model.quests.JournalEntryLocator;
 
 @Singleton
-public class JournalPresenter implements ViewPresenter {
+class JournalPresenter implements ViewPresenter {
 	private final JournalView view;
 	private final JournalEntryLocator quests;
 	private boolean visible = false;

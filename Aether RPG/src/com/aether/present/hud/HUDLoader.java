@@ -13,14 +13,13 @@ public class HUDLoader {
 	}
 
 	private static void bindViews(ServiceStore store) {
-		PlayerMovementState playerMovementState = store.get(PlayerMovementState.class);
-		store.bind(PersonaView.class, new PersonaWindow(playerMovementState));
+		store.bind(PersonaView.class, PersonaWindow.class);
 		store.bind(PersonaPresenter.class, PersonaPresenter.class);
 
-        store.bind(JournalView.class, new JournalWindow());
+        store.bind(JournalView.class, JournalWindow.class);
 		store.bind(JournalPresenter.class, JournalPresenter.class);
 		
-		store.bind(EquipmentView.class, new EquipmentWindow());
+		store.bind(EquipmentView.class, EquipmentWindow.class);
 		store.bind(EquipmentPresenter.class, EquipmentPresenter.class);
 	}
 

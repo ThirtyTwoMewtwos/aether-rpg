@@ -2,6 +2,8 @@ package com.aether.present.hud;
 
 import java.util.concurrent.Callable;
 
+import org.gap.jseed.injection.annotation.Singleton;
+
 import com.aether.present.PlayerMovementState;
 import com.aether.present.hud.persona.AttributesPanel;
 import com.aether.present.hud.persona.BiograhyPanel;
@@ -15,6 +17,7 @@ import com.jmex.bui.headlessWindows.BDraggableWindow;
 import com.jmex.bui.layout.AbsoluteLayout;
 import com.jmex.bui.util.Rectangle;
 
+@Singleton
 class PersonaWindow implements PersonaView {
 	private BWindow window;
     

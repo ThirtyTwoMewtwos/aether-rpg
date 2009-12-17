@@ -4,7 +4,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import com.aether.gbui.bss.AllGbuiTests;
+import com.aether.gbui.AllGbuiTests;
 import com.aether.model.AllModelTests;
 import com.aether.present.AllPresentTests;
 import com.aether.test.AllAetherTestTests;

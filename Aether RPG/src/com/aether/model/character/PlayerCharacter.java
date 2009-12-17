@@ -40,6 +40,7 @@ import com.aether.model.Equipment;
 import com.aether.model.Item;
 import com.aether.model.items.CharacterBackpack;
 import com.aether.model.items.EquipmentContainer;
+import com.aether.model.items.GenericItem;
 import com.lowagie.text.Chapter;
 import com.lowagie.text.Document;
 import com.lowagie.text.Font;
@@ -106,6 +107,9 @@ public class PlayerCharacter implements CharacterSheet, Serializable {
     
     public PlayerCharacter(String hName,String hBio, Sex sex, Classification hClass) {
     	backpack = new CharacterBackpack();
+//    	backpack.addItem(new GenericItem("Satchel", "Used for carrying items", "?", 1));
+//    	backpack.addItem(new GenericItem("Orb", "Round thing to look at.  Kinda pretty", "?", 2));
+    	
         level = 1;
         setXPToLevel(100);
         setLocation(new Point(20,20));

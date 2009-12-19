@@ -22,6 +22,9 @@ public interface InGameView {
 	 * @param i
 	 * @param j 
 	 */
+
+        void setXP(int currentXP, int xpNeededToLevel);
+        
 	void setHealth(int maximum, int current);
 
 	void setMana(int maximum, int current);

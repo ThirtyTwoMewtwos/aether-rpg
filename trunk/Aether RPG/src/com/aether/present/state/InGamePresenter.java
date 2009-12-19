@@ -38,6 +38,10 @@ public class InGamePresenter implements ActiveState {
 		
 		Statistic mana = player.getMana();
 		view.setMana(mana.getMax(), mana.getValue());
+
+                int xp = player.getXP();
+                int xpToLevel = player.getXPToLevel();
+                view.setXP(xp, xpToLevel);
 		
 		view.setImage(CharacterTypeImage.getImage(player.getClassification()));
 	}
@@ -51,9 +55,9 @@ public class InGamePresenter implements ActiveState {
 	public void togglePersona() {
 		hudLocator.toggleViewVisibility(View.PERSONA);
 	}
-    public void toggleQuestJournal(){
+        public void toggleQuestJournal(){
         hudLocator.toggleViewVisibility(View.JOURNAL);
-    }
+        }
 
 	public void toggleEquipment() {
 		hudLocator.toggleViewVisibility(View.EQUIPMENT);

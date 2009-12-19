@@ -38,6 +38,7 @@ import com.aether.present.game.InGameWorldWindow;
 import com.aether.present.hud.BChatComponent;
 import com.aether.present.state.InGamePresenter;
 import com.aether.present.state.InGameView;
+import com.aether.present.hud.persona.ExperiencePanel;
 import com.jme.input.KeyInput;
 import com.jmex.bui.BChatWindow;
 import com.jmex.bui.BImage;
@@ -66,6 +67,7 @@ public class InGameWindow extends BaseWindow implements InGameView {
 	private InGamePresenter presenter;
 	private BMeterBar healthMeter;
 	private BMeterBar manaMeter;
+        private ExperiencePanel xpPanel;
 	private BLabel characterIcon;
 	private final InGameWorldWindow window;
 	private final PlayerMovementState state;
@@ -101,6 +103,9 @@ public class InGameWindow extends BaseWindow implements InGameView {
 		characterIcon.setName(STATS_SYMBOL_ID);
 		window.add(characterIcon, new Rectangle(0, window.getHeight() - 28, 24,
 				24));
+
+                xpPanel = new ExperiencePanel();
+                window.add(xpPanel, new Rectangle(0, 110, window.getWidth(), 20));
 
 		healthMeter = new BMeterBar(STATS_HEALTH_ID);
 		healthMeter.setStyleClass(UILookAndFeel.STATISTICS_HEALTH);
@@ -186,6 +191,11 @@ public class InGameWindow extends BaseWindow implements InGameView {
 	public void setPresenter(InGamePresenter presenter) {
 		this.presenter = presenter;
 	}
+
+        @Override
+         public void setXP(int currentXP, int xpNeededForNextLevel){
+        xpPanel.setXP(currentXP, xpNeededForNextLevel);
+        }
 
 	@Override
 	public void setHealth(int maximum, int current) {

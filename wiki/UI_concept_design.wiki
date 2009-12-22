@@ -51,6 +51,8 @@
 
  * Quests: The Quest window will consist of 2 total windows, but only 1 will appear when you click the Quests button (or use the keyboard shortcut).  The first window is a list of active quests, color coated based on the suggested level versus the players current level.  The window will be organized in sections by areas of the quest locations. Each quest in the Quest window will also display the suggest level of the quest next to the quest's name.  If a user clicks a quest in the list, a second window is then displayed next to the original one to explain the the quest in detail.
 
+ * Console: allows cheats to be administered, such as, adding quests/items/skills increasing stats/xp/skills.  This will be our easy way of testing the game environment manually where automated testing will not function for us.
+
 == On to Design ==
 Windows are setup as simple UI layout objects that delegate the work down to a presenter.   Presenters contain the logic to; navigate the next window and handle interaction with the model.  This is the common [http://martinfowler.com/eaaDev/PassiveScreen.html Passive View Pattern].  All windows are defined by an interface known as the _View_.  This view is passed into the presenter upon startup and is used to initialize the view and presenter together.    Each View is implemented by a _Window_ which is responsible for setting up the default look and arranging any setup of controls and special keys.  To help facilitate some of the setup and handling of key bindings a _Window_ can be extended by a _BaseWindow_ which provides these functions (such as activation, deactivation of a _Window_ along with the handling of key bindings).
 

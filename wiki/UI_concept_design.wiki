@@ -24,6 +24,7 @@
   * G(u)ild = u
   * S(o)cial = o
   * Quest (J)ournal = j
+  * Console = F1 (this if for testing only).
 
  * Mini-map.  Spherical radius of player using standard colored dots to represent a top-down view of immediate surroundings.
 

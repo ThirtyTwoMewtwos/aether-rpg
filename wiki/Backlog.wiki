@@ -19,13 +19,15 @@ This process can change as time goes on.
    # ~~Selecting on a quest reveals quest details - _complete_~~
    # ~~Able to drop quest - _complete_~~ 
   * Equipment View: The view should show a left and right hand, a head, feet, legs, torso, and arms and the items in which are placed on the character.  Thus, the picture of a left hand could show a sword laying over top.  For now, we will not show a fully body displaying the different items being carried, and instead focus on the equipment and the equipment place-ability. - _im.a.hypocrite, Captain.queezy_
-   # Able to arrange equipment
+   # ~~Able to arrange equipment - _complete_~~
    # Able to drop equipment
    # Can transfer equipment
    # Show equipped/used items
+   # Arrangement of equipment is saved between game states
     
-  
  * Complete user UI -
+ * When character state changes (journal/items carried/stat's) the UI should be informed of this change
+ * Persistence of the game state between sessions
 
  * Code review of curves (xp, stats, etc.) - _im.a.hypocrite_
 

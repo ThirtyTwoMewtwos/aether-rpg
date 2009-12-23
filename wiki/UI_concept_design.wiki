@@ -18,8 +18,7 @@
   * options = esc
   * (P)ersona = p
   * S(k)ills = k
-  * (I)nventory = i
-  * Equipment = c
+  * (I)nventory / Equipment = i
   * (M)ap = m
   * G(u)ild = u
   * S(o)cial = o

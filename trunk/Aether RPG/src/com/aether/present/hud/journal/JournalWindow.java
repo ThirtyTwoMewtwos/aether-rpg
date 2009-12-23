@@ -1,4 +1,4 @@
-package com.aether.present.hud;
+package com.aether.present.hud.journal;
 
 import java.util.Collection;
 import java.util.concurrent.Callable;
@@ -7,8 +7,8 @@ import org.gap.jseed.injection.annotation.Singleton;
 
 import com.aether.model.quests.JournalEntry;
 import com.aether.present.UILookAndFeel;
-import com.aether.present.hud.journal.JournalDescriptionHeader;
-import com.aether.present.hud.journal.JournalHeader;
+import com.aether.present.hud.JournalPresenter;
+import com.aether.present.hud.JournalView;
 import com.jme.renderer.ColorRGBA;
 import com.jme.util.GameTaskQueueManager;
 import com.jmex.bui.BButton;
@@ -27,7 +27,7 @@ import com.jmex.bui.layout.AbsoluteLayout;
 import com.jmex.bui.util.Rectangle;
 
 @Singleton
-class JournalWindow implements JournalView {
+public class JournalWindow implements JournalView {
 	private JournalHeader journalHeader;
 
 	private BWindow window;

@@ -1,4 +1,4 @@
-package com.aether.present.hud;
+package com.aether.gbui;
 
 import com.jme.renderer.ColorRGBA;
 import com.jmex.bui.BContainer;

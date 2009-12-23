@@ -30,17 +30,15 @@ package com.aether.model.items;
  *
  */
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import com.aether.model.Item;
 
 public class CharacterBackpack implements EquipmentContainer {
 	private int weightCarried = 0;
 	private Map<String, Item> items = new HashMap<String, Item>();
+	private Item[] locations = new Item[80];
 	
 	@Override
 	public int weightCarried() {
@@ -57,6 +55,16 @@ public class CharacterBackpack implements EquipmentContainer {
 		if (!items.containsKey(toAdd.getName())) {
 			weightCarried += toAdd.getWeight();
 			items.put(toAdd.getName(), toAdd);
+			addItemToNextLocation(toAdd);
+		}
+	}
+
+	private void addItemToNextLocation(Item toAdd) {
+		for (int i = 0; i < locations.length; i++) {
+			if (locations[i] == null) {
+				locations[i] = toAdd;
+				return;
+			}
 		}
 	}
 
@@ -70,9 +78,25 @@ public class CharacterBackpack implements EquipmentContainer {
 	public int itemCount() {
 		return items.size();
 	}
-
+	
 	@Override
-	public Collection<String> getAllItemNames() {
-		return items.keySet();
+	public Collection<? extends Item> getAllItems() {
+		return items.values();
+	}
+
+	public int locationOf(Item item) {
+		for (int i = 0; i < locations.length; i++) {
+			if (item.equals(locations[i])) {
+				return i;
+			}
+		}
+		return 0;
+	}
+	
+	@Override
+	public void setLocation(int newLocation, Item item) {
+		int oldLocation = locationOf(item);
+		locations[oldLocation] = null;
+		locations[newLocation] = item;
 	}
 }

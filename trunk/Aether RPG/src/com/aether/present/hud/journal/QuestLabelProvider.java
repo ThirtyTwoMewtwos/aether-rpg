@@ -1,9 +1,8 @@
-package com.aether.present.hud;
+package com.aether.present.hud.journal;
 
 import java.awt.Image;
 
 import com.aether.model.quests.JournalEntry;
-import com.aether.model.quests.QuestTypeImage;
 import com.jmex.bui.BImage;
 import com.jmex.bui.ImageLabelProvider;
 import com.jmex.bui.icon.BIcon;

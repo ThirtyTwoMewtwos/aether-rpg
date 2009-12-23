@@ -46,4 +46,12 @@ public class BTextAreaOperator extends BComponentOperator {
 			}
 		});
 	}
+
+	public String getText() {
+		return BComponentOperatorUtil.callInBuiThread(new Callable<String>() {
+			public String call() throws Exception {
+				return textArea.getText();
+			}
+		});
+	}
 }

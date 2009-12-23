@@ -1,7 +1,9 @@
-package com.aether.model;
+package com.aether.model.items;
+
+import com.aether.model.Equipment;
 
 /*
- * ChestArmor.java
+ * HandsArmor.java
  * 
  * Copyright (c) 2008, Tyler Hoersch
  * All rights reserved.
@@ -29,13 +31,13 @@ package com.aether.model;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-public class ChestArmor extends Equipment
+public class HandsArmor extends Equipment
 {
-    public ChestArmor(String arName,int arLevelRequirement)
+    public HandsArmor(String arName,int arLevelRequirement)
     {
         this(arName,arLevelRequirement,0,0,0,0,0,0);
     }
-    public ChestArmor(String arName,int arLevelRequirement,int str, int dex,int tough,int intel,int wis, int def)
+    public HandsArmor(String arName,int arLevelRequirement,int str, int dex,int tough,int intel,int wis, int def)
     {
         setName(arName);
         setLevelRequirement(arLevelRequirement);
@@ -48,6 +50,6 @@ public class ChestArmor extends Equipment
     }
     public int getSlot()
     {
-        return Equipment.CHEST;
+        return Equipment.HANDS;
     }
 }

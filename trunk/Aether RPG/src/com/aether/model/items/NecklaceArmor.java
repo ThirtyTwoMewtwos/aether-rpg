@@ -1,4 +1,6 @@
-package com.aether.model;
+package com.aether.model.items;
+
+import com.aether.model.Equipment;
 
 /*
  * NecklaceArmor.java

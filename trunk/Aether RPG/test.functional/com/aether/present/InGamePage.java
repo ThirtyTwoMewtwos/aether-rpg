@@ -34,4 +34,8 @@ public class InGamePage {
 	public BTextFieldOperator getChatInputField() throws InterruptedException {
 		return new BTextFieldOperator(getChatWindow(), new NameOperatorSearch(InGameView.CHAT_INPUT_ID));
 	}
+
+	public ConsolePage getConsolePage() throws InterruptedException {
+		return new ConsolePage();
+	}
 }

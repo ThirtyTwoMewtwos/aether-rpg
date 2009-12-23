@@ -1,4 +1,4 @@
-package com.aether.present.hud;
+package com.aether.present.hud.journal;
 
 import static org.junit.Assert.*;
 
@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.aether.model.quests.KillQuest;
+import com.aether.present.hud.journal.QuestLabelProvider;
 
 
 public class TestQuestLabelProvider {

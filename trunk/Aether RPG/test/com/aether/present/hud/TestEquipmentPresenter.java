@@ -12,7 +12,7 @@ import org.junit.Test;
 import com.aether.model.character.CharacterLocator;
 import com.aether.model.character.CharacterSheet;
 import com.aether.model.items.EquipmentContainer;
-
+import com.aether.model.items.Item;
 
 public class TestEquipmentPresenter {
 	private EquipmentView view;
@@ -42,9 +42,17 @@ public class TestEquipmentPresenter {
 		EasyMock.expect(character.getEquipmentContainer()).andReturn(equipment);
 		EasyMock.expect(equipment.weightCarried()).andReturn(45);
 		view.setWeightCarried("45");
-		List<String> items = Arrays.asList("Rocket", "Knife", "Glue");
-		EasyMock.expect(equipment.getAllItemNames()).andReturn(items);
-		view.setItems(items);
+		Item item1 = EasyMock.createMock("item1", Item.class);
+		Item item2 = EasyMock.createMock("item2", Item.class);
+		Item item3 = EasyMock.createMock("item3", Item.class);
+		List items = Arrays.asList(item1, item2, item3);
+		EasyMock.expect(equipment.getAllItems()).andReturn(items);
+		EasyMock.expect(equipment.locationOf(item1)).andReturn(0);
+		view.setItem(0, 0, 0, item1);
+		EasyMock.expect(equipment.locationOf(item2)).andReturn(21);
+		view.setItem(1, 0, 1, item2);
+		EasyMock.expect(equipment.locationOf(item3)).andReturn(6);
+		view.setItem(0, 1, 1, item3);
 		view.setVisible(true);
 		view.setVisible(false);
 		
@@ -52,6 +60,19 @@ public class TestEquipmentPresenter {
 		EquipmentPresenter presenter = new EquipmentPresenter(view, locator);
 		presenter.toggleVisibility();
 		presenter.toggleVisibility();
+		EasyMock.verify(view, locator, character, equipment);
+	}
+	
+	@Test
+	public void test_View_requests_a_new_location_for_item() throws Exception {
+		Item item1 = EasyMock.createMock(Item.class);
+		EasyMock.expect(locator.getPlayer()).andReturn(character);
+		EasyMock.expect(character.getEquipmentContainer()).andReturn(equipment);
+		equipment.setLocation(21, item1);
+		
+		EasyMock.replay(view, locator, character, equipment);
+		EquipmentPresenter presenter = new EquipmentPresenter(view, locator);
+		presenter.setLocation(1, 0, 1, item1);
 		EasyMock.verify(view, locator, character, equipment);
 	}
 }

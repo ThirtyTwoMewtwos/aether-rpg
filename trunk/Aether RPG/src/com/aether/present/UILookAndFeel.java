@@ -30,28 +30,13 @@ package com.aether.present;
  *
  */
 
-import static com.aether.gbui.bss.BssWriter.StyleState.disabled;
-import static com.aether.gbui.bss.BssWriter.StyleState.hover;
-import static com.aether.gbui.bss.BssWriter.StyleState.selected;
-import static com.aether.gbui.bss.BssWriter.StyleType.button;
-import static com.aether.gbui.bss.BssWriter.StyleType.list_entry;
-import static com.aether.gbui.bss.BssWriter.StyleType.textarea;
-import static com.aether.gbui.bss.BssWriter.StyleType.combobox;
-import static com.aether.gbui.bss.BssWriter.StyleType.label;
-import static com.aether.gbui.bss.BssWriter.StyleType.menuitem;
-import static com.aether.gbui.bss.BssWriter.StyleType.textfield;
-import static com.aether.gbui.bss.BssWriter.StyleType.window;
+import static com.aether.gbui.bss.BssWriter.StyleState.*;
+import static com.aether.gbui.bss.BssWriter.StyleType.*;
 
 import java.awt.Color;
 import java.io.IOException;
 
-import com.aether.gbui.bss.BssBackgroundMode;
-import com.aether.gbui.bss.BssColor;
-import com.aether.gbui.bss.BssFontStyle;
-import com.aether.gbui.bss.BssStyleClass;
-import com.aether.gbui.bss.BssTextAlign;
-import com.aether.gbui.bss.BssTextEffect;
-import com.aether.gbui.bss.BssWriter;
+import com.aether.gbui.bss.*;
 import com.aether.gbui.bss.BssWriter.StyleType;
 import com.jme.input.InputHandler;
 import com.jme.util.Timer;
@@ -87,7 +72,7 @@ public class UILookAndFeel {
 
 	public void loadBaseStyleSheet() {
 		try {
-                        setupLoginLookAndFeel();
+            setupLoginLookAndFeel();
 			setupInGameStatistics();
 			setupInGameChatBox();
 			setupWindow();
@@ -104,17 +89,16 @@ public class UILookAndFeel {
 		setupDefaultStyleSheet();
 	}
 
-        private void setupLoginLookAndFeel()
-        {
-            writer.createStyle(LOGIN_LOGO_LOOK)
-                                .setBackground("images/logoPlaceHolder.png", BssBackgroundMode.FRAMEXY);
+	private void setupLoginLookAndFeel() {
+		writer.createStyle(LOGIN_LOGO_LOOK)
+				.setBackground("images/logoPlaceHolder.png", BssBackgroundMode.FRAMEXY);
 
-            writer.createStyle(LOGIN_TEXTFIELD_LOOK)
-                                .setBackground("images/clearTextField.png", BssBackgroundMode.SCALEX)
-                                .setPadding(3, 30)
-                                .setColor(BssColor.BLACK)
-                                .setFont("serif", BssFontStyle.PLAIN, 15);
-        }
+		writer.createStyle(LOGIN_TEXTFIELD_LOOK)
+				.setBackground("images/clearTextField.png", BssBackgroundMode.SCALEX)
+				.setPadding(3, 30)
+				.setColor(BssColor.BLACK)
+				.setFont("serif", BssFontStyle.PLAIN, 15);
+	}
 
 	private void setupInGameStatistics() {
 		writer.createStyle(STATISTICS_TOOLTIP_TEXT)
@@ -226,6 +210,11 @@ public class UILookAndFeel {
 				.setTextAlign(BssTextAlign.LEFT)
 				.setColor(BssColor.GREEN)
 				.clearBackground();
+		
+		writer.createStyle(tooltip_label)
+				.setBackground(BssColor.GRAY)
+				.setColor(BssColor.WHITE)
+				.setFont(FONT_FAMILY, BssFontStyle.ITALIC, 11);
 	}
 
     private void setupTextField() {

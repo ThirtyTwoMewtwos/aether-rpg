@@ -3,9 +3,9 @@ package com.aether.present.state;
 import com.aether.model.character.CharacterLocator;
 import com.aether.model.character.CharacterSheet;
 import com.aether.model.character.Statistic;
-import com.aether.present.CharacterTypeImage;
 import com.aether.present.hud.HUDViewLocator;
 import com.aether.present.hud.HUDViewLocator.View;
+import com.aether.present.hud.persona.CharacterTypeImage;
 
 public class InGamePresenter implements ActiveState {
 	public static final String OPTIONS_MENU_TRANSITION = "options.menu";
@@ -61,5 +61,9 @@ public class InGamePresenter implements ActiveState {
 
 	public void toggleEquipment() {
 		hudLocator.toggleViewVisibility(View.EQUIPMENT);
+	}
+
+	public void toggleConsole() {
+		hudLocator.toggleViewVisibility(View.CONSOLE);
 	}
 }

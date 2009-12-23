@@ -38,6 +38,7 @@ import org.gap.jseed.ServiceStore;
 
 import com.aether.model.character.CharacterLocator;
 import com.aether.model.character.PCLocator;
+import com.aether.model.parser.ConsoleParserLoader;
 import com.aether.model.quests.JournalLoader;
 import com.aether.present.game.InGameWorldWindow;
 import com.aether.present.game.PCMovementState;
@@ -105,6 +106,7 @@ public class Main {
 		store.bind(StateTransition.class, GameStateTransition.class);
 		store.bind(CharacterLocator.class, PCLocator.class);
 		new JournalLoader(store);
+		new ConsoleParserLoader(store);
 		store.bind(PlayerMovementState.class, PCMovementState.class);
 	}
 
@@ -112,7 +114,7 @@ public class Main {
 		HUDLoader.initialize(store);
 
 		store.bind(InGameWorldWindow.class, InGameWorldWindow.class);
-                store.bind(LoginView.class, LoginWindow.class);
+		store.bind(LoginView.class, LoginWindow.class);
 		store.bind(LoginPresenter.class, LoginPresenter.class);
 		store.bind(MainMenuView.class, MainMenuWindow.class);
 		store.bind(MainMenuPresenter.class, MainMenuPresenter.class);
@@ -127,17 +129,15 @@ public class Main {
 		ActiveState createCharacterScreen = store.get(CharacterCreationPresenter.class);
 		InGamePresenter inGame = store.get(InGamePresenter.class);
 
-//		stateTransition.add(loginScreen,
-//				LoginPresenter.LOGIN_TRANSITION, mainMenuScreen);
-//		stateTransition.add(mainMenuScreen,
-//				MainMenuPresenter.LOGOUT_TRANSITION,
-//				loginScreen);
-		stateTransition.add(mainMenuScreen,
-				MainMenuPresenter.CREATE_CHARACTER_TRANSITION, createCharacterScreen);
-                stateTransition.add(createCharacterScreen, CharacterCreationPresenter.CANCEL_CREATE_CHARACTER_TRANSITION, mainMenuScreen);
-                stateTransition.add(createCharacterScreen,CharacterCreationPresenter.GAME_WINDOW_TRANSITION,inGame);
-		stateTransition.add(inGame, InGamePresenter.OPTIONS_MENU_TRANSITION,
-				mainMenuScreen);
+		// stateTransition.add(loginScreen,
+		// LoginPresenter.LOGIN_TRANSITION, mainMenuScreen);
+		// stateTransition.add(mainMenuScreen,
+		// MainMenuPresenter.LOGOUT_TRANSITION,
+		// loginScreen);
+		stateTransition.add(mainMenuScreen, MainMenuPresenter.CREATE_CHARACTER_TRANSITION, createCharacterScreen);
+		stateTransition.add(createCharacterScreen, CharacterCreationPresenter.CANCEL_CREATE_CHARACTER_TRANSITION, mainMenuScreen);
+		stateTransition.add(createCharacterScreen, CharacterCreationPresenter.GAME_WINDOW_TRANSITION, inGame);
+		stateTransition.add(inGame, InGamePresenter.OPTIONS_MENU_TRANSITION, mainMenuScreen);
 
 		stateTransition.setStartState(mainMenuScreen);
 	}
@@ -145,7 +145,7 @@ public class Main {
 	public static void shutdown() {
 		callShutdownHooks();
 		callShutdown();
-		
+
 		assureGameIsShutdown();
 	}
 

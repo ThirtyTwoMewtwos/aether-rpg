@@ -60,7 +60,7 @@ public class TestInGamePresenter {
 		EasyMock.expect(characterLocator.getPlayer()).andReturn(hero);
 		view.setHealth(10, 10);
 		view.setMana(10, 2);
-                view.setXP(10, 100);
+        view.setXP(0, 100);
 		view.setImage((Image)EasyMock.anyObject());
         view.deactivate();
         hudLocator.deactivate();

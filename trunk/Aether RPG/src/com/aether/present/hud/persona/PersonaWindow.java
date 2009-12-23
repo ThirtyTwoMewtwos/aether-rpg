@@ -1,15 +1,12 @@
-package com.aether.present.hud;
+package com.aether.present.hud.persona;
 
 import java.util.concurrent.Callable;
 
 import org.gap.jseed.injection.annotation.Singleton;
 
 import com.aether.present.PlayerMovementState;
-import com.aether.present.hud.persona.AttributesPanel;
-import com.aether.present.hud.persona.BiograhyPanel;
-import com.aether.present.hud.persona.CombatPanel;
-import com.aether.present.hud.persona.ExperiencePanel;
-import com.aether.present.hud.persona.HeaderPanel;
+import com.aether.present.hud.PersonaPresenter;
+import com.aether.present.hud.PersonaView;
 import com.jme.util.GameTaskQueueManager;
 import com.jmex.bui.BWindow;
 import com.jmex.bui.BuiSystem;
@@ -18,7 +15,7 @@ import com.jmex.bui.layout.AbsoluteLayout;
 import com.jmex.bui.util.Rectangle;
 
 @Singleton
-class PersonaWindow implements PersonaView {
+public class PersonaWindow implements PersonaView {
 	private BWindow window;
     
 	private HeaderPanel headerPanel;

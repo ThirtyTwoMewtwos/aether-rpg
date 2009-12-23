@@ -1,7 +1,9 @@
-package com.aether.model;
+package com.aether.model.items;
+
+import com.aether.model.Equipment;
 
 /*
- * CloakArmor.java
+ * BootsArmor.java
  * 
  * Copyright (c) 2008, Tyler Hoersch
  * All rights reserved.
@@ -29,13 +31,13 @@ package com.aether.model;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-public class CloakArmor extends Equipment
+public class BootsArmor extends Equipment
 {
-    public CloakArmor(String arName,int arLevelRequirement)
+    public BootsArmor(String arName,int arLevelRequirement)
     {
         this(arName,arLevelRequirement,0,0,0,0,0,0);
     }
-    public CloakArmor(String arName,int arLevelRequirement,int str, int dex,int tough,int intel,int wis, int def)
+    public BootsArmor(String arName,int arLevelRequirement,int str, int dex,int tough,int intel,int wis, int def)
     {
         setName(arName);
         setLevelRequirement(arLevelRequirement);
@@ -48,6 +50,6 @@ public class CloakArmor extends Equipment
     }
     public int getSlot()
     {
-        return Equipment.CLOAK;
+        return Equipment.BOOTS;
     }
 }

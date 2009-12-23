@@ -1,4 +1,4 @@
-package com.aether.present;
+package com.aether.present.hud.persona;
 
 /*
  * CharacterTypeImage.java

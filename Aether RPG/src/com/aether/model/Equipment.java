@@ -1,5 +1,7 @@
 package com.aether.model;
 
+import com.aether.model.items.Item;
+
 /*
  * Equipment.java
  * 

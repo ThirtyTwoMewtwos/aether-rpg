@@ -5,10 +5,18 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import com.jmex.bui.BComponent;
 import com.jmex.bui.BContainer;
 import com.jmex.bui.BLabel;
+import com.jmex.bui.dragndrop.BDragEvent;
+import com.jmex.bui.dragndrop.BDragListener;
+import com.jmex.bui.dragndrop.BDropEvent;
+import com.jmex.bui.dragndrop.BDropListener;
+import com.jmex.bui.icon.BIcon;
+import com.jmex.bui.icon.BlankIcon;
 import com.jmex.bui.layout.TableLayout;
 
 public class BGridContainer extends BContainer {
 	private Object[] values;
+	private final BDragListener[] listeners;
+	
 	private final int numberOfRows;
 	private final int numberOfColumns;
 	private BCellRenderer cellRenderer = new BCellRenderer() {
@@ -24,6 +32,7 @@ public class BGridContainer extends BContainer {
 		this.numberOfRows = rows;
 		this.numberOfColumns = columns;
 		values = new Object[rows * columns];
+		listeners = new BDragListener[rows * columns];
 		TableLayout layout = new TableLayout(numberOfColumns, 2, 2);
 		layout.setHorizontalAlignment(TableLayout.CENTER);
 		layout.setVerticalAlignment(TableLayout.CENTER);
@@ -92,7 +101,43 @@ public class BGridContainer extends BContainer {
 			child.setStyleClass("gridcell");
 			super.add(index, child, null);
 		}
+		
+		setDragEnabled(true);
 	}
+	
+	public void setDragEnabled(boolean dragEnableState) {
+		for (int i = 0; i < values.length; i++) {
+			BComponent component = getComponent(i);
+			component.addListener(new SwitchValues());
+			if (values[i] != null) {
+				BIcon icon = null;
+				if (component instanceof BLabel) {
+					icon = ((BLabel)component).getIcon();
+					icon =  icon == null? new BlankIcon(14,14): icon; 
+				}
+				listeners[i] = new BDragListener(component, values[i], icon);
+				component.addListener(listeners[i]);
+			}
+		}
+	}
+	
+	private class SwitchValues extends BDropListener {
+        protected void drop(BDropEvent dropEvent) {
+        	BDragEvent dragEvent = dropEvent.getDragEvent();
+        	BComponent source = (BComponent)dragEvent.getSource();
+        	BComponent destination = (BComponent)dropEvent.getSource();
+        	
+       		moveValue(source, destination);
+       		initializeComponents();
+        }
+
+		private void moveValue(BComponent source, BComponent destination) {
+			int newIndex = getComponentIndex(destination);
+       		int oldIndex = getComponentIndex(source);
+       		values[newIndex] = values[oldIndex];
+       		values[oldIndex] = null;
+		}
+    }
 	
 	@Override
 	public void add(BComponent child) {

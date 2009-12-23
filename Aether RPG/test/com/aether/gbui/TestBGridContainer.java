@@ -187,6 +187,4 @@ public class TestBGridContainer {
 		EasyMock.verify(cell);
 		assertEquals(24, container.getComponentCount());
 	}
-	
-	
 }

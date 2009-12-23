@@ -37,7 +37,7 @@ import java.util.Map;
 
 
 public class BssWriter {
-	public enum StyleType {window, combobox, menuitem, button, list_entry, textarea, textfield, label, message, titlemessage, statusmessage}
+	public enum StyleType {window, combobox, menuitem, button, list_entry, textarea, textfield, label, message, titlemessage, statusmessage, tooltip_label, tooltip_button, tooltip_window}
 	public enum StyleState {hover, disabled, selected, down}
 
     private Map<String, BssStyleClass> stylesClasses = new HashMap<String, BssStyleClass>();

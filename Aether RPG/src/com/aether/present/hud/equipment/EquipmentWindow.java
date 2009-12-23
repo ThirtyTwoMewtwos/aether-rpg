@@ -1,4 +1,4 @@
-package com.aether.present.hud;
+package com.aether.present.hud.equipment;
 
 import java.awt.Image;
 import java.util.Collection;
@@ -8,10 +8,12 @@ import org.gap.jseed.injection.annotation.Singleton;
 
 import com.aether.gbui.BCellRenderer;
 import com.aether.gbui.BGridContainer;
-import com.aether.model.quests.QuestType;
-import com.aether.model.quests.QuestTypeImage;
-import com.aether.present.hud.equipment.HeaderPanel;
+import com.aether.gbui.bss.BssWriter;
+import com.aether.model.items.Item;
+import com.aether.present.hud.EquipmentPresenter;
+import com.aether.present.hud.EquipmentView;
 import com.jme.util.GameTaskQueueManager;
+import com.jmex.bui.BButton;
 import com.jmex.bui.BComponent;
 import com.jmex.bui.BImage;
 import com.jmex.bui.BLabel;
@@ -24,35 +26,21 @@ import com.jmex.bui.layout.AbsoluteLayout;
 import com.jmex.bui.util.Rectangle;
 
 @Singleton
-class EquipmentWindow implements EquipmentView {
+public class EquipmentWindow implements EquipmentView {
 	private BWindow window;
 	private HeaderPanel header;
 	private BGridContainer items;
+	private EquipmentPresenter presenter;
 
 	public EquipmentWindow() {
 		initWindow();
 
 		header = new HeaderPanel();
-		items = new BGridContainer(4, 6);
+		items = new BGridContainer(4, 5);
 		items.setName(EquipmentView.EQUIPMENT_LIST);
-		items.setCellRenderer(new BCellRenderer() {
-			@Override
-			public BComponent getCellComponent(Object value, int i) {
-				String text = (value == null ? "" : value.toString());
-				BLabel label = null;
-				if (value == null) {
-					label = new BLabel(new BlankIcon(24, 24));
-				} else {
-					Image image = QuestTypeImage.getImage(QuestType.Hunt);
-					BImage bImage = new BImage(image);
-					label = new BLabel(new ImageIcon(bImage));
-					label.setTooltipText(text);
-					label.setTooltipRelativeToMouse(true);
-				}
-				return label;
-			}
-		});
-
+		items.setCellRenderer(new ItemCellRenderer());
+		items.setDragEnabled(true);
+			
 		window.add(header, new Rectangle(0, 295, 240, 45));
 		window.add(items, new Rectangle(0, 100, 240, 180));
 	}
@@ -68,20 +56,17 @@ class EquipmentWindow implements EquipmentView {
 
 	@Override
 	public void setPresenter(EquipmentPresenter presenter) {
-
+		this.presenter = presenter;
 	}
 
 	@Override
 	public void setWeightCarried(String totalWeight) {
 		header.setWeight(totalWeight);
 	}
-
+	
 	@Override
-	public void setItems(Collection<? extends Object> newItems) {
-		int column = 0;
-		for (Object each : newItems) {
-			items.setValue(0, column++, each);
-		}
+	public void setItem(int page, int row, int col, Item item) {
+		items.setValue(row, col, item);
 	}
 
 	@Override
@@ -107,5 +92,33 @@ class EquipmentWindow implements EquipmentView {
 				return null;
 			}
 		});
+	}
+	
+	private final class ItemCellRenderer implements BCellRenderer {
+		@Override
+		public BComponent getCellComponent(Object value, int i) {
+			Item item = (Item)value;
+			String text = (value == null ? "" : item.getName());
+			if (value == null) {
+				return new BLabel(new BlankIcon(32, 32));
+			} else {
+				return createItemLabel(item, text);
+			}
+		}
+
+		private BLabel createItemLabel(Item item, String text) {
+			BLabel label;
+			Image image = ItemTypeImage.getImage(item.getItemType());
+			BImage bImage = new BImage(image);
+			label = new BButton(new ImageIcon(bImage), "") {
+				@Override
+				protected BComponent createTooltipComponent(String tiptext) {
+					return new BLabel(tiptext, BssWriter.StyleType.tooltip_label.name());
+				}
+			};
+			label.setTooltipText(text);
+			label.setTooltipRelativeToMouse(true);
+			return label;
+		}
 	}
 }

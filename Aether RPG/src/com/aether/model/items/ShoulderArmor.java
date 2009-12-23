@@ -1,7 +1,9 @@
-package com.aether.model;
+package com.aether.model.items;
+
+import com.aether.model.Equipment;
 
 /*
- * TrinketArmor.java
+ * ShoulderArmor.java
  * 
  * Copyright (c) 2008, Tyler Hoersch
  * All rights reserved.
@@ -29,13 +31,13 @@ package com.aether.model;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-public class TrinketArmor extends Equipment
+public class ShoulderArmor extends Equipment
 {
-    public TrinketArmor(String arName,int arLevelRequirement)
+    public ShoulderArmor(String arName,int arLevelRequirement)
     {
         this(arName,arLevelRequirement,0,0,0,0,0,0);
     }
-    public TrinketArmor(String arName,int arLevelRequirement,int str, int dex,int tough,int intel,int wis, int def)
+    public ShoulderArmor(String arName,int arLevelRequirement,int str, int dex,int tough,int intel,int wis, int def)
     {
         setName(arName);
         setLevelRequirement(arLevelRequirement);
@@ -48,6 +50,6 @@ public class TrinketArmor extends Equipment
     }
     public int getSlot()
     {
-        return Equipment.TRINKET;
+        return Equipment.SHOULDER;
     }
 }

@@ -12,7 +12,8 @@ import com.aether.gbui.bss.TestBssWriter;
 	TestBssColor.class,
 	TestBssStyleClass.class,
 	TestBssWriter.class,
-	TestBGridContainer.class
+	TestBGridContainer.class,
+	TestBGridContainerDragNDrop.class
 })
 @RunWith(Suite.class)
 public class AllGbuiTests {

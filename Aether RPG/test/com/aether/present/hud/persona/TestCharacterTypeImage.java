@@ -1,4 +1,4 @@
-package com.aether.model.character;
+package com.aether.present.hud.persona;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -7,7 +7,6 @@ import java.awt.Image;
 import org.junit.Test;
 
 import com.aether.model.character.Classification;
-import com.aether.present.CharacterTypeImage;
 
 
 public class TestCharacterTypeImage {

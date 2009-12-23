@@ -1,10 +1,11 @@
-package com.aether.model.quests;
+package com.aether.present.hud.journal;
 
 import java.awt.Image;
 import java.io.File;
 
 import javax.imageio.ImageIO;
 
+import com.aether.model.quests.QuestType;
 import com.util.FileUtil;
 
 public class QuestTypeImage {

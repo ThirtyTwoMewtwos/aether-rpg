@@ -30,7 +30,6 @@ package com.aether.model.items;
  *
  */
 
-import com.aether.model.Item;
 
 public class GenericItem implements Item {
 

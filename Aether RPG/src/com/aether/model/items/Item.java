@@ -1,4 +1,4 @@
-package com.aether.model;
+package com.aether.model.items;
 
 /*
  * Item.java

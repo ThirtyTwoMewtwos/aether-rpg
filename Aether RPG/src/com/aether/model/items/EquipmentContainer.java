@@ -32,7 +32,6 @@ package com.aether.model.items;
 
 import java.util.Collection;
 
-import com.aether.model.Item;
 
 public interface EquipmentContainer {
 
@@ -40,8 +39,13 @@ public interface EquipmentContainer {
 
 	boolean isEmpty();
 
-	void addItem(Item itemA);
+	void addItem(Item item);
 
-	Collection<String> getAllItemNames();
+	Collection<? extends Item> getAllItems();
+	
+	int itemCount();
+	
+	int locationOf(Item item);
 
+	void setLocation(int location, Item item);
 }

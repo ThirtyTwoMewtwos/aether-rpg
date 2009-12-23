@@ -36,6 +36,7 @@ import java.util.List;
 import com.aether.model.character.Classification;
 import com.aether.model.character.Race;
 import com.aether.model.character.Sex;
+import com.aether.present.hud.persona.CharacterTypeImage;
 import com.aether.present.state.CharacterCreationPresenter;
 import com.aether.present.state.CharacterCreationView;
 import com.jme.input.KeyInput;

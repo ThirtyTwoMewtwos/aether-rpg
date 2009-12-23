@@ -1,10 +1,13 @@
-package com.aether.model.quests;
+package com.aether.present.hud.journal;
 
 import static org.junit.Assert.assertNotNull;
 
 import java.awt.Image;
 
 import org.junit.Test;
+
+import com.aether.model.quests.QuestType;
+import com.aether.present.hud.journal.QuestTypeImage;
 
 public class TestQuestTypeImage {
 	@Test

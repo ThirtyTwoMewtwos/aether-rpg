@@ -2,6 +2,8 @@ package com.aether.present.hud;
 
 import java.util.Collection;
 
+import com.aether.model.items.Item;
+
 public interface EquipmentView {
 	String ID = "equipment.view";
 	String EQUIPMENT_WEIGHT = "equipment.weight";
@@ -11,12 +13,11 @@ public interface EquipmentView {
 
 	void setWeightCarried(String totalWeight);
 
+	void setItem(int page, int row, int col, Item item1);
+
 	void activate();
-
+	
 	void deactivate();
-
+	
 	void setVisible(boolean b);
-
-	void setItems(Collection<? extends Object> items);
-
 }

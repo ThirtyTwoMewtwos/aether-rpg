@@ -1,5 +1,6 @@
 package com.aether.model.items;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -9,7 +10,6 @@ import java.util.Collection;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aether.model.Item;
 import com.aether.test.AssertCollection;
 
 public class TestCharacterBackpack {
@@ -77,12 +77,33 @@ public class TestCharacterBackpack {
 	}
 	
 	@Test
-	public void test_All_item_names_are_returned() throws Exception {
+	public void test_Get_all_items() throws Exception {
 		backpack.addItem(itemA);
 		backpack.addItem(itemB);
-		Collection<String> names = backpack.getAllItemNames();
-		assertEquals(2, names.size());
-		AssertCollection.assertContains("itemA", names);
-		AssertCollection.assertContains("itemB", names);
+		backpack.addItem(itemC);
+		
+		Collection<? extends Object> items = backpack.getAllItems();
+		
+		AssertCollection.assertContains(itemA, items);
+		AssertCollection.assertContains(itemB, items);
+		AssertCollection.assertContains(itemC, items);
+	}
+	
+	@Test
+	public void test_Add_multiple_items_places_in_sequential_order() throws Exception {
+		backpack.addItem(itemA);
+		backpack.addItem(itemB);
+		backpack.addItem(itemC);
+		assertEquals(0, backpack.locationOf(itemA));
+		assertEquals(1, backpack.locationOf(itemB));
+		assertEquals(2, backpack.locationOf(itemC));
+	}
+	
+	@Test
+	public void test_Move_added_item_to_new_location() throws Exception {
+		backpack.addItem(itemA);
+		
+		backpack.setLocation(21, itemA);
+		assertEquals(21, backpack.locationOf(itemA));
 	}
 }

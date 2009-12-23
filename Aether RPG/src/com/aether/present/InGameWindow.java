@@ -32,10 +32,10 @@ package com.aether.present;
 
 import java.awt.Image;
 
+import com.aether.gbui.BChatComponent;
 import com.aether.gbui.BDraggableChatWindow;
 import com.aether.gbui.components.BMeterBar;
 import com.aether.present.game.InGameWorldWindow;
-import com.aether.present.hud.BChatComponent;
 import com.aether.present.state.InGamePresenter;
 import com.aether.present.state.InGameView;
 import com.aether.present.hud.persona.ExperiencePanel;
@@ -63,6 +63,7 @@ public class InGameWindow extends BaseWindow implements InGameView {
 	private static final String PERSONA_VIEW_KEY_BINDING = "persona.view";
 	private static final String JOURNAL_VIEW_KEY_BINDING = "journal.view";
 	private static final String EQUIPMENT_VIEW_KEY_BINDING = "equipment.view";
+	private static final String CONSOLE_VIEW_KEY_BINDING = "console.view";
 
 	private InGamePresenter presenter;
 	private BMeterBar healthMeter;
@@ -110,15 +111,12 @@ public class InGameWindow extends BaseWindow implements InGameView {
 		healthMeter = new BMeterBar(STATS_HEALTH_ID);
 		healthMeter.setStyleClass(UILookAndFeel.STATISTICS_HEALTH);
 		healthMeter.setTooltipStyleClass(UILookAndFeel.STATISTICS_TOOLTIP_TEXT);
-		window.add(healthMeter,
-				new Rectangle(1, 0, 10, window.getHeight() - 30));
+		window.add(healthMeter,	new Rectangle(1, 0, 10, window.getHeight() - 30));
 
 		manaMeter = new BMeterBar(STATS_MANA_ID);
 		manaMeter.setStyleClass(UILookAndFeel.STATISTICS_MANA_POINTS);
 		manaMeter.setTooltipStyleClass(UILookAndFeel.STATISTICS_TOOLTIP_TEXT);
-		window
-				.add(manaMeter, new Rectangle(14, 0, 10,
-						window.getHeight() - 30));
+		window.add(manaMeter, new Rectangle(14, 0, 10, window.getHeight() - 30));
 	}
 
 	private BChatWindow initChatWindow() {
@@ -171,6 +169,7 @@ public class InGameWindow extends BaseWindow implements InGameView {
 		registerBinding(PERSONA_VIEW_KEY_BINDING, KeyInput.KEY_P);
 		registerBinding(JOURNAL_VIEW_KEY_BINDING, KeyInput.KEY_J);
 		registerBinding(EQUIPMENT_VIEW_KEY_BINDING, KeyInput.KEY_I);
+		registerBinding(CONSOLE_VIEW_KEY_BINDING, KeyInput.KEY_F1);
 	}
 
 	@Override
@@ -184,6 +183,8 @@ public class InGameWindow extends BaseWindow implements InGameView {
 				presenter.toggleQuestJournal();
 			} else if (EQUIPMENT_VIEW_KEY_BINDING.equals(name)) {
 				presenter.toggleEquipment();
+			} else if (CONSOLE_VIEW_KEY_BINDING.equals(name)) {
+				presenter.toggleConsole();
 			}
 		}
 	}

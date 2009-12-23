@@ -4,6 +4,9 @@ import org.gap.jseed.ServiceStore;
 
 import com.aether.present.PlayerMovementState;
 import com.aether.present.hud.HUDViewLocator.View;
+import com.aether.present.hud.equipment.EquipmentWindow;
+import com.aether.present.hud.journal.JournalWindow;
+import com.aether.present.hud.persona.PersonaWindow;
 
 public class HUDLoader {
 
@@ -21,6 +24,9 @@ public class HUDLoader {
 		
 		store.bind(EquipmentView.class, EquipmentWindow.class);
 		store.bind(EquipmentPresenter.class, EquipmentPresenter.class);
+
+		store.bind(ConsoleView.class, ConsoleWindow.class);
+		store.bind(ConsolePresenter.class, ConsolePresenter.class);
 	}
 
 	private static void attachViewsToHUDLocator(ServiceStore store) {
@@ -29,6 +35,7 @@ public class HUDLoader {
 		service.attach(View.PERSONA, store.get(PersonaPresenter.class));
         service.attach(View.JOURNAL, store.get(JournalPresenter.class));
         service.attach(View.EQUIPMENT, store.get(EquipmentPresenter.class));
+        service.attach(View.CONSOLE, store.get(ConsolePresenter.class));
 		
 		store.bind(HUDViewLocator.class, service);
 	}

@@ -6,7 +6,7 @@ The world, where all users interact.  This is the land, water, and sky in the ga
 
 == Time Setting ==
 
-The game takes place in a early 19th century time period world as far as technology.  There are only simple pistols and the majority of the population can use a sword or knives better. Although players do not need to be constantly reminded of where they are in the technological timeline in comparison to ours, it should be easily inferred throught the game. In Aedar, there are few large cities--only small villages and smaller tribes.  There are tradesmen, few in number (usually one or two per village), but skilled. Some of the more skilled ones will be able to take on an apprentice.
+The game takes place in an early 19th century time period world as far as technology.  There are only simple pistols and the majority of the population can use a sword or knives better. Although players do not need to be constantly reminded of where they are in the technological timeline in comparison to ours, it should be easily inferred throught the game. In Aedar, there are few large cities--only small villages and smaller tribes.  There are tradesmen, few in number (usually one or two per village), but skilled. Some of the more skilled ones will be able to take on an apprentice.
 
 == Overall (land) ==
 
@@ -24,3 +24,7 @@ Although the land of Aedar is vast, there are some key elements that will be bro
    * Caverns
    * Mountain Ranges
    * Plains
+
+== Lore == 
+
+* To be completed

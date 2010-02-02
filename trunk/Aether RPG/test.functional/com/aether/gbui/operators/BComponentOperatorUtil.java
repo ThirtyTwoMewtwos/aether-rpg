@@ -49,7 +49,7 @@ public class BComponentOperatorUtil {
 			if (component != null) {
 				return component;
 			}
-			System.out.println("searching for widget!" );
+			System.out.println("searching for widget! " + searcher);
 
 			performWaitOnThread();
 			elapsedTime= System.currentTimeMillis() - startTime;

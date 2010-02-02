@@ -27,7 +27,7 @@ public class TestCharacterCreationWindow extends AetherTestCase {
 	@Before
 	public void setUp() throws Exception {
 		characterLocator = Main.getServiceStore().get(CharacterLocator.class);
-		createCharacterPage = new LoginPage().clickLogin().clickNewCampain();
+		createCharacterPage = new LoginPage().quickLogin().clickNewCampain();
 		classSelection = createCharacterPage.getClassSelection();
 	}
 

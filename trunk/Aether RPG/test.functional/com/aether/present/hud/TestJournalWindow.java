@@ -29,7 +29,7 @@ public class TestJournalWindow extends AetherTestCase {
 		title2 = "Find billy!";
 		locator.addEntry(new KillQuest(title2, "Find billy\n then kill\n him.", 2, 1, "Dwarf"));
 		
-		CreateCharacterPage createCharacterPage = new LoginPage().clickLogin().clickNewCampain();
+		CreateCharacterPage createCharacterPage = new LoginPage().quickLogin().clickNewCampain();
 		createCharacterPage.loadDummyData();
 		InGamePage inGamePage = createCharacterPage.clickFinish();
 		journalPage = inGamePage.getJournalPage();

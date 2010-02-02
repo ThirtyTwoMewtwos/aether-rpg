@@ -13,7 +13,7 @@ public class TestMainMenuWindow {
 	@Before
 	public void setUp() throws Exception {
 		Main.startGame();
-		mainMenuPage = new LoginPage().clickLogin();
+		mainMenuPage = new LoginPage().quickLogin();
 	}
 	
 	@Test

@@ -45,7 +45,7 @@
 	</target>
 
 	<target name="compile" depends="init">
-		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" nowarn="true"/>
 		<javac srcdir="${test.dir}" destdir="${classes.dir}" classpathref="classpath" />
 		<javac srcdir="${functional.test.dir}" destdir="${classes.dir}" classpathref="classpath" />
 		<copydir dest="${classes.dir}" src="${src.dir}" />

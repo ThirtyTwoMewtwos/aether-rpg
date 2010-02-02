@@ -20,6 +20,7 @@ import com.aether.model.character.CharacterSheet;
 import com.aether.present.AetherTestCase;
 import com.aether.present.CreateCharacterPage;
 import com.aether.present.InGamePage;
+import com.aether.present.LoginPage;
 import com.aether.present.Main;
 import com.aether.present.MainMenuPage;
 import com.aether.present.PersonaPage;
@@ -33,7 +34,7 @@ public class TestPersonaWindow extends AetherTestCase {
 	@Before
 	public void setUp() throws Exception {
 		serviceStore = Main.getServiceStore();
-		CreateCharacterPage newCampain = new MainMenuPage().clickNewCampain();
+		CreateCharacterPage newCampain = new LoginPage().clickLogin().clickNewCampain();
 		newCampain.loadDummyData();
 		InGamePage gamePage = newCampain.clickFinish();
 

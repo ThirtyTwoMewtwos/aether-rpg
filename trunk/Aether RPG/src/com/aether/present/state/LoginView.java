@@ -30,12 +30,16 @@ package com.aether.present.state;
  *
  */
 
-public interface LoginView
-{
-    public static final String ID = "login.view";
-    void setPresenter(LoginPresenter anyObject);
+public interface LoginView {
+	public static final String ID = "login.view";
 
-    void activate();
+	void setPresenter(LoginPresenter anyObject);
 
-    void deactivate();
+	void activate();
+
+	void deactivate();
+
+	void setEnableLogin(boolean isEnabled);
+
+	void setLoginErrorMessage(String string);
 }

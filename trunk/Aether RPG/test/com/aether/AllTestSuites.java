@@ -7,6 +7,7 @@ import org.junit.runners.Suite.SuiteClasses;
 import com.aether.gbui.AllGbuiTests;
 import com.aether.model.AllModelTests;
 import com.aether.present.AllPresentTests;
+import com.aether.service.connection.offline.AllServiceConnectionTests;
 import com.aether.test.AllAetherTestTests;
 import com.util.AllUtilTests;
 
@@ -21,7 +22,8 @@ import com.util.AllUtilTests;
 	AllModelTests.class,
 	AllPresentTests.class,
 	AllUtilTests.class,
-	AllAetherTestTests.class
+	AllAetherTestTests.class,
+	AllServiceConnectionTests.class
 })
 @RunWith(Suite.class)
 public class AllTestSuites {

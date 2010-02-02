@@ -26,7 +26,7 @@ public class TestInGameWindow extends AetherTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		CreateCharacterPage createCharacter = new MainMenuPage().clickNewCampain();
+		CreateCharacterPage createCharacter = new LoginPage().clickLogin().clickNewCampain();
 		createCharacter.loadDummyData();
 		inGamePage = createCharacter.clickFinish();
 	}

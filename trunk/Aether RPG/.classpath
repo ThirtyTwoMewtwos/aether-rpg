@@ -8,7 +8,6 @@
 	<classpathentry kind="lib" path="lib/mouseManager_r1_jme2.jar"/>
 	<classpathentry kind="lib" path="lib/jme-collada.jar"/>
 	<classpathentry kind="lib" path="lib/jme-colladabinding.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6"/>
 	<classpathentry kind="lib" path="lib/jogl/gluegen-rt.jar"/>
 	<classpathentry kind="lib" path="lib/jogl/jogl.jar"/>
@@ -26,8 +25,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/jme-bui.jar" sourcepath="/GBui"/>
-	<classpathentry kind="lib" path="D:/java/components/jemmy.jar"/>
 	<classpathentry kind="lib" path="lib/jME_2.0.jar" sourcepath="/jme"/>
 	<classpathentry kind="lib" path="lib/javassist.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

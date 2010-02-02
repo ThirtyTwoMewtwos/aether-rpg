@@ -48,19 +48,20 @@ import com.jmex.bui.event.ActionListener;
 import com.jmex.bui.layout.AbsoluteLayout;
 import com.jmex.bui.util.Point;
 import com.jmex.game.state.GameStateManager;
+import com.sun.istack.internal.NotNull;
 
 @Singleton
 public class LoginWindow extends BaseWindow implements LoginView {
-	private static final Object DEFAULT_WINDOW = "base.window";
-	private static final String EXIT_KEY_BINDING = "exit";
-        private static final String LOGIN_KEY_BINDING = "login";
+	private static final String DEFAULT_WINDOW = "base.window";
+	private static final String EXIT_KEY_BINDING = "Exit";
+	private static final String LOGIN_KEY_BINDING = "Login";
 
-        private BLabel welcome;
-        private BLabel userLabel;
-        private BLabel pswdLabel;
+	private BLabel welcome;
+	private BLabel userLabel;
+	private BLabel pswdLabel;
 
-        private BTextField username;
-        private BPasswordField password;
+	private BTextField username;
+	private BPasswordField password;
 
 	private BButton login;
 	private BButton exitGame;
@@ -68,98 +69,99 @@ public class LoginWindow extends BaseWindow implements LoginView {
 	private LoginPresenter presenter;
 	private int startPosY;
 
-    public LoginWindow()
-    {
-        super(ID);
+	public LoginWindow() {
+		super(ID);
 
-        bindKeysToView();
+		bindKeysToView();
 
-        DisplaySystem.getDisplaySystem();
-        BWindow mainWindow = new BWindow(BuiSystem.getStyle(), new AbsoluteLayout());
-        mainWindow.setName(ID);
-        addWindow(DEFAULT_WINDOW, mainWindow);
-        mainWindow.setSize(450,450);
+		DisplaySystem.getDisplaySystem();
+		BWindow mainWindow = new BWindow(BuiSystem.getStyle(), new AbsoluteLayout());
+		mainWindow.setName(ID);
+		addWindow(DEFAULT_WINDOW, mainWindow);
+		mainWindow.setSize(450, 450);
 
-        startPosY = mainWindow.getHeight() - 100;
-        int posX = mainWindow.getWidth() / 2;
+		startPosY = mainWindow.getHeight() - 100;
+		int posX = mainWindow.getWidth() / 2;
 
-        welcome = new BLabel("AEther Online");
-        welcome.setPreferredSize(200, 20);
-        mainWindow.add(welcome, new Point((posX /2) , startPosY));
+		welcome = new BLabel("AEther Online");
+		welcome.setPreferredSize(200, 20);
+		mainWindow.add(welcome, new Point((posX / 2), startPosY));
 
-        userLabel = new BLabel("Username:");
-        userLabel.setPreferredSize(200 , 20);
-        mainWindow.add(userLabel, new Point((posX /2) - 70,startPosY - 110));
+		userLabel = new BLabel("Username:");
+		userLabel.setPreferredSize(200, 20);
+		mainWindow.add(userLabel, new Point((posX / 2) - 70, startPosY - 110));
 
-        username = new BTextField(30);
-        username.setStyleClass(UILookAndFeel.LOGIN_TEXTFIELD_LOOK);
-        mainWindow.add(username,new Point((posX /2) - 70,startPosY - 140));
+		username = new BTextField(30);
+		username.setStyleClass(UILookAndFeel.LOGIN_TEXTFIELD_LOOK);
+		mainWindow.add(username, new Point((posX / 2) - 70, startPosY - 140));
 
-        pswdLabel = new BLabel("Password:");
-        pswdLabel.setPreferredSize(200 , 20);
-        mainWindow.add(pswdLabel,new Point((posX /2) - 70,startPosY - 165));
+		pswdLabel = new BLabel("Password:");
+		pswdLabel.setPreferredSize(200, 20);
+		mainWindow.add(pswdLabel, new Point((posX / 2) - 70, startPosY - 165));
 
-        password = new BPasswordField(30);
-        password.setStyleClass(UILookAndFeel.LOGIN_TEXTFIELD_LOOK);
-        mainWindow.add(password, new Point((posX /2) - 70, startPosY - 195));
+		password = new BPasswordField(30);
+		password.setStyleClass(UILookAndFeel.LOGIN_TEXTFIELD_LOOK);
+		mainWindow.add(password, new Point((posX / 2) - 70, startPosY - 195));
 
-        mainWindow.center();
+		mainWindow.center();
 
-        initLoginButton(posX);
-        initExitGameButton(posX);
+		initLoginButton(posX);
+		initExitGameButton(posX);
 
-        GameStateManager.getInstance().attachChild(this);
-    }
+		GameStateManager.getInstance().attachChild(this);
+	}
 
-	private void initLoginButton(int posX)
-        {
-            login = new BButton("login");
-            login.setPreferredSize(50, 20);
-            getWindow(DEFAULT_WINDOW).add(login, new Point((posX /2) - 70, startPosY - 240));
-            login.addListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                presenter.performLoginAttempt();
+	private void initLoginButton(int posX) {
+		login = new BButton(LOGIN_KEY_BINDING);
+		login.setPreferredSize(50, 20);
+		getWindow(DEFAULT_WINDOW).add(login, new Point((posX / 2) - 70, startPosY - 240));
+		login.addListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				presenter.performLogin();
 			}
 		});
 	}
 
-	private void initExitGameButton(int posX)
-        {
-            exitGame = new BButton("exit");
-            exitGame.setPreferredSize(50, 20);
-            getWindow(DEFAULT_WINDOW).add(exitGame, new Point((posX /2) + 100, startPosY - 240));
-            exitGame.addListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent event) {
-                            presenter.performExit();
-                    }
-            });
+	private void initExitGameButton(int posX) {
+		exitGame = new BButton(EXIT_KEY_BINDING);
+		exitGame.setPreferredSize(50, 20);
+		getWindow(DEFAULT_WINDOW).add(exitGame, new Point((posX / 2) + 100, startPosY - 240));
+		exitGame.addListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				presenter.performExit();
+			}
+		});
 	}
 
-	private void bindKeysToView()
-        {
-            registerBinding(EXIT_KEY_BINDING, KeyInput.KEY_ESCAPE);
-            registerBinding(LOGIN_KEY_BINDING,KeyInput.KEY_RETURN);
-
+	private void bindKeysToView() {
+		registerBinding(EXIT_KEY_BINDING, KeyInput.KEY_ESCAPE);
+		registerBinding(LOGIN_KEY_BINDING, KeyInput.KEY_RETURN);
 	}
 
 	@Override
-	protected void handleBinding(String name)
-        {
-            if (EXIT_KEY_BINDING.equals(name))
-            {
-                presenter.performExit();
-            }
-            else if(LOGIN_KEY_BINDING.equals(name))
-            {
-                presenter.performLoginAttempt();
-            }
+	protected void handleBinding(String name) {
+		if (EXIT_KEY_BINDING.equals(name)) {
+			presenter.performExit();
+		} else if (LOGIN_KEY_BINDING.equals(name)) {
+			presenter.performLogin();
+		}
+	}
+
+	@NotNull
+	@Override
+	public void setPresenter(LoginPresenter presenter) {
+		this.presenter = presenter;
 	}
 
 	@Override
-	public void setPresenter(LoginPresenter presenter)
-        {
-            this.presenter = presenter;
+	public void setEnableLogin(boolean isEnabled) {
+		
+	}
+
+	@Override
+	public void setLoginErrorMessage(String string) {
+		
 	}
 }

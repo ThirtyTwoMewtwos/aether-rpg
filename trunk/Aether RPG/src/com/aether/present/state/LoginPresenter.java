@@ -32,39 +32,62 @@ package com.aether.present.state;
 
 import org.gap.jseed.injection.annotation.Singleton;
 
+import com.aether.service.connection.Client;
+import com.sun.istack.internal.NotNull;
+
 @Singleton
 public class LoginPresenter implements ActiveState {
-	public static final String LOGIN_TRANSITION = "login.transition.view";
+	public static final String MAIN_MENU_TRANSITION = "main.menu.view";
 
 	private final ShutdownService exitService;
 	private final LoginView view;
-	private final StateTransition presentationState;
+	private final StateTransition transitionState;
 
-	public LoginPresenter(LoginView view, StateTransition presentationState, ShutdownService exitService)
-        {
-            this.view = view;
-            this.presentationState = presentationState;
-            this.exitService = exitService;
-            view.setPresenter(this);
+	private String user;
+
+	private String password;
+
+	private final Client client;
+
+	public LoginPresenter(LoginView view, StateTransition stateTransition, ShutdownService exitService, Client client) {
+		this.view = view;
+		this.transitionState = stateTransition;
+		this.exitService = exitService;
+		this.client = client;
+		view.setPresenter(this);
 	}
 
-	public void performExit()
-        {
-            exitService.shutdown();
+	public void performExit() {
+		exitService.shutdown();
 	}
 
-	public void enter()
-        {
-            view.activate();
-	}
-
-	public void performLoginAttempt()
-        {
-            presentationState.transition(this, LOGIN_TRANSITION);
+	public void enter() {
+		view.activate();
 	}
 
 	@Override
 	public void exit() {
 		view.deactivate();
+	}
+
+	@NotNull
+	public void setUsername(String user) {
+		this.user = user;
+	}
+
+	@NotNull
+	public void setPassword(String password) {
+		this.password = password;
+		if (user != null) {
+			view.setEnableLogin(true);
+		}
+	}
+
+	public void performLogin() {
+		if (client.login(user, password)) {
+			transitionState.transition(this, MAIN_MENU_TRANSITION);
+		} else {
+			view.setLoginErrorMessage(client.getErrorMessage());
+		}
 	}
 }

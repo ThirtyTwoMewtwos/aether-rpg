@@ -56,6 +56,8 @@ import com.aether.present.state.LoginPresenter;
 import com.aether.present.state.LoginView;
 import com.aether.present.state.ShutdownService;
 import com.aether.present.state.StateTransition;
+import com.aether.service.connection.Client;
+import com.aether.service.connection.offline.OfflineClient;
 import com.jme.app.AbstractGame;
 import com.jme.input.MouseInput;
 import com.jme.renderer.Camera;
@@ -105,6 +107,7 @@ public class Main {
 		store.bind(ShutdownService.class, FinishGameService.class);
 		store.bind(StateTransition.class, GameStateTransition.class);
 		store.bind(CharacterLocator.class, PCLocator.class);
+		store.bind(Client.class, OfflineClient.class);
 		new JournalLoader(store);
 		new ConsoleParserLoader(store);
 		store.bind(PlayerMovementState.class, PCMovementState.class);
@@ -125,21 +128,19 @@ public class Main {
 
 		StateTransition stateTransition = store.get(StateTransition.class);
 
+		ActiveState loginScreen = store.get(LoginPresenter.class);
 		ActiveState mainMenuScreen = store.get(MainMenuPresenter.class);
 		ActiveState createCharacterScreen = store.get(CharacterCreationPresenter.class);
 		InGamePresenter inGame = store.get(InGamePresenter.class);
 
-		// stateTransition.add(loginScreen,
-		// LoginPresenter.LOGIN_TRANSITION, mainMenuScreen);
-		// stateTransition.add(mainMenuScreen,
-		// MainMenuPresenter.LOGOUT_TRANSITION,
-		// loginScreen);
+		stateTransition.add(loginScreen, LoginPresenter.MAIN_MENU_TRANSITION, mainMenuScreen);
+		stateTransition.add(mainMenuScreen, MainMenuPresenter.LOGOUT_TRANSITION, loginScreen);
 		stateTransition.add(mainMenuScreen, MainMenuPresenter.CREATE_CHARACTER_TRANSITION, createCharacterScreen);
 		stateTransition.add(createCharacterScreen, CharacterCreationPresenter.CANCEL_CREATE_CHARACTER_TRANSITION, mainMenuScreen);
 		stateTransition.add(createCharacterScreen, CharacterCreationPresenter.GAME_WINDOW_TRANSITION, inGame);
 		stateTransition.add(inGame, InGamePresenter.OPTIONS_MENU_TRANSITION, mainMenuScreen);
 
-		stateTransition.setStartState(mainMenuScreen);
+		stateTransition.setStartState(loginScreen);
 	}
 
 	public static void shutdown() {

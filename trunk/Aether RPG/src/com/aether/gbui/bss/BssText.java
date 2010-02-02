@@ -30,7 +30,7 @@ package com.aether.gbui.bss;
  *
  */
 
-import org.gap.jseed.contract.Contract;
+import org.gap.jseed.utils.Defense;
 
 import com.jmex.bui.property.FontProperty;
 
@@ -59,8 +59,8 @@ class BssText {
 	}
 
 	public void setFont(String family, BssFontStyle style, int size) {
-		Contract.argumentNotNull(family, "Family font must be specified");
-		Contract.argumentNotNull(style, "Style font must be specified");
+		Defense.argumentNotNull(family, "Family font must be specified");
+		Defense.argumentNotNull(style, "Style font must be specified");
 		font.family = family;
 		font.style = style.toString();
 		font.size = size;		

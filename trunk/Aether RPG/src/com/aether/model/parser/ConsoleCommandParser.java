@@ -12,6 +12,9 @@ class ConsoleCommandParser implements CommandParser {
 	private static final String QUERY_AVAILABLE_COMMANDS = "?";
 	private Map<String, CommandParser> parsers = new Hashtable<String, CommandParser>();
 
+	/** TODO for jSeed **/
+	public ConsoleCommandParser() {}
+	
 	public String parse(String request) {
 		if (QUERY_AVAILABLE_COMMANDS.equals(request)) {
 			return queryAvailableCommands();

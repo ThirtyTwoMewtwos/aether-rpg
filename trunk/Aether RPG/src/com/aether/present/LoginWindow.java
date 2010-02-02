@@ -30,6 +30,7 @@ package com.aether.present;
  *
  */
 
+import org.gap.jseed.contract.annotation.NotNull;
 import org.gap.jseed.injection.annotation.Singleton;
 
 import com.aether.present.state.LoginPresenter;
@@ -49,7 +50,6 @@ import com.jmex.bui.text.Document;
 import com.jmex.bui.text.Document.Listener;
 import com.jmex.bui.util.Point;
 import com.jmex.game.state.GameStateManager;
-import com.sun.istack.internal.NotNull;
 
 @Singleton
 public class LoginWindow extends BaseWindow implements LoginView {

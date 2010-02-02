@@ -12,6 +12,7 @@ import com.aether.present.AetherTestCase;
 import com.aether.present.CreateCharacterPage;
 import com.aether.present.InGamePage;
 import com.aether.present.JournalPage;
+import com.aether.present.LoginPage;
 import com.aether.present.Main;
 import com.aether.present.MainMenuPage;
 
@@ -28,7 +29,7 @@ public class TestJournalWindow extends AetherTestCase {
 		title2 = "Find billy!";
 		locator.addEntry(new KillQuest(title2, "Find billy\n then kill\n him.", 2, 1, "Dwarf"));
 		
-		CreateCharacterPage createCharacterPage = new MainMenuPage().clickNewCampain();
+		CreateCharacterPage createCharacterPage = new LoginPage().clickLogin().clickNewCampain();
 		createCharacterPage.loadDummyData();
 		InGamePage inGamePage = createCharacterPage.clickFinish();
 		journalPage = inGamePage.getJournalPage();

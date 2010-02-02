@@ -1,6 +1,8 @@
 package com.aether.model.parser;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -40,5 +42,25 @@ public class TestItemCommandParser {
 		assertEquals("added Ring", parser.parse("items add jewelry_1"));
 		assertEquals(1, backpack.itemCount());
 		assertEquals("jewelry_1", backpack.getAllItems().iterator().next().getItemType());
+	}
+	
+	@Test
+	public void test_Requesting_help_on_commands() throws Exception {
+		String result = parser.parse("items ?");
+		assertNotNull(result);
+		assertFalse(result.contains("unknown item requested."));
+	}
+	
+	@Test
+	public void test_Passing_in_unknown_command() throws Exception {
+		String result = parser.parse("items poo-bear 7");
+		assertNotNull(result);
+		assertEquals("Unknown items command given.", result);
+	}
+	
+	@Test
+	public void test_Command_has_no_parameters() throws Exception {
+		String result = parser.parse("items");
+		assertEquals("Unknown items command given.", result);
 	}
 }

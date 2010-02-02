@@ -19,6 +19,7 @@ import com.aether.present.hud.persona.TestPersonaImages;
 import com.aether.present.state.TestCharacterCreationPresenter;
 import com.aether.present.state.TestGamePresentationTransitioner;
 import com.aether.present.state.TestInGamePresenter;
+import com.aether.present.state.TestLoginPresenter;
 import com.aether.present.state.TestMainMenuPresenter;
 import com.aether.present.state.TestShutdownService;
 
@@ -34,6 +35,7 @@ import com.aether.present.state.TestShutdownService;
 	TestMainMenuPresenter.class,
 	TestInGamePresenter.class,
 	TestConsolePresenter.class,
+	TestLoginPresenter.class,
 	
 	TestSkyboxFacingImages.class, 
 	TestPersonaImages.class,

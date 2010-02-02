@@ -1,6 +1,5 @@
 package com.aether.model.parser;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 import org.easymock.EasyMock;

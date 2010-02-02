@@ -9,6 +9,7 @@ import com.aether.present.AetherTestCase;
 import com.aether.present.ConsolePage;
 import com.aether.present.CreateCharacterPage;
 import com.aether.present.InGamePage;
+import com.aether.present.LoginPage;
 import com.aether.present.MainMenuPage;
 
 public class TestConsoleWindow extends AetherTestCase {
@@ -16,7 +17,7 @@ public class TestConsoleWindow extends AetherTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		CreateCharacterPage createCharacterPage = new MainMenuPage().clickNewCampain();
+		CreateCharacterPage createCharacterPage = new LoginPage().clickLogin().clickNewCampain();
 		createCharacterPage.loadDummyData();
 		InGamePage inGamePage = createCharacterPage.clickFinish();
 		console = inGamePage.getConsolePage();

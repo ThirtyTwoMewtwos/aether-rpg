@@ -1,9 +1,6 @@
-package com.aether.present.state;
-
-import org.gap.jseed.injection.annotation.Singleton;
-
+package com.aether.service.connection;
 /*
- * MainMenuPresenter.java
+ * Client.java
  *
  * Copyright (c) 2008, Tyler Hoersch
  * All rights reserved.
@@ -32,50 +29,16 @@ import org.gap.jseed.injection.annotation.Singleton;
  *
  */
 
-
-/** 
- * This looks too simple, but give it time, this should handle
- * loading of game state, evaluating whether a saved game exists, informing
- * the view to enable or disable the login button, etc.  And of course
- * manages shutting down of the UI.
- *  
+/**
+ * Used to interact with the server
+ * 
  * @author gpelcha
+ *
  */
-@Singleton
-public class MainMenuPresenter implements ActiveState {
-	public static final String CREATE_CHARACTER_TRANSITION = "create.character.view";
-    public static final String LOGOUT_TRANSITION = "logout.account";
-	
-	private final ShutdownService exitService;
-	private final MainMenuView view;
-	private final StateTransition presentationState;
+public interface Client {
 
-	public MainMenuPresenter(MainMenuView view, StateTransition presentationState, ShutdownService exitService) {
-		this.view = view;
-		this.presentationState = presentationState;
-		this.exitService = exitService;
-		view.setPresenter(this);
-	}
+	boolean login(String string, String string2);
 
-	public void performExit() {
-		exitService.shutdown();
-	}
+	String getErrorMessage();
 
-	public void enter() {
-		view.activate();
-	}
-
-        public void performLogout()
-        {
-            presentationState.transition(this, LOGOUT_TRANSITION);
-        }
-
-	public void performCreateCharacter() {
-		presentationState.transition(this, CREATE_CHARACTER_TRANSITION);
-	}
-
-	@Override
-	public void exit() {
-		view.deactivate();
-	}
 }

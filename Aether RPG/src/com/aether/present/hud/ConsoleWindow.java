@@ -36,7 +36,7 @@ public class ConsoleWindow implements ConsoleView {
 		BorderLayout layout = new BorderLayout();
 		BWindow result = new BDraggableWindow(BuiSystem.getStyle(), layout);
 		result.setName(CONSOLE_ID);
-		result.setSize(300, 140);
+		result.setSize(300, 240);
 		result.center();
 		result.setVisible(false);
 		return result;

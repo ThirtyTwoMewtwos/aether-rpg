@@ -30,10 +30,10 @@ package com.aether.present.state;
  *
  */
 
+import org.gap.jseed.contract.annotation.NotNull;
 import org.gap.jseed.injection.annotation.Singleton;
 
 import com.aether.service.connection.Client;
-import com.sun.istack.internal.NotNull;
 
 @Singleton
 public class LoginPresenter implements ActiveState {

@@ -6,7 +6,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
 import com.aether.present.state.StateTransition;
-import com.jme.system.DisplaySystem;
 
 
 public abstract class AetherTestCase {

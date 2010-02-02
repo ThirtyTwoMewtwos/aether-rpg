@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="src" path="test.functional"/>
-	<classpathentry kind="lib" path="lib/jseed.jar"/>
+	<classpathentry kind="lib" path="lib/jseed.jar" sourcepath="lib/jseed.jar"/>
 	<classpathentry kind="lib" path="lib/iText-2.1.5.jar" sourcepath="D:/components/sun/jdk1.5.0_11/src.zip"/>
 	<classpathentry kind="lib" path="lib/mouseManager_r1_jme2.jar"/>
 	<classpathentry kind="lib" path="lib/jme-collada.jar"/>

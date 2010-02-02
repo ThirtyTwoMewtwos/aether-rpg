@@ -32,6 +32,8 @@ package com.aether.present.state;
 
 public interface LoginView {
 	public static final String ID = "login.view";
+	public static final String USERNAME_ID = "username.login.id";
+	public static final String PASSWORD_ID = "password.login.id";
 
 	void setPresenter(LoginPresenter anyObject);
 

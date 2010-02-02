@@ -34,18 +34,19 @@ import org.gap.jseed.injection.annotation.Singleton;
 
 import com.aether.present.state.LoginPresenter;
 import com.aether.present.state.LoginView;
-import com.aether.present.UILookAndFeel;
 import com.jme.input.KeyInput;
 import com.jme.system.DisplaySystem;
 import com.jmex.bui.BButton;
 import com.jmex.bui.BLabel;
-import com.jmex.bui.BTextField;
 import com.jmex.bui.BPasswordField;
+import com.jmex.bui.BTextField;
 import com.jmex.bui.BWindow;
 import com.jmex.bui.BuiSystem;
 import com.jmex.bui.event.ActionEvent;
 import com.jmex.bui.event.ActionListener;
 import com.jmex.bui.layout.AbsoluteLayout;
+import com.jmex.bui.text.Document;
+import com.jmex.bui.text.Document.Listener;
 import com.jmex.bui.util.Point;
 import com.jmex.game.state.GameStateManager;
 import com.sun.istack.internal.NotNull;
@@ -56,13 +57,8 @@ public class LoginWindow extends BaseWindow implements LoginView {
 	private static final String EXIT_KEY_BINDING = "Exit";
 	private static final String LOGIN_KEY_BINDING = "Login";
 
-	private BLabel welcome;
-	private BLabel userLabel;
-	private BLabel pswdLabel;
-
 	private BTextField username;
 	private BPasswordField password;
-
 	private BButton login;
 	private BButton exitGame;
 
@@ -83,37 +79,71 @@ public class LoginWindow extends BaseWindow implements LoginView {
 		startPosY = mainWindow.getHeight() - 100;
 		int posX = mainWindow.getWidth() / 2;
 
-		welcome = new BLabel("AEther Online");
+		initWindowTitle(mainWindow, posX);
+		initUsernameInput(mainWindow, posX);
+		initPasswordInput(mainWindow, posX);
+		initLoginButton(posX);
+		initExitGameButton(posX);
+
+		mainWindow.center();
+
+		GameStateManager.getInstance().attachChild(this);
+	}
+
+	private void initWindowTitle(BWindow mainWindow, int posX) {
+		BLabel welcome = new BLabel("AEther Online");
 		welcome.setPreferredSize(200, 20);
 		mainWindow.add(welcome, new Point((posX / 2), startPosY));
+	}
 
-		userLabel = new BLabel("Username:");
+	private void initUsernameInput(BWindow mainWindow, int posX) {
+		BLabel userLabel = new BLabel("Username:");
 		userLabel.setPreferredSize(200, 20);
 		mainWindow.add(userLabel, new Point((posX / 2) - 70, startPosY - 110));
 
 		username = new BTextField(30);
+		username.setName(USERNAME_ID);
 		username.setStyleClass(UILookAndFeel.LOGIN_TEXTFIELD_LOOK);
-		mainWindow.add(username, new Point((posX / 2) - 70, startPosY - 140));
+		username.getDocument().addListener(new Listener() {
+			@Override
+			public void textInserted(Document document, int offset, int length) {
+				presenter.setUsername(username.getText());
+			}
 
-		pswdLabel = new BLabel("Password:");
+			@Override
+			public void textRemoved(Document document, int offset, int length) {
+				presenter.setUsername(username.getText());
+			}
+		});
+		mainWindow.add(username, new Point((posX / 2) - 70, startPosY - 140));
+	}
+
+	private void initPasswordInput(BWindow mainWindow, int posX) {
+		BLabel pswdLabel = new BLabel("Password:");
 		pswdLabel.setPreferredSize(200, 20);
 		mainWindow.add(pswdLabel, new Point((posX / 2) - 70, startPosY - 165));
 
 		password = new BPasswordField(30);
+		password.setName(PASSWORD_ID);
 		password.setStyleClass(UILookAndFeel.LOGIN_TEXTFIELD_LOOK);
+		password.getDocument().addListener(new Listener() {
+			@Override
+			public void textInserted(Document document, int offset, int length) {
+				presenter.setPassword(password.getText());
+			}
+
+			@Override
+			public void textRemoved(Document document, int offset, int length) {
+				presenter.setPassword(password.getText());
+			}
+		});
 		mainWindow.add(password, new Point((posX / 2) - 70, startPosY - 195));
-
-		mainWindow.center();
-
-		initLoginButton(posX);
-		initExitGameButton(posX);
-
-		GameStateManager.getInstance().attachChild(this);
 	}
 
 	private void initLoginButton(int posX) {
 		login = new BButton(LOGIN_KEY_BINDING);
 		login.setPreferredSize(50, 20);
+		login.setEnabled(false);
 		getWindow(DEFAULT_WINDOW).add(login, new Point((posX / 2) - 70, startPosY - 240));
 		login.addListener(new ActionListener() {
 			@Override
@@ -157,7 +187,7 @@ public class LoginWindow extends BaseWindow implements LoginView {
 
 	@Override
 	public void setEnableLogin(boolean isEnabled) {
-		
+		login.setEnabled(isEnabled);
 	}
 
 	@Override

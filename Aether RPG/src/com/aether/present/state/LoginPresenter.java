@@ -73,14 +73,19 @@ public class LoginPresenter implements ActiveState {
 	@NotNull
 	public void setUsername(String user) {
 		this.user = user;
+		checkEnableLogin();
+	}
+
+	private void checkEnableLogin() {
+		if (password != null && user != null) {
+			view.setEnableLogin(true);
+		}
 	}
 
 	@NotNull
 	public void setPassword(String password) {
 		this.password = password;
-		if (user != null) {
-			view.setEnableLogin(true);
-		}
+		checkEnableLogin();
 	}
 
 	public void performLogin() {

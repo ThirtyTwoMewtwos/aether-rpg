@@ -34,7 +34,7 @@ public class TestPersonaWindow extends AetherTestCase {
 	@Before
 	public void setUp() throws Exception {
 		serviceStore = Main.getServiceStore();
-		CreateCharacterPage newCampain = new LoginPage().clickLogin().clickNewCampain();
+		CreateCharacterPage newCampain = new LoginPage().quickLogin().clickNewCampain();
 		newCampain.loadDummyData();
 		InGamePage gamePage = newCampain.clickFinish();
 

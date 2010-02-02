@@ -31,10 +31,15 @@ package com.aether.present.state;
  */
 
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.createNiceMock;
+import static org.easymock.EasyMock.createStrictMock;
+import static org.easymock.EasyMock.eq;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.notNull;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
 
-import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -71,6 +76,16 @@ public class TestLoginPresenter {
 		verify(view, stateTransition, shutdownService, client);
 	}
 	
+	@Test
+	public void testLoginCredentialsInReverseOrder() throws Exception {
+		view.setEnableLogin(true);
+		
+		replay(view, stateTransition, shutdownService, client);
+		LoginPresenter presenter = new LoginPresenter(view, stateTransition, shutdownService, client);
+		presenter.setPassword("pdiddy-rules");
+		presenter.setUsername("jsmith");
+		verify(view, stateTransition, shutdownService, client);
+	}
 	@Test
 	public void testRequestLoginFails() throws Exception {
 		view.setEnableLogin(true);

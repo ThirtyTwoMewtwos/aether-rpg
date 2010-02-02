@@ -23,7 +23,7 @@ public class TestEquipmentWindow extends AetherTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		CreateCharacterPage createCharacterPage = new LoginPage().clickLogin().clickNewCampain();
+		CreateCharacterPage createCharacterPage = new LoginPage().quickLogin().clickNewCampain();
 		createCharacterPage.loadDummyData();
 		InGamePage inGamePage = createCharacterPage.clickFinish();
 		equipmentPage = inGamePage.getEquipmentPage();

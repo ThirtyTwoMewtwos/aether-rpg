@@ -25,7 +25,8 @@ This process can change as time goes on.
    # Show equipped/used items
    # Arrangement of equipment is saved between game states
     
- * Able to login to a server
+ * Create a working offline mode for local tests -  _Captain.queezy_
+ * Able to login to a server 
  * Able to perform chat between clients within the game
  * Persistent world is created
  * Saving will save the character location
